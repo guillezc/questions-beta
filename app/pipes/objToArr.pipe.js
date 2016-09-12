@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var ObjToArrPipe = (function () {
     function ObjToArrPipe() {
     }
@@ -19,14 +19,14 @@ var ObjToArrPipe = (function () {
         }
         return newArr;
     };
-    ObjToArrPipe = __decorate([
-        core_1.Pipe({
-            name: 'objToArr',
-            pure: false
-        }), 
-        __metadata('design:paramtypes', [])
-    ], ObjToArrPipe);
     return ObjToArrPipe;
 }());
+ObjToArrPipe = __decorate([
+    core_1.Pipe({
+        name: 'objToArr',
+        pure: false
+    }),
+    __metadata("design:paramtypes", [])
+], ObjToArrPipe);
 exports.ObjToArrPipe = ObjToArrPipe;
 //# sourceMappingURL=objToArr.pipe.js.map
