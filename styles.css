@@ -76,10 +76,12 @@
 #q-loading.sessions-loading{
     top: 150px;
 }
-#datatable_sessions tbody > tr > td{
+#datatable_sessions tbody > tr > td,
+#datatable_participants tbody > tr > td{
     vertical-align: middle;
 }
-#datatable_sessions .btn{
+#datatable_sessions .btn,
+#datatable_participants .btn{
     height: 26px;
     width: 26px;
     line-height: 26px;

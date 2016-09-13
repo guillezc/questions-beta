@@ -12,6 +12,13 @@ import { ParticipantAddComponent } from './pages/participante-nuevo.component';
 import { QuestionsComponent } from './pages/preguntas.component';
 import { ProyectedComponent } from './pages/proyectar.component';
 
+import { VotesComponent } from './pages/votaciones.component';
+import { VoteEditComponent } from './pages/votacion-editar.component';
+import { VoteAddComponent } from './pages/votacion-nueva.component';
+
+import { ResultsComponent } from './pages/resultados.component';
+import { ResultsProyectedComponent } from './pages/resultados-proyectar.component';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -49,6 +56,26 @@ const appRoutes: Routes = [
   {
     path: 'proyectar',
     component: ProyectedComponent
+  },
+  {
+    path: 'votaciones',
+    component: VotesComponent
+  },
+  {
+    path: 'votacion/nueva',
+    component: VoteAddComponent
+  },
+  {
+    path: 'votacion/editar/:id',
+    component: VoteEditComponent
+  },
+  {
+    path: 'resultados/:id',
+    component: ResultsComponent
+  },
+  {
+    path: 'resultadosProyectados/:id',
+    component: ResultsProyectedComponent
   }
 ];
 

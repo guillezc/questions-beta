@@ -36,6 +36,11 @@ import { ParticipantEditComponent } from './pages/participante-editar.component'
 import { ParticipantAddComponent } from './pages/participante-nuevo.component'
 import { QuestionsComponent } from './pages/preguntas.component';
 import { ProyectedComponent } from './pages/proyectar.component';
+import { VotesComponent } from './pages/votaciones.component';
+import { VoteEditComponent } from './pages/votacion-editar.component';
+import { VoteAddComponent } from './pages/votacion-nueva.component';
+import { ResultsComponent } from './pages/resultados.component';
+import { ResultsProyectedComponent } from './pages/resultados-proyectar.component';
 
 enableProdMode();
 
@@ -63,7 +68,12 @@ enableProdMode();
   	ParticipantEditComponent,
   	ParticipantAddComponent,
   	QuestionsComponent,
-  	ProyectedComponent
+  	ProyectedComponent,
+  	VotesComponent,
+  	VoteEditComponent,
+  	VoteAddComponent,
+  	ResultsComponent,
+  	ResultsProyectedComponent
 	],
 	providers: [
     appRoutingProviders,
