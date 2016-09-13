@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { Session }  from '../classes/session';
 import { Speaker }  from '../classes/speaker';
-
-import { ObjToArrPipe } from '../pipes/objToArr.pipe';
 
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
@@ -14,8 +12,7 @@ import  'app/js/participants.js';
 
 @Component({
 	selector: 'q-participants',
-	templateUrl: 'app/templates/participants.component.html',
-	pipes: [ObjToArrPipe]
+	templateUrl: 'app/templates/participants.component.html'
 })
 
 export class ParticipantsComponent implements OnInit{
@@ -57,6 +54,6 @@ export class ParticipantsComponent implements OnInit{
 	}
 
 		deleteSpeaker(speaker: Speaker){
-		this.firebase.database.object('/people/'+speaker.$key).remove();
+		this.af.database.object('/people/'+speaker.$key).remove();
 	}
 }

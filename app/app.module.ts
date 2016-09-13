@@ -1,9 +1,16 @@
-import { NgModule }         from '@angular/core';
-import { BrowserModule }    from '@angular/platform-browser';
-import { NgForm, FormsModule } from '@angular/forms';
+import '@angular/platform-browser-dynamic';
+import '@angular/platform-browser';
+import '@angular/core';
+
+import { NgModule, enableProdMode }         from '@angular/core';
+import { BrowserModule, Title }    from '@angular/platform-browser';
+import { NgForm, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { routing, appRoutingProviders } from './app.routing';
-import { Title } from '@angular/platform-browser';
+
+import { ObjToArrPipe }    from './pipes/objToArr.pipe';
+import { ObjKeyToArrPipe } from './pipes/objKeyToArr.pipe';
 
 import * as firebase from "firebase";
 import {FIREBASE_PROVIDERS, 
@@ -13,25 +20,46 @@ import {FIREBASE_PROVIDERS,
         AuthProviders, 
         firebaseAuthConfig} from 'angularfire2';
 
+import { NKDatetime } from 'ng2-datetime/ng2-datetime';
+import { SELECT_DIRECTIVES } from 'ng2-select/ng2-select';
+import { TagInputModule } from 'ng2-tag-input';
+
 import { AppComponent }     from './app.component';
 import { HeaderComponent }  from './header.component';
 import { SidebarComponent } from './sidebar.component';
 
+import { SessionsComponent } from './pages/sesiones.component';
+import { SessionAddComponent } from './pages/sesion-nueva.component';
+import { SessionEditComponent } from './pages/sesion-editar.component';
 import { ParticipantsComponent } from './pages/participantes.component';
-import { ParticipantEditComponent } from './pages/participante-editar.component'
+import { ParticipantEditComponent } from './pages/participante-editar.component';
+import { ParticipantAddComponent } from './pages/participante-nuevo.component'
+
+enableProdMode();
+
 
 @NgModule({
   imports:      [ 
   	BrowserModule,
   	FormsModule,
+  	ReactiveFormsModule,
+  	TagInputModule,
   	routing
   ],
   declarations: [ 
   	AppComponent, 
   	HeaderComponent, 
   	SidebarComponent,
+  	ObjToArrPipe,
+  	ObjKeyToArrPipe,
+  	NKDatetime,
+  	SELECT_DIRECTIVES,
+  	SessionsComponent,
+  	SessionAddComponent,
+  	SessionEditComponent,
   	ParticipantsComponent,
-  	ParticipantEditComponent
+  	ParticipantEditComponent,
+  	ParticipantAddComponent
 	],
 	providers: [
     appRoutingProviders,

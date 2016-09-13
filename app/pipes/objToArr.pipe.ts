@@ -1,11 +1,11 @@
-import { Pipe } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'objToArr',
   pure: false
 })
 
-export class ObjToArrPipe {
+export class ObjToArrPipe implements PipeTransform {
   transform(object:any) {
     let newArr: any[] = [];
     for (var key in object) {

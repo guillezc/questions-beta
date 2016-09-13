@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CORE_DIRECTIVES } from '@angular/common';
-import { Router, ActivatedRoute, ROUTER_DIRECTIVES } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 
-import { ObjToArrPipe } from '../pipes/objToArr.pipe';
 import { Session }  from '../classes/session';
 import { Speaker }  from '../classes/speaker';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
@@ -11,9 +9,7 @@ import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'q-participants-add',
-  templateUrl: 'app/templates/participant-edit.component.html',
-  directives: [ROUTER_DIRECTIVES, CORE_DIRECTIVES],
-  pipes: [ObjToArrPipe]
+  templateUrl: 'app/templates/participant-edit.component.html'
 })
 
 export class ParticipantEditComponent implements OnInit{
