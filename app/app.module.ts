@@ -34,6 +34,8 @@ import { SessionEditComponent } from './pages/sesion-editar.component';
 import { ParticipantsComponent } from './pages/participantes.component';
 import { ParticipantEditComponent } from './pages/participante-editar.component';
 import { ParticipantAddComponent } from './pages/participante-nuevo.component'
+import { QuestionsComponent } from './pages/preguntas.component';
+import { ProyectedComponent } from './pages/proyectar.component';
 
 enableProdMode();
 
@@ -59,7 +61,9 @@ enableProdMode();
   	SessionEditComponent,
   	ParticipantsComponent,
   	ParticipantEditComponent,
-  	ParticipantAddComponent
+  	ParticipantAddComponent,
+  	QuestionsComponent,
+  	ProyectedComponent
 	],
 	providers: [
     appRoutingProviders,

@@ -9,6 +9,9 @@ import { ParticipantsComponent } from './pages/participantes.component';
 import { ParticipantEditComponent } from './pages/participante-editar.component';
 import { ParticipantAddComponent } from './pages/participante-nuevo.component';
 
+import { QuestionsComponent } from './pages/preguntas.component';
+import { ProyectedComponent } from './pages/proyectar.component';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -38,6 +41,14 @@ const appRoutes: Routes = [
   {
     path: 'participante/nuevo',
     component: ParticipantAddComponent
+  },
+  {
+    path: 'preguntas',
+    component: QuestionsComponent
+  },
+  {
+    path: 'proyectar',
+    component: ProyectedComponent
   }
 ];
 
