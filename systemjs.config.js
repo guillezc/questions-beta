@@ -28,7 +28,8 @@
       'angularfire2': 'node_modules/angularfire2',
       'ng2-datetime':               'node_modules/ng2-datetime',
       'ng2-select':                 'node_modules/ng2-select',
-      'ng2-tag-input':              'node_modules/ng2-tag-input'
+      'ng2-tag-input':              'node_modules/ng2-tag-input',
+      'ng2-charts':                 'node_modules/ng2-charts'
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -61,6 +62,10 @@
       },
       'ng2-tag-input': { 
         main: './dist/index.js', 
+        defaultExtension: 'js' 
+      },
+      'ng2-charts': { 
+        main: 'ng2-charts.js', 
         defaultExtension: 'js' 
       }
     }

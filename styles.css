@@ -1,12 +1,12 @@
 .page-body .page-header.navbar .menu-toggler.sidebar-toggler,
 .page-body .page-header.navbar .menu-toggler.responsive-toggler{
-	height: 14px;
+    height: 14px;
 }
 .page-body .page-header.navbar .menu-toggler>span{
-	top: 9px;
+    top: 9px;
 }
 .questions-selecteds h4{
-	font-weight: 500;
+    font-weight: 500;
     line-height: 30px;
 }
 .questions-toolbar>.caption{
@@ -18,37 +18,37 @@
 }
 .page-body.page-proyecteds .page-header,
 .page-body.page-proyecteds .page-sidebar-wrapper{
-	display: none !important;
+    display: none !important;
 }
 .page-body.page-proyecteds .page-container,
 .page-body.page-proyecteds .page-content{
-	margin: 0 !important;
-	padding: 0;
+    margin: 0 !important;
+    padding: 0;
     height: 100% !important;
 }
 .carousel.slide#carousel-proyecteds,
 .carousel.slide#carousel-proyecteds .carousel-inner,
 .carousel.slide#carousel-proyecteds .item{
-	height: 100% !important;
-	background: #000;
+    height: 100% !important;
+    background: #000;
 }
 .carousel.slide#carousel-proyecteds .item{
-	background: #000;
+    background: #000;
 }
 .carousel.slide#carousel-proyecteds .carousel-caption{
-	bottom: auto;
+    bottom: auto;
     top: 50%;
     padding: 0;
     height: 320px;
     margin-top: -160px;
 }
 .carousel.slide#carousel-proyecteds .carousel-caption > div.table{
-	margin: 0;
+    margin: 0;
     height: 100%;
     display: table;
 }
 .carousel.slide#carousel-proyecteds .carousel-caption > div.table > div{
-	display: table-cell;
+    display: table-cell;
     vertical-align: middle;
 }
 .carousel.slide#carousel-proyecteds h1{
@@ -76,12 +76,10 @@
 #q-loading.sessions-loading{
     top: 150px;
 }
-#datatable_sessions tbody > tr > td,
-#datatable_participants tbody > tr > td{
+#datatable_sessions tbody > tr > td{
     vertical-align: middle;
 }
-#datatable_sessions .btn,
-#datatable_participants .btn{
+#datatable_sessions .btn{
     height: 26px;
     width: 26px;
     line-height: 26px;
@@ -214,10 +212,21 @@ table.dataTable{
     display: table-cell;
     vertical-align: middle;
 }
+.page-body.page-proyecteds .chart-container .chart-inn > div > div > div{
+    height: 640px !important;
+    width: 768px !important;
+    min-width: 686px;
+    margin: 0 auto;
+}
 .page-body.page-proyecteds .chart-container .page-title{
     margin: 0;
     text-align: center;
 }
 .page-body.page-proyecteds .chart-container #gchart_proyecteds > div > div{
     margin: 0 auto;
+}
+.carousel.slide.chart-slide#carousel-proyecteds .carousel-caption{
+    top: 0;
+    margin-top: 0;
+    height: 100%;
 }

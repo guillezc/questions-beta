@@ -26,10 +26,10 @@
                             <tr role="row" class="heading">
                                 <th width="15%">Inicio - Fin</th>
                                 <th width="15%">Salón</th>
-                                <th width="20%"> Título </th>
+                                <th width="15%"> Título </th>
                                 <th width="20%"> Oradores </th>
                                 <th width="20%"> Moderadores </th>
-                                <th width="10%">Acciones</th>
+                                <th width="15%">Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -50,6 +50,7 @@
                                 	<input type="hidden" value="{{ session.$key }}" #sessionId>
                                     <a href="javascript:;" (click)="editSession(session)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-edit"></i></a>
                                     <a href="javascript:;" (click)="deleteSession(session)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-trash"></i></a>
+                                    <a href="javascript:;" *ngIf="session.hasSurvey" (click)="goToVotes(session)" title="Ver votaciones" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-list"></i></a>
                                 </td>
                             </tr>
                         </tbody>

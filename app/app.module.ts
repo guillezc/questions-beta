@@ -23,6 +23,7 @@ import {FIREBASE_PROVIDERS,
 import { NKDatetime } from 'ng2-datetime/ng2-datetime';
 import { SELECT_DIRECTIVES } from 'ng2-select/ng2-select';
 import { TagInputModule } from 'ng2-tag-input';
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { AppComponent }     from './app.component';
 import { HeaderComponent }  from './header.component';
@@ -39,8 +40,10 @@ import { ProyectedComponent } from './pages/proyectar.component';
 import { VotesComponent } from './pages/votaciones.component';
 import { VoteEditComponent } from './pages/votacion-editar.component';
 import { VoteAddComponent } from './pages/votacion-nueva.component';
+import { VotesSessionComponent } from './pages/votaciones-sesion.component';
 import { ResultsComponent } from './pages/resultados.component';
 import { ResultsProyectedComponent } from './pages/resultados-proyectar.component';
+import { ResultSesionProyectedComponent } from './pages/resultados-sesion-proyectar.component';
 
 enableProdMode();
 
@@ -51,6 +54,7 @@ enableProdMode();
   	FormsModule,
   	ReactiveFormsModule,
   	TagInputModule,
+  	ChartsModule,
   	routing
   ],
   declarations: [ 
@@ -72,8 +76,10 @@ enableProdMode();
   	VotesComponent,
   	VoteEditComponent,
   	VoteAddComponent,
+  	VotesSessionComponent,
   	ResultsComponent,
-  	ResultsProyectedComponent
+  	ResultsProyectedComponent,
+  	ResultSesionProyectedComponent
 	],
 	providers: [
     appRoutingProviders,

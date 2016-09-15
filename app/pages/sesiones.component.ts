@@ -17,13 +17,13 @@ import  'app/js/sessions.js';
 export class SessionsComponent implements OnInit {
 
   sessions: FirebaseListObservable<any[]>;
-  firebase: AngularFire;
+  survey: FirebaseListObservable<any[]>;
   sessionList: Session[] = [];
   isLoaded: Boolean = false;
 
   constructor(
     private router         : Router,
-    public af        : AngularFire,
+    public  af        : AngularFire,
     private titleService   : Title) {
 
   }
@@ -40,6 +40,17 @@ export class SessionsComponent implements OnInit {
   getSessions(){
     this.sessions = this.af.database.list('sessions');
     this.sessions.subscribe(data => {
+      data.forEach((sess: any) => {
+        this.survey = this.af.database.list('/surveys', {
+          query: {
+            orderByChild: 'sessionId',
+            equalTo: sess.$key 
+          }
+        });
+        this.survey.subscribe(srv => {
+          sess.hasSurvey = (srv.length > 0) ? true : false; 
+        });
+      });
       this.sessionList = data;
       SessionJS.init();
       this.isLoaded = true;
@@ -58,6 +69,11 @@ export class SessionsComponent implements OnInit {
 
   deleteSession(session: Session){
   	this.af.database.object('/sessions/'+session.$key).remove();
+  }
+
+  goToVotes(session: Session){
+    let link = ['/votaciones/sesion', session.$key];
+    this.router.navigate(link);
   }
 
 }
