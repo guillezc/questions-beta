@@ -8,6 +8,8 @@ export class Survey {
     public session: Session[];
     public question: string;
     public options: Vote[];
+    public chartLabels: string[];
+    public chartValues: number[];
 
     constructor(){}
 

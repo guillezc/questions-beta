@@ -25,12 +25,10 @@
                         <img src="app/assets/global/img/loading.gif" alt="loading" />
                     </div>
             	<div class="chart-container" [hidden]="isEmpty">
-            		<div id="gchart_pie_1" style="height: auto;width: 100%;min-width: 686px;"></div>
-                    <base-chart class="chart"
-                       [data]="pieChartData"
-                       [labels]="pieChartLabels"
-                       [chartType]="pieChartType">
-                    </base-chart>
+                    <q-chart 
+                       [pieChartData]="chartData"
+                       [pieChartLabels]="chartLabels">
+                    </q-chart>
             	</div>
             	<h3 class="text-center" [hidden]="!isEmpty">No hay resultados para esta encuesta</h3>
             </div>

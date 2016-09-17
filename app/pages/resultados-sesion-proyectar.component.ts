@@ -19,11 +19,15 @@ export class ResultSesionProyectedComponent implements OnInit {
   surveyObj: Survey = new Survey();
   sessionObj: Session = new Session();
   surveys: FirebaseListObservable<any[]>;
+  option: FirebaseObjectObservable<any[]>;
+  session: FirebaseObjectObservable<any[]>;
   surveysList: Survey[] = [];
   sessionID: any;
   isEmpty: boolean = false;
   isLoaded: boolean = false;
   surveySData: any[] = [];
+
+  chartData: any[] = [];
 
   constructor(
     private router         : Router,
@@ -41,6 +45,7 @@ export class ResultSesionProyectedComponent implements OnInit {
     this.setTitle("Resultados - México Cumbre de Negocios");
     this.route.params.subscribe(params => {
       this.sessionID = params['id'];
+      this.session = this.af.database.object('/sessions/'+this.sessionID)
       this.surveys = this.af.database.list('surveys', {
         query: {
           orderByChild: 'sessionId',
@@ -50,33 +55,23 @@ export class ResultSesionProyectedComponent implements OnInit {
       this.surveys.subscribe(data => {
         this.surveysList = data;
         var index_chart = 0;
+
         data.forEach((s: Survey) => {
           this.surveyObj = s;
           this.getOptions(index_chart);
           index_chart++;
         });
-      });  
-      /*this.firebase.database.object('/surveys/'+this.surveyID).subscribe(srvObj => {
-        this.surveyObj = srvObj;
-        this.getOptions();
-        this.firebase.database.object('/sessions/'+srvObj.sessionId).subscribe(sessObj => {
-          this.sessionObj = sessObj;
-        });
-      });*/
-
+      }); 
     });
     
   }
 
   getOptions(index_chart: any){
-    ResultSesionProyectedsVar.reset();
-
-    let votesObj: any[] = [];
-    let votemp: any[] = [];
-    votemp.push("Opcion");
-    votemp.push("Numero de votos");
-    votesObj.push(votemp);
+    var xchartLabels=[];
+    var xchartData=[];
+    var res;
     //ResultSesionProyectedsVar.setVote(index_chart, votemp);
+    //console.log(this.surveysList[index_chart]);
 
     var optionsArr = this.getArrayOf(this.surveyObj.options);
     var counter = 0;
@@ -85,24 +80,25 @@ export class ResultSesionProyectedComponent implements OnInit {
 
     optionsArr.forEach((opt: any) => {
       this.af.database.object('/votes/'+opt.voteId).subscribe(vote => {
-        let votemp: any[] = [];
-        votemp.push(opt.name);
+
+        xchartLabels.push(opt.name);
         var voteNum = (vote.users != false) ? vote.users.length : 0;
-        votemp.push(voteNum);
-        votesObj.push(votemp);
-        ResultSesionProyectedsVar.setVote(index_chart, votesObj);
+        xchartData.push(voteNum);
 
         load++;
         if(voteNum == 0) counter++;
         if(counter == dataSize) this.isEmpty = true;
         if(load == dataSize){
-          ResultSesionProyectedsVar.init(index_chart);
+          this.surveysList[index_chart].chartLabels = xchartLabels;
+          this.surveysList[index_chart].chartValues = xchartData;
+          ResultSesionProyectedsVar.init();
           this.isLoaded = true;
+          console.log(this.surveysList[index_chart])
         }
 
       });
     });
-    
+    return res;
   }
 
   getArrayOf(object: any) {

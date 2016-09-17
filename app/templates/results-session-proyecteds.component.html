@@ -1,4 +1,4 @@
-<div id="carousel-proyecteds" class="carousel slide chart-slide" data-ride="carousel">
+<div id="carousel-proyecteds" class="carousel slide chart-slide" data-ride="carousel" *ngIf="surveys | async">
     <ol class="carousel-indicators">
         <li data-target="#carousel-proyecteds" *ngFor="let slide of surveysList; let i = index" [attr.data-slide-to]="i" [class.active]="i==0"></li>
       </ol>
@@ -10,16 +10,19 @@
 				        <img src="app/assets/global/img/loading.gif" alt="loading" />
 				    </div>
 					<div class="chart-container" [hidden]="isEmpty">
-						<div class="chart-inn">
-							<!--<h3 class="page-title results-title">
-							    {{ surveyObj.question }} <br />
+						<div class="chart-inn" *ngIf="surveys | async">
+							<h3 class="page-title results-title">
+							    {{ slide.question }} <br />
 							    <small>
-							        Día: {{ sessionObj.day }} <br />
-							        Sesión: {{ sessionObj.title }} <br />
-							        Inicio: {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
+							        Día: {{ session.day | async }} <br />
+							        Sesión: {{ session.title }} <br />
+							        Inicio: {{ session.startTime | date:"dd MMM y - H:mm" }}
 							    </small>
-							</h3> -->
-							<div id="gchart_proyecteds_{{ i }}" style="height: 640px;width: 768px;min-width: 686px;margin: 0 auto;"></div>
+							</h3>
+							<q-chart 
+                 [pieChartData]="slide.chartValues"
+                 [pieChartLabels]="slide.chartLabels">
+              </q-chart>
 						</div>
 					</div>
                 </div>

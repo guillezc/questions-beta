@@ -11,6 +11,9 @@
 		        Inicio: {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
 		    </small>
 		</h3>
-		<div id="gchart_proyecteds" style="height: auto;width: 100%;min-width: 686px;"></div>
+		<q-chart 
+           [pieChartData]="chartData"
+           [pieChartLabels]="chartLabels">
+        </q-chart>
 	</div>
 </div>

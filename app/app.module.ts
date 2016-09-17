@@ -28,6 +28,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { AppComponent }     from './app.component';
 import { HeaderComponent }  from './header.component';
 import { SidebarComponent } from './sidebar.component';
+import { PieChartComponent } from './parts/pieChart.component';
 
 import { SessionsComponent } from './pages/sesiones.component';
 import { SessionAddComponent } from './pages/sesion-nueva.component';
@@ -61,6 +62,7 @@ enableProdMode();
   	AppComponent, 
   	HeaderComponent, 
   	SidebarComponent,
+  	PieChartComponent,
   	ObjToArrPipe,
   	ObjKeyToArrPipe,
   	NKDatetime,

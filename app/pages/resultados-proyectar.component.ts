@@ -22,6 +22,9 @@ export class ResultsProyectedComponent implements OnInit {
   isEmpty: boolean = false;
   isLoaded: boolean = false;
 
+  chartLabels:string[] = [];
+  chartData:number[] = [];
+
   constructor(
     private router         : Router,
     private route          : ActivatedRoute,
@@ -50,13 +53,8 @@ export class ResultsProyectedComponent implements OnInit {
   }
 
   getOptions(){
-    ResultsProyectedsVar.reset();
-
-    let votesObj: any[] = [];
-    let votemp: any[] = [];
-    votemp.push("Opcion");
-    votemp.push("Numero de votos");
-    ResultsProyectedsVar.setVote(votemp);
+    var xchartLabels=[];
+    var xchartData=[];
 
     var optionsArr = this.getArrayOf(this.surveyObj.options);
     var counter = 0;
@@ -65,18 +63,19 @@ export class ResultsProyectedComponent implements OnInit {
 
     optionsArr.forEach((opt: any) => {
       this.af.database.object('/votes/'+opt.voteId).subscribe(vote => {
-        let votemp: any[] = [];
-        votemp.push(opt.name);
+        
+        xchartLabels.push(opt.name);
         var voteNum = (vote.users != false) ? vote.users.length : 0;
-        votemp.push(voteNum);
-        ResultsProyectedsVar.setVote(votemp);
+        xchartData.push(voteNum);
 
         load++;
         if(voteNum == 0) counter++;
         if(counter == dataSize) this.isEmpty = true;
         if(load == dataSize){
-          ResultsProyectedsVar.init();
+          this.chartLabels = xchartLabels;
+          this.chartData = xchartData;
           this.isLoaded = true;
+          ResultsProyectedsVar.init();
         }
 
       });

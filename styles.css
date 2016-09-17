@@ -230,3 +230,14 @@ table.dataTable{
     margin-top: 0;
     height: 100%;
 }
+.chart-container .chart{
+    height: auto;
+}
+.chart-container .chart canvas{
+    width: 100% !important;
+    height: auto !important;
+}
+.chart-title{
+    text-align: center;
+    font-weight: 600;
+}

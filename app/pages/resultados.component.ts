@@ -17,11 +17,15 @@ import  'app/js/results.js';
 
 export class ResultsComponent implements OnInit {
   surveyObj: Survey = new Survey();
+  survey: FirebaseObjectObservable<any>;
   sessionObj: Session = new Session();
 	surveyID: any;
 	isEmpty: boolean = false;
 	isLoaded: boolean = false;
   proyectedUrl: SafeResourceUrl;
+
+  chartLabels:string[] = [];
+  chartData:number[] = [];
 
 	constructor(
     private router         : Router,
@@ -41,11 +45,12 @@ export class ResultsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.surveyID = params['id'];
       this.proyectedUrl = this.sanit.bypassSecurityTrustResourceUrl("/resultadosProyectados/"+this.surveyID);
-      this.af.database.object('/surveys/'+this.surveyID).subscribe(srvObj => {
-        this.surveyObj = srvObj;
-        this.getOptions();
+      this.survey = this.af.database.object('/surveys/'+this.surveyID);
+      this.survey.subscribe(srvObj => {
         this.af.database.object('/sessions/'+srvObj.sessionId).subscribe(sessObj => {
           this.sessionObj = sessObj;
+          this.surveyObj = srvObj;
+          this.getOptions();
         });
       });
     });
@@ -53,13 +58,9 @@ export class ResultsComponent implements OnInit {
   }
 
   getOptions(){
-    ResultsVar.reset();
 
-    let votesObj: any[] = [];
-    let votemp: any[] = [];
-    votemp.push("Opcion");
-    votemp.push("Numero de votos");
-    ResultsVar.setVote(votemp);
+    var xchartLabels=[];
+    var xchartData=[];
 
     var optionsArr = this.getArrayOf(this.surveyObj.options);
     var counter = 0;
@@ -68,18 +69,19 @@ export class ResultsComponent implements OnInit {
 
     optionsArr.forEach((opt: any) => {
       this.af.database.object('/votes/'+opt.voteId).subscribe(vote => {
-        let votemp: any[] = [];
-        votemp.push(opt.name);
+
+        xchartLabels.push(opt.name);
         var voteNum = (vote.users != false) ? vote.users.length : 0;
-        votemp.push(voteNum);
-        ResultsVar.setVote(votemp);
+        xchartData.push(voteNum);
 
         load++;
         if(voteNum == 0) counter++;
         if(counter == dataSize) this.isEmpty = true;
         if(load == dataSize){
-          ResultsVar.init();
+          this.chartLabels = xchartLabels;
+          this.chartData = xchartData;
           this.isLoaded = true;
+          ResultsVar.init();
         }
       });
     });
