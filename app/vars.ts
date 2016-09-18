@@ -2,10 +2,10 @@ import { Question } from './classes/question';
 
 let _settings = {
     layout: {
-        pageSidebarClosed: false, // sidebar menu state
-        pageContentWhite: true, // set page content layout
-        pageBodySolid: false, // solid body color state
-        pageAutoScrollOnLoad: 1000 // auto scroll to top on page load
+        pageSidebarClosed: false, 
+        pageContentWhite: true,
+        pageBodySolid: false, 
+        pageAutoScrollOnLoad: 1000 
     },
     assetsPath: 'app/assets',
     globalPath: 'app/assets/global',

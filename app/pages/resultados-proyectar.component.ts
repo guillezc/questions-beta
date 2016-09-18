@@ -53,8 +53,8 @@ export class ResultsProyectedComponent implements OnInit {
   }
 
   getOptions(){
-    var xchartLabels=[];
-    var xchartData=[];
+    let xchartLabels: any[] = [];
+    let xchartData: any[] = [];
 
     var optionsArr = this.getArrayOf(this.surveyObj.options);
     var counter = 0;

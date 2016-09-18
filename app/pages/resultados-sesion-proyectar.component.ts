@@ -69,11 +69,8 @@ export class ResultSesionProyectedComponent implements OnInit {
   }
 
   getOptions(index_chart: any){
-    var xchartLabels=[];
-    var xchartData=[];
-    var res;
-    //ResultSesionProyectedsVar.setVote(index_chart, votemp);
-    //console.log(this.surveysList[index_chart]);
+    let xchartLabels: any[] = [];
+    let xchartData: any[] = [];
 
     var optionsArr = this.getArrayOf(this.surveyObj.options);
     var counter = 0;
@@ -100,7 +97,6 @@ export class ResultSesionProyectedComponent implements OnInit {
 
       });
     });
-    return res;
   }
 
   getArrayOf(object: any) {
