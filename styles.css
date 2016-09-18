@@ -72,6 +72,7 @@
     text-align: center;
     width: 100%;
     top: 50px;
+    left: 0;
 }
 #q-loading.sessions-loading{
     top: 150px;
@@ -207,6 +208,10 @@ table.dataTable{
     height: 100%;
     display: table;
     width: 100%;
+    background: #000;
+}
+.page-body.page-proyecteds .chart-container .chart-title{
+    color: #fff;
 }
 .page-body.page-proyecteds .chart-container .chart-inn{
     display: table-cell;
@@ -221,6 +226,10 @@ table.dataTable{
 .page-body.page-proyecteds .chart-container .page-title{
     margin: 0;
     text-align: center;
+    color: #fff;
+}
+.page-body.page-proyecteds .chart-container .page-title > small{
+    color: #fff;
 }
 .page-body.page-proyecteds .chart-container #gchart_proyecteds > div > div{
     margin: 0 auto;
@@ -236,8 +245,15 @@ table.dataTable{
 .chart-container .chart canvas{
     width: 100% !important;
     height: auto !important;
+    margin: 0 auto;
 }
 .chart-title{
     text-align: center;
     font-weight: 600;
+}
+
+@media(min-width: 769px){
+    .chart-container .chart canvas{
+        width: 80% !important;
+    }
 }

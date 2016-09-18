@@ -20,7 +20,7 @@ export class ResultSesionProyectedComponent implements OnInit {
   sessionObj: Session = new Session();
   surveys: FirebaseListObservable<any[]>;
   option: FirebaseObjectObservable<any[]>;
-  session: FirebaseObjectObservable<any[]>;
+  session: any;
   surveysList: Survey[] = [];
   sessionID: any;
   isEmpty: boolean = false;
@@ -45,7 +45,9 @@ export class ResultSesionProyectedComponent implements OnInit {
     this.setTitle("Resultados - México Cumbre de Negocios");
     this.route.params.subscribe(params => {
       this.sessionID = params['id'];
-      this.session = this.af.database.object('/sessions/'+this.sessionID)
+      this.af.database.object('/sessions/'+this.sessionID).subscribe(sess =>  {
+        this.session = sess;
+      });
       this.surveys = this.af.database.list('surveys', {
         query: {
           orderByChild: 'sessionId',
