@@ -7,7 +7,8 @@ import { BrowserModule, Title }    from '@angular/platform-browser';
 import { NgForm, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-import { routing, appRoutingProviders } from './app.routing';
+import { Routes, RouterModule } from '@angular/router';
+import { routing, routes, appRoutingProviders } from './app.routing';
 
 import { ObjToArrPipe }    from './pipes/objToArr.pipe';
 import { ObjKeyToArrPipe } from './pipes/objKeyToArr.pipe';
@@ -56,7 +57,7 @@ enableProdMode();
   	ReactiveFormsModule,
   	TagInputModule,
   	ChartsModule,
-  	routing
+    RouterModule.forRoot(routes, { useHash: true })
   ],
   declarations: [ 
   	AppComponent, 

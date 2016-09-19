@@ -38,7 +38,7 @@ export class VotesSessionComponent implements OnInit {
     this.setTitle("Votaciones - México Cumbre de Negocios");
     this.route.params.subscribe(params => {
       this.sessionID = params['id'];
-      this.resultsProyectedUrl = this.sanit.bypassSecurityTrustResourceUrl("/resultadosSesionProyectados/"+this.sessionID);
+      this.resultsProyectedUrl = this.sanit.bypassSecurityTrustResourceUrl("#/resultadosSesionProyectados/"+this.sessionID);
       this.getSurveys();
     });
   	

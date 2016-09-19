@@ -94,4 +94,6 @@ export const appRoutingProviders: any[] = [
 
 ];
 
+export const routes: any[] = appRoutes;
+
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes);

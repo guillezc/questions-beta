@@ -44,7 +44,7 @@ export class ResultsComponent implements OnInit {
     this.setTitle("Resultados - México Cumbre de Negocios");
     this.route.params.subscribe(params => {
       this.surveyID = params['id'];
-      this.proyectedUrl = this.sanit.bypassSecurityTrustResourceUrl("/resultadosProyectados/"+this.surveyID);
+      this.proyectedUrl = this.sanit.bypassSecurityTrustResourceUrl("#/resultadosProyectados/"+this.surveyID);
       this.survey = this.af.database.object('/surveys/'+this.surveyID);
       this.survey.subscribe(srvObj => {
         this.af.database.object('/sessions/'+srvObj.sessionId).subscribe(sessObj => {
