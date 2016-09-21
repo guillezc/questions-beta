@@ -251,6 +251,16 @@ table.dataTable{
     text-align: center;
     font-weight: 600;
 }
+.day-filter{
+    position: absolute;
+    left: 200px;
+    top: 54px;
+    z-index: 9;
+}
+
+.day-filter label{
+    margin-right: 5px;
+}
 
 @media(min-width: 769px){
     .chart-container .chart canvas{

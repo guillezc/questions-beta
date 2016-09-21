@@ -19,9 +19,11 @@ export class SessionEditComponent implements OnInit{
   sessionObj: Session = new Session();
   session: FirebaseObjectObservable<any>;
   people: FirebaseListObservable<any>;
+  events: any[];
   peopleItems: Array<any> = [];
   managerSelect: Array<any> = [];
   oratorSelect: Array<any> = [];
+  eventItems: Array<any> = [];
   firebase: AngularFire;
   submitted = false;
   sub: any;
@@ -66,6 +68,7 @@ export class SessionEditComponent implements OnInit{
       this.getSession();
     });
     this.getPeople();
+    this.getEvents();
   }
 
   getPeople(){
@@ -75,13 +78,34 @@ export class SessionEditComponent implements OnInit{
     });
   }
 
+  getEvents(){
+    this.af.database.list('/events').subscribe(evts => {
+      this.events = evts;
+      evts.forEach((evt: any) => {
+        this.eventItems[evt.day] = evt.$key;
+      });
+    });
+  }
+
   onSubmit(sess: any) { 
     this.submitted = false;
     sess.startTime = sess.startTime.getTime();
     sess.endTime = sess.endTime.getTime();
+    this.updateEvent(sess.day);
     this.session.update(sess);
     let link = ['/sesiones'];
     this.router.navigate(link);
+  }
+
+  updateEvent(day: any){
+    
+    if(String(this.sessionObj.day) != String(day)){
+
+      this.af.database.object('/events/'+this.sessionObj.eventId+'/sessionsId/'+this.sessionID).remove();
+      this.af.database.object('/events/'+this.eventItems[day]+'/sessionsId/'+this.sessionID).update({ show: true});
+
+    }
+
   }
 
   getSession(){
@@ -121,6 +145,10 @@ export class SessionEditComponent implements OnInit{
     }
 
     return items;
+  }
+
+  setEvtSessionItems(sessions: any){
+
   }
 
   addSpeaker(value:any):void {

@@ -34,6 +34,9 @@ var SessionJS = function(){
 				    } );
 				}
 			}, 100)
+		},
+		destroyTable: function(){
+			$('#datatable_sessions').dataTable().fnDestroy();
 		}
 	}
 }();

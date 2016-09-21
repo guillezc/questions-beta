@@ -20,6 +20,8 @@ export class SessionsComponent implements OnInit {
   survey: FirebaseListObservable<any[]>;
   sessionList: Session[] = [];
   isLoaded: Boolean = false;
+  events: any[];
+  eventItems: Array<any> = [];
 
   constructor(
     private router         : Router,
@@ -35,6 +37,7 @@ export class SessionsComponent implements OnInit {
   ngOnInit() {  
   	this.getSessions();
     this.setTitle("Sesiones - México Cumbre de Negocios");
+    this.getEvents();
   }
 
   getSessions(){
@@ -57,6 +60,15 @@ export class SessionsComponent implements OnInit {
     });
   }
 
+  getEvents(){
+    this.af.database.list('/events').subscribe(evts => {
+      this.events = evts;
+      evts.forEach((evt: any) => {
+        this.eventItems[evt.day] = evt.$key;
+      });
+    });
+  }
+
   addSession(){
     let link = ['/sesion/nueva'];
     this.router.navigate(link);
@@ -69,6 +81,38 @@ export class SessionsComponent implements OnInit {
 
   deleteSession(session: Session){
   	this.af.database.object('/sessions/'+session.$key).remove();
+  }
+
+  filtraPorDias(day: any){
+    this.isLoaded = false;
+    SessionJS.destroyTable();
+    if(day == '...'){
+      this.getSessions();
+    }else{
+      this.sessions = this.af.database.list('sessions', {
+        query: {
+          orderByChild: 'eventId',
+          equalTo: this.eventItems[day]
+        }
+      });
+      this.sessions.subscribe(data => {
+        data.forEach((sess: any) => {
+          this.survey = this.af.database.list('/surveys', {
+            query: {
+              orderByChild: 'sessionId',
+              equalTo: sess.$key 
+            }
+          });
+          this.survey.subscribe(srv => {
+            sess.hasSurvey = (srv.length > 0) ? true : false; 
+          });
+        });
+        this.sessionList = data;
+        SessionJS.init();
+        this.isLoaded = true;
+      });
+    }
+    
   }
 
   goToVotes(session: Session){
