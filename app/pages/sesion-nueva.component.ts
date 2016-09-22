@@ -64,7 +64,7 @@ export class SessionAddComponent implements OnInit {
      this.setTitle("Agregar sesión - México Cumbre de Negocios");
      this.initSession();
      this.getPeople();
-     this.getEvents();
+     //this.getEvents();
   }
 
   getPeople(){
@@ -108,7 +108,7 @@ export class SessionAddComponent implements OnInit {
 
     this.session = this.af.database.list('/sessions');
     const newID = this.session.push(sess).key;
-    this.updateEvent(sess.day, newID);
+    //this.updateEvent(sess.day, newID);
     for (var key in this.oratorSelect) {
       if (this.oratorSelect.hasOwnProperty(key)) {
         this.af.database.object('/sessions/'+newID+'/speakers/'+key).update(this.oratorSelect[key]);

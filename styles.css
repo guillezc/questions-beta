@@ -77,10 +77,14 @@
 #q-loading.sessions-loading{
     top: 150px;
 }
-#datatable_sessions tbody > tr > td{
+#datatable_sessions tbody > tr > td,
+#datatable_participants tbody > tr > td,
+#datatable_events tbody > tr > td{
     vertical-align: middle;
 }
-#datatable_sessions .btn{
+#datatable_sessions .btn,
+#datatable_participants .btn,
+#datatable_events .btn{
     height: 26px;
     width: 26px;
     line-height: 26px;
@@ -95,6 +99,10 @@
 }
 .form-sessions .form-group.form-md-line-input .form-control{
     height: 30px;
+}
+.form-sessions .form-group.form-md-line-input .form-control.ui-select-multiple{
+    height: auto;
+    min-height: 30px;
 }
 .form-sessions .form-group.form-md-line-input textarea.form-control{
     min-height: 84px;
@@ -260,6 +268,12 @@ table.dataTable{
 
 .day-filter label{
     margin-right: 5px;
+}
+.fec-ini{
+    color: #32c5d2 !important;
+}
+.fec-fin{
+    color: rgb(227,6,19) !important;
 }
 
 @media(min-width: 769px){

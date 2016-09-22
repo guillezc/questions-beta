@@ -1,7 +1,7 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a [routerLink]="['/sesiones']">Inicio</a>
+            <a [routerLink]="['/eventos']">Inicio</a>
             <i class="fa fa-circle"></i>
             <a href="#">Preguntas</a>
         </li>
@@ -17,21 +17,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <label>
-                                Día
-                                <select class="form-control input-sm input-xsmall input-inline" #questionDay>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                </select>
-                            </label>
-                            <label>
                                 Sesión
                                 <select class="form-control input-md input-medium input-inline" #questionSession>
                                     <option value="all">Todas</option>
                                     <option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title }}</option>
                                 </select>
                             </label>
-                            <button id="filter-questions" (click)="filterQuestions(questionDay, questionSession)" class="btn sbold green"> Filtrar
+                            <button id="filter-questions" (click)="filterQuestions(questionSession)" class="btn sbold green"> Filtrar
                                 <i class="fa fa-filter"></i>
                             </button>
                         </div>

@@ -1,6 +1,8 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
+            <a [routerLink]="['/eventos']">Inicio</a>
+            <i class="fa fa-circle"></i>
             <a href="javascript:void(0);">Sesiones</a>
         </li>
     </ul>
@@ -18,7 +20,7 @@
 	                        	<button id="add-session" (click)="addSession()" class="btn sbold green">
 	                        		Agregar <i class="fa fa-plus"></i>
                             	</button>
-                                <div [hidden]="!isLoaded" class="day-filter">
+                                <div [hidden]="true" class="day-filter">
                                     <label>Día</label>
                                     <select name="day" (change)="filtraPorDias(filtroDias.value)" #filtroDias >
                                         <option value="...">Todos</option>

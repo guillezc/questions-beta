@@ -120,7 +120,7 @@ export class QuestionsComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  filterQuestions(day: any, session: any){
+  filterQuestions(session: any){
     if(session.value != 'all'){
       this.questions = this.af.database.list('questions', {
         query: {

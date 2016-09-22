@@ -37,7 +37,7 @@ export class SessionsComponent implements OnInit {
   ngOnInit() {  
   	this.getSessions();
     this.setTitle("Sesiones - México Cumbre de Negocios");
-    this.getEvents();
+    //this.getEvents();
   }
 
   getSessions(){

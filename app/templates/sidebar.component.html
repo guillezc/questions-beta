@@ -3,28 +3,33 @@
     <!-- BEGIN SIDEBAR MENU -->
     <ul class="page-sidebar-menu sidebar-questions" data-keep-expanded="false" data-auto-scroll="true"
     data-slide-speed="200" [ngClass]="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
-
         <li class="start nav-item">
-            <a [routerLink]="['/sesiones']" data-href="#/sesiones" routerLinkActive="active">
-                <i class="icon-home"></i>
+            <a [routerLink]="['/eventos']" data-href="#/eventos" routerLinkActive="active">
+                <i class="fa fa-calendar"></i>
+                <span class="title">Eventos</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a [routerLink]="['/sesiones']" data-href="#/sesiones">
+                <i class="fa fa-group"></i>
                 <span class="title">Sesiones</span>
             </a>
         </li>
         <li class="nav-item">
             <a [routerLink]="['/participantes']" data-href="#/participantes">
-                <i class="icon-user"></i>
+                <i class="fa fa-user"></i>
                 <span class="title">Participantes</span>
             </a>
         </li>
         <li class="nav-item">
             <a [routerLink]="['/preguntas']" data-href="#/preguntas">
-                <i class="icon-question"></i>
+                <i class="fa fa-question-circle"></i>
                 <span class="title">Preguntas</span>
             </a>
         </li>
         <li class="nav-item">
             <a [routerLink]="['/votaciones']" data-href="#/votaciones">
-                <i class="icon-note"></i>
+                <i class="fa fa-thumbs-up"></i>
                 <span class="title">Votaciones</span>
             </a>
         </li>

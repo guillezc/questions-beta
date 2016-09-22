@@ -22,11 +22,22 @@ import { ResultsProyectedComponent } from './pages/resultados-proyectar.componen
 import { VotesSessionComponent } from './pages/votaciones-sesion.component';
 import { ResultSesionProyectedComponent } from './pages/resultados-sesion-proyectar.component';
 
+import { EventsComponent } from './pages/eventos.component';
+import { EventsAddComponent } from './pages/evento-nuevo.component';
+
 const appRoutes: Routes = [
   {
     path: '',
-    redirectTo: '/sesiones',
+    redirectTo: '/eventos',
     pathMatch: 'full'
+  },
+  {
+    path: 'eventos',
+    component: EventsComponent
+  },
+  {
+    path: 'evento/nuevo',
+    component: EventsAddComponent
   },
   {
     path: 'sesiones',

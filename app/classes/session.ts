@@ -4,8 +4,6 @@ export class Session {
 
     public $key: number;
     public allDay: boolean;
-    public eventId: string;
-    public day: number;
     public description: string;
     public endTime: Date;
     public hasDetails: boolean;

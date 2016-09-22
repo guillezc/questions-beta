@@ -68,7 +68,7 @@ export class SessionEditComponent implements OnInit{
       this.getSession();
     });
     this.getPeople();
-    this.getEvents();
+    //this.getEvents();
   }
 
   getPeople(){
@@ -91,7 +91,7 @@ export class SessionEditComponent implements OnInit{
     this.submitted = false;
     sess.startTime = sess.startTime.getTime();
     sess.endTime = sess.endTime.getTime();
-    this.updateEvent(sess.day);
+    //this.updateEvent(sess.day);
     this.session.update(sess);
     let link = ['/sesiones'];
     this.router.navigate(link);

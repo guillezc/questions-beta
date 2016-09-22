@@ -1,7 +1,7 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a [routerLink]="['/sesiones']">Inicio</a>
+            <a [routerLink]="['/eventos']">Inicio</a>
             <i class="fa fa-circle"></i>
             <a href="#">Votaciones</a>
         </li>
@@ -28,8 +28,7 @@
                     <table class="table table-striped table-bordered table-hover" id="datatable_votes">
                         <thead>
                             <tr role="row" class="heading">
-                                <th width="5%"> Día </th>
-                                <th width="20%"> Sesión </th>
+                                <th width="25%"> Sesión </th>
                                 <th width="20%"> Hora </th>
                                 <th width="25%">  </th>
                                 <th width="30%">  </th>
@@ -37,7 +36,6 @@
                         </thead>
                         <tbody *ngIf="votes | async">
                         	<tr *ngFor="let survey of surveyList">
-                                <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.day }}</div></td>
                                 <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.title }}</div></td>
                                 <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.startTime | date:"dd MMM y - H:mm" }} hrs</div></td>
                                 <td>
