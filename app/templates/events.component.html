@@ -17,7 +17,7 @@
             		<div class="table-toolbar questions-toolbar">
                     	<div class="row">
 	                        <div class="col-md-12">
-	                        	<button id="add-session" (click)="addSpeaker()" class="btn sbold green">
+	                        	<button id="add-session" (click)="addEvent()" class="btn sbold green">
 	                        		Agregar <i class="fa fa-plus"></i>
                             	</button>
 	                        </div>
@@ -36,13 +36,13 @@
                             <tr *ngFor="let event of eventList">
                                 <td> <span class="fec-ini">{{ event.startTime | date:"dd-MMM-yy H:mm" }}</span> <br/>
                                     <span class="fec-fin">{{ event.endTime | date:"dd-MMM-yy H:mm" }}</span></td>
-                                <td>{{ event.name }}</td>
+                                <td>{{ event.name.spanish }}</td>
                                 <td>
                                     <div *ngFor="let sess of event.sessions | objToArr">- {{ sess | slice:0:36 }} <span *ngIf="sess.length > 36">...</span></div>
                                 </td>
                                 <td>
-                                    <a href="javascript:;" (click)="editSpeaker(event)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-edit"></i></a>
-                                    <button type="button" [disabled]="event.sessions.length <= 0" (click)="deleteSpeaker(event)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-trash"></i></button>
+                                    <a href="javascript:;" (click)="editEvent(event)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-edit"></i></a>
+                                    <button type="button" [disabled]="event.sessions.length > 0" (click)="deleteEvent(event)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>
                         </tbody>

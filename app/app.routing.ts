@@ -24,6 +24,7 @@ import { ResultSesionProyectedComponent } from './pages/resultados-sesion-proyec
 
 import { EventsComponent } from './pages/eventos.component';
 import { EventsAddComponent } from './pages/evento-nuevo.component';
+import { EventsEditComponent } from './pages/evento-editar.component';
 
 const appRoutes: Routes = [
   {
@@ -38,6 +39,10 @@ const appRoutes: Routes = [
   {
     path: 'evento/nuevo',
     component: EventsAddComponent
+  },
+  {
+    path: 'evento/editar/:id',
+    component: EventsEditComponent
   },
   {
     path: 'sesiones',

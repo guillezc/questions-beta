@@ -68,7 +68,6 @@ export class SessionEditComponent implements OnInit{
       this.getSession();
     });
     this.getPeople();
-    //this.getEvents();
   }
 
   getPeople(){
@@ -78,34 +77,13 @@ export class SessionEditComponent implements OnInit{
     });
   }
 
-  getEvents(){
-    this.af.database.list('/events').subscribe(evts => {
-      this.events = evts;
-      evts.forEach((evt: any) => {
-        this.eventItems[evt.day] = evt.$key;
-      });
-    });
-  }
-
   onSubmit(sess: any) { 
     this.submitted = false;
     sess.startTime = sess.startTime.getTime();
     sess.endTime = sess.endTime.getTime();
-    //this.updateEvent(sess.day);
     this.session.update(sess);
     let link = ['/sesiones'];
     this.router.navigate(link);
-  }
-
-  updateEvent(day: any){
-    
-    if(String(this.sessionObj.day) != String(day)){
-
-      this.af.database.object('/events/'+this.sessionObj.eventId+'/sessionsId/'+this.sessionID).remove();
-      this.af.database.object('/events/'+this.eventItems[day]+'/sessionsId/'+this.sessionID).update({ show: true});
-
-    }
-
   }
 
   getSession(){
@@ -129,6 +107,7 @@ export class SessionEditComponent implements OnInit{
   getSessionOrators(){
     this.af.database.list('/sessions/'+this.sessionID+'/speakers').subscribe(data => {
       this.oratorSelect = this.setSpeakersItems(data);
+      console.log(this.oratorSelect);
     });
   }
 

@@ -7,6 +7,9 @@ import { Event }  from '../classes/event';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
+import  'app/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js';
+import  'app/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js';
+
 @Component({
 	selector: 'q-events-add',
 	templateUrl: 'app/templates/event-add.component.html'
@@ -20,7 +23,27 @@ export class EventsAddComponent implements OnInit{
 	sessionItems: Array<any> = [];
 	sessionSelect: Array<any> = [];
 	eventItems: Array<any> = [];
-  days: any[];
+	days: any[];
+
+	timepickerStartOpts: any = {
+    minuteStep: 1
+  };
+
+  timepickerEndOpts: any = {
+    minuteStep: 1
+  };
+
+	datepickerStartOpts: any = {
+    autoclose: true,
+    todayBtn: 'linked',
+    todayHighlight: true
+  };
+
+  datepickerEndOpts: any = {
+    autoclose: true,
+    todayBtn: 'linked',
+    todayHighlight: true
+  };
 
 	constructor(
 		private router       : Router,
@@ -36,28 +59,37 @@ export class EventsAddComponent implements OnInit{
 	ngOnInit() {  
 		this.setTitle("Agregar Evento - México Cumbre de Negocios");
 		this.initEvent();
-		this.getDays();
 		this.getSessions();
 	}
 
 	onSubmit(event: any){
-		console.log(event);
-		//this.events = this.af.database.list('/events');
-    //const newID = this.events.push(event).key;
+		event.startTime = event.startTime.getTime();
+    event.endTime = event.endTime.getTime();
+    event.name = [];
+    event.name['spanish'] = event.name_spanish;
+    event.name['english'] = event.name_english;
+    delete event['name_spanish'];
+    delete event['name_english'];
+
+    this.events = this.af.database.list('/events');
+    const newEventID = this.events.push(event).key;
+    for (var key in this.sessionSelect) {
+    	this.af.database.object('/events/'+newEventID+'/sessionsId/'+key).update({ show: true});
+    }
+
+    let link = ['/eventos'];
+    this.router.navigate(link);
+
 	}
 
 	initEvent(){
-		this.addObj.day = '';
-		this.addObj.name = '';
-	}
+		this.addObj.name = [];
+    this.addObj.name['spanish'] = "";
+    this.addObj.name['english'] = "";
+		this.addObj.startTime = new Date();
+    this.addObj.endTime = new Date();
 
-	getDays(){
-		this.af.database.list('/events').subscribe(evts => {
-			this.days = evts;
-			evts.forEach((evt: any) => {
-				this.eventItems[evt.day] = evt.$key;
-			});
-		});
+    console.log(this.addObj);
 	}
 
 	getSessions(){

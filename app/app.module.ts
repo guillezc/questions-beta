@@ -49,6 +49,7 @@ import { ResultsProyectedComponent } 			from './pages/resultados-proyectar.compo
 import { ResultSesionProyectedComponent } from './pages/resultados-sesion-proyectar.component';
 import { EventsComponent } 								from './pages/eventos.component';
 import { EventsAddComponent } 						from './pages/evento-nuevo.component';
+import { EventsEditComponent } 						from './pages/evento-editar.component';
 
 enableProdMode();
 
@@ -87,7 +88,8 @@ enableProdMode();
   	ResultsProyectedComponent,
   	ResultSesionProyectedComponent,
   	EventsComponent,
-  	EventsAddComponent
+  	EventsAddComponent,
+  	EventsEditComponent
 	],
 	providers: [
     appRoutingProviders,

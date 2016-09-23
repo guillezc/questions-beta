@@ -47,17 +47,17 @@ export class EventsComponent implements OnInit{
 		});
 	}
 
-	addSpeaker(){
+	addEvent(){
 		let link = ['/evento/nuevo'];
 		this.router.navigate(link);
 	}
 
-	editSpeaker(event: Event){
+	editEvent(event: Event){
 		let link = ['/evento/editar', event.$key];
 		this.router.navigate(link);
 	}
 
-	deleteSpeaker(event: Event){
-		this.af.database.object('/evento/'+event.$key).remove();
+	deleteEvent(event: Event){
+		this.af.database.object('/events/'+event.$key).remove();
 	}
 }

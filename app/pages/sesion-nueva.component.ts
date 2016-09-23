@@ -64,7 +64,6 @@ export class SessionAddComponent implements OnInit {
      this.setTitle("Agregar sesión - México Cumbre de Negocios");
      this.initSession();
      this.getPeople();
-     //this.getEvents();
   }
 
   getPeople(){
@@ -74,26 +73,15 @@ export class SessionAddComponent implements OnInit {
     });
   }
 
-  getEvents(){
-    this.af.database.list('/events').subscribe(evts => {
-      this.events = evts;
-      evts.forEach((evt: any) => {
-        this.eventItems[evt.day] = evt.$key;
-      });
-    });
-  }
-
   initSession(){
     this.addObj.startTime = new Date();
     this.addObj.endTime = new Date();
-    this.addObj.day = 1;
     this.addObj.allDay = false;
     this.addObj.hasDetails = false;
     this.addObj.onMySchedule = false;
     this.addObj.description = "";
     this.addObj.location = "";
     this.addObj.tags = [];
-    this.addObj.eventId = "";
   }
 
   onSubmit(sess: any) { 
@@ -104,11 +92,8 @@ export class SessionAddComponent implements OnInit {
     if(sess.allDay)
       sess.endTime = sess.startTime
 
-    sess.eventId = this.eventItems[sess.day];
-
     this.session = this.af.database.list('/sessions');
     const newID = this.session.push(sess).key;
-    //this.updateEvent(sess.day, newID);
     for (var key in this.oratorSelect) {
       if (this.oratorSelect.hasOwnProperty(key)) {
         this.af.database.object('/sessions/'+newID+'/speakers/'+key).update(this.oratorSelect[key]);
@@ -132,10 +117,6 @@ export class SessionAddComponent implements OnInit {
     this.session.subscribe(data => {
       this.addObj = data;
     });
-  }
-
-  updateEvent(day: any, sessId: any){
-    this.af.database.object('/events/'+this.eventItems[day]+'/sessionsId/'+sessId).update({ show: true});
   }
 
   addSpeaker(value:any):void {
