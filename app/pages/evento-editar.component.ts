@@ -107,7 +107,7 @@ export class EventsEditComponent implements OnInit{
       let count: any = 0;
       data.forEach(( sessId: any) => {
         this.af.database.object('/sessions/'+sessId.$key).subscribe(sess => {
-          sessId.title = sess.title;
+          sessId.title = sess.title.spanish;
           count++;
           if(count == data.length){
             this.sessionSelect = this.getItemsToSelect(data);

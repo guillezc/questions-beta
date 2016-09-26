@@ -112,7 +112,7 @@ export class EventsAddComponent implements OnInit{
       sessions.forEach((sesss: Session) => {
         items.push( {
           id  : sesss.$key,
-          text: sesss.title
+          text: sesss.title.spanish
         });
       });
     }

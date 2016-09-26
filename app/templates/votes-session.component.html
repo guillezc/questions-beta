@@ -35,7 +35,7 @@
                         </thead>
                         <tbody *ngIf="votes | async">
                             <tr *ngFor="let survey of surveyList">
-                                <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.title }}</div></td>
+                                <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.title.spanish }}</div></td>
                                 <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.startTime | date:"dd MMM y - H:mm" }} hrs</div></td>
                                 <td>
                                     {{ survey.question }}
