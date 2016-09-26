@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, Renderer } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
 
 import { Session }  from '../classes/session';
 import { Speaker }  from '../classes/speaker';
@@ -22,11 +23,17 @@ export class ChatComponent implements OnInit{
 	chatList: any[] = [];
 	people: FirebaseListObservable<any[]>;
 	peopleList: Message[] = [];
+	messages: FirebaseListObservable<any[]>;
+	messagesList: any[] = [];
 	peopleItems: Array<any> = [];
   peopleSelect: Array<any> = [];
 	userID = '-KPCMKA-InT8eGDHER2P';
+	newMessage: any = "";
+	newChatID: any;
+	chatID: any;
 	existChat: boolean = false;
 	isNewChat: boolean = false;
+	isLoaded: boolean = false;
 
 	constructor(
 		private router       : Router,
@@ -48,9 +55,25 @@ export class ChatComponent implements OnInit{
 	}
 
 	getChats(){
-		this.chats = this.af.database.list('chats');
+		this.chats = this.af.database.list('people/'+this.userID+'/chats');
 		this.chats.subscribe(data => {
-      this.chatList = data;
+      if(data.length > 0){
+      	this.chatList = [];
+      	let count: any = 0;
+      	data.forEach((q: any) => {
+	        this.af.database.object('/chats/'+q.$key).subscribe(chData => {
+	          this.chatList.push({
+	          	key: chData.$key,
+	          	title: chData.title,
+	          	lastMessage: chData.lastMessage
+	          });
+	          count++;
+	          if(count==data.length)
+	          	this.isLoaded = true;
+	        });
+	      });
+	      
+      }
     });
 
 	    /*this.messages.subscribe(data => {
@@ -81,7 +104,67 @@ export class ChatComponent implements OnInit{
   }
 
   newChat(){
+  	this.messagesList = [];
   	this.isNewChat = true;
+  	this.existChat = false;
+  }
+
+  addChat(tChat:any){
+
+		let tstamp: Date = new Date();
+		let creator: any = this.userID;
+  	this.peopleSelect[creator] = this.userID;
+
+		this.newChatID = this.af.database.list('chats').push({
+			title: tChat.value,
+			timestamp: tstamp.getTime()
+		}).key;
+
+  	for (var key in this.peopleSelect) {
+  		this.af.database.object('people/'+key+'/chats/'+this.newChatID).update({active: true});
+    }
+
+    this.isNewChat = false;
+		this.existChat = true;
+
+  }
+
+  onSubmit(chat:any){
+  	console.log(chat);
+  	this.newMessage = "";
+  	let tstamp: Date = new Date();
+  	this.af.database.list('messages/'+this.chatID).push({
+  		name: this.userID,
+      message: chat.newMessage,
+      timestamp: tstamp.getTime()
+  	});
+  }
+
+  loadMessages(value:any){
+  	this.newMessage = "";
+  	this.existChat = true;
+  	this.chatID = value;
+  	this.messages = this.af.database.list('messages/'+value);
+  	this.messages.subscribe(msjs => {
+  		if(msjs.length > 0){
+  			this.messagesList = [];
+      	msjs.forEach((q: any) => {
+    			this.af.database.object('people/'+q.name).subscribe(people => {
+			      this.messagesList.push({
+	          	key: q.$key,
+	          	message: q.message,
+	          	pic: 'url('+ people.pic +')',
+	          	name: people.name
+	          });
+			    });
+	      });
+
+      	ChatJS.init();
+      }else{
+      	this.messagesList = [];
+      	ChatJS.init();
+      }
+    });
   }
 
   addMember(value:any):void {

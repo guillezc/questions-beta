@@ -24,12 +24,17 @@
 						</div>
 						<!-- Chats container -->
 						<div id="members-card" class="col-md-6 col-sm-6">
+							<div [hidden]="isLoaded" class="sessions-loading" id="q-loading">
+                  <img src="app/assets/global/img/loading.gif" alt="loading" />
+              </div>
 							<div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-shadow--2dp">
-								<div id="members">
+								<div id="members" *ngIf="chats | async">
 									<div class="message-container member-item" *ngFor="let chat of chatList">
-							      <div class="spacing"><div class="pic"></div></div>
-							      <div class="message">{{ chat.title }}</div>
-							      <button class="btn btn-circle btn-icon-only btn-default commenting"><i class="fa fa-commenting"></i></button>
+							      <div>
+							      	<div class="spacing"><div class="pic"></div></div>
+								      <div class="message">{{ chat.title }}</div>
+								      <button class="btn btn-circle btn-icon-only btn-default commenting" (click)="loadMessages(chat.key)"><i class="fa fa-commenting"></i></button>
+							      </div>
 							    </div>
 								</div>
 							</div>
@@ -39,6 +44,11 @@
 							<div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-shadow--2dp">
 								<div id="new-chat">
 									<h5>Seleccione participantes</h5>
+									<label>Titulo:</label>
+									<br/>
+									<input type="text" id="new-chat-title" name="new-chat-title" #newChatTitle>
+									<br/>
+									<br/>
 									<ng-select 	[allowClear]="true" [items]="peopleItems"
 										   				[initData]="peopleSelect"
 							               	[multiple]="true"
@@ -48,7 +58,7 @@
 							    </ng-select>
 							    <br/>
 							    <div class="text-right">
-										<button class="btn btn-default" (click)="addChat()"><i class="fa fa-save"></i> Crear chat</button>
+										<button class="btn btn-default" (click)="addChat(newChatTitle)"><i class="fa fa-save"></i> Crear chat</button>
 									</div>
 								</div>
 							</div>
@@ -59,16 +69,16 @@
 			          <div id="messages">
 			            <span id="message-filler"></span>
 
-			            <div class="message-container" *ngFor="let message of messageList">
-							      <div class="spacing"><div class="pic" [ngStyle]="{'background': message.picUrl}"></div></div>
-							      <div class="message">{{ message.text }}</div>
+			            <div class="message-container" *ngFor="let message of messagesList">
+							      <div class="spacing"><div class="pic" [ngStyle]="{'background': message.pic}"></div></div>
+							      <div class="message">{{ message.message }}</div>
 							      <div class="name">{{ message.name }}</div>
 							    </div>
 
 			          </div>
-			          <form id="message-form" action="#">
+			          <form id="message-form" method="post" (ngSubmit)="onSubmit(chatData.value)" #chatData="ngForm">
 			            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-			              <input class="mdl-textfield__input" type="text" id="message">
+			              <input class="mdl-textfield__input" name="newMessage" [(ngModel)]="newMessage" type="text" id="message">
 			              <label class="mdl-textfield__label" for="message">Message...</label>
 			            </div>
 			            <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">

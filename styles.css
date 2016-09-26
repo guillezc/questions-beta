@@ -281,6 +281,10 @@ table.dataTable{
 .chat-container .mdl-layout__content{
     width: 100%;
 }
+input#new-chat-title{
+    border: none;
+    border-bottom: 1px solid #ccc;
+}
 
 @media(min-width: 769px){
     .chart-container .chart canvas{
