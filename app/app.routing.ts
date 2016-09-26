@@ -26,6 +26,8 @@ import { EventsComponent } from './pages/eventos.component';
 import { EventsAddComponent } from './pages/evento-nuevo.component';
 import { EventsEditComponent } from './pages/evento-editar.component';
 
+import { ChatComponent } from './pages/chat.component';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -103,6 +105,10 @@ const appRoutes: Routes = [
   {
     path: 'resultadosSesionProyectados/:id',
     component: ResultSesionProyectedComponent
+  },
+  {
+    path: 'chat',
+    component: ChatComponent
   }
 ];
 

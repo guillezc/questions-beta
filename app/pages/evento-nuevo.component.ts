@@ -88,8 +88,6 @@ export class EventsAddComponent implements OnInit{
     this.addObj.name['english'] = "";
 		this.addObj.startTime = new Date();
     this.addObj.endTime = new Date();
-
-    console.log(this.addObj);
 	}
 
 	getSessions(){

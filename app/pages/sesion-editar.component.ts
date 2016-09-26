@@ -81,7 +81,20 @@ export class SessionEditComponent implements OnInit{
     this.submitted = false;
     sess.startTime = sess.startTime.getTime();
     sess.endTime = sess.endTime.getTime();
+
+    sess.title = {spanish: sess.title_spanish, english: sess.title_english};
+    sess.description = {spanish: sess.description_spanish, english: sess.description_english};
+    sess.location = {spanish: sess.location_spanish, english: sess.location_english};
+
+    delete sess['title_spanish'];
+    delete sess['title_english'];
+    delete sess['description_spanish'];
+    delete sess['description_english'];
+    delete sess['location_spanish'];
+    delete sess['location_english'];
+
     this.session.update(sess);
+
     let link = ['/sesiones'];
     this.router.navigate(link);
   }
@@ -91,10 +104,20 @@ export class SessionEditComponent implements OnInit{
     this.session.subscribe(data => {
       this.getSessionManagers();
       this.getSessionOrators();
-      data.tags = data.tags ? data.tags : [];
-      data.startTime = new Date(data.startTime);
-      data.endTime = new Date(data.endTime);
-      this.sessionObj = data;
+
+      this.sessionObj.tags = data.tags ? data.tags : [];
+      this.sessionObj.startTime = new Date(data.startTime);
+      this.sessionObj.endTime = new Date(data.endTime);
+      this.sessionObj.allDay = data.allDay;
+      this.sessionObj.title = [];
+      this.sessionObj.title['spanish'] = data.title.spanish;
+      this.sessionObj.title['english'] = data.title.english;
+      this.sessionObj.description = [];
+      this.sessionObj.description['spanish'] = data.description.spanish;
+      this.sessionObj.description['english'] = data.description.english;
+      this.sessionObj.location = [];
+      this.sessionObj.location['spanish'] = data.location.spanish;
+      this.sessionObj.location['english'] = data.location.english;
     });
   }
 
@@ -107,7 +130,6 @@ export class SessionEditComponent implements OnInit{
   getSessionOrators(){
     this.af.database.list('/sessions/'+this.sessionID+'/speakers').subscribe(data => {
       this.oratorSelect = this.setSpeakersItems(data);
-      console.log(this.oratorSelect);
     });
   }
 
@@ -134,6 +156,7 @@ export class SessionEditComponent implements OnInit{
     this.af.database.object('/people/'+value.id).subscribe(data => {
       var okey = data['$key'];
       delete data['$key'];
+      delete data['$exists'];
       this.af.database.object('sessions/'+this.sessionID+'/speakers/'+okey).update(data);
     });
     
@@ -147,6 +170,7 @@ export class SessionEditComponent implements OnInit{
     this.af.database.object('/people/'+value.id).subscribe(data => {
       var mkey = data['$key'];
       delete data['$key'];
+      delete data['$exists'];
       this.af.database.object('sessions/'+this.sessionID+'/managers/'+mkey).update(data);
     });
     

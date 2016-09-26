@@ -79,9 +79,16 @@ export class SessionAddComponent implements OnInit {
     this.addObj.allDay = false;
     this.addObj.hasDetails = false;
     this.addObj.onMySchedule = false;
-    this.addObj.description = "";
-    this.addObj.location = "";
     this.addObj.tags = [];
+    this.addObj.title = [];
+    this.addObj.title['spanish'] = "";
+    this.addObj.title['english'] = "";
+    this.addObj.description = [];
+    this.addObj.description['spanish'] = "";
+    this.addObj.description['english'] = "";
+    this.addObj.location = [];
+    this.addObj.location['spanish'] = "";
+    this.addObj.location['english'] = "";
   }
 
   onSubmit(sess: any) { 
@@ -91,6 +98,17 @@ export class SessionAddComponent implements OnInit {
 
     if(sess.allDay)
       sess.endTime = sess.startTime
+
+    sess.title = {spanish: sess.title_spanish, english: sess.title_english};
+    sess.description = {spanish: sess.description_spanish, english: sess.description_english};
+    sess.location = {spanish: sess.location_spanish, english: sess.location_english};
+
+    delete sess['title_spanish'];
+    delete sess['title_english'];
+    delete sess['description_spanish'];
+    delete sess['description_english'];
+    delete sess['location_spanish'];
+    delete sess['location_english'];
 
     this.session = this.af.database.list('/sessions');
     const newID = this.session.push(sess).key;
@@ -123,6 +141,7 @@ export class SessionAddComponent implements OnInit {
     this.af.database.object('/people/'+value.id).subscribe(data => {
       var spkID = data['$key'];
       delete data['$key'];
+      delete data['$exists'];
       this.oratorSelect[spkID] = data;
     });
   }
@@ -135,6 +154,7 @@ export class SessionAddComponent implements OnInit {
     this.af.database.object('/people/'+value.id).subscribe(data => {
       var spkID = data['$key'];
       delete data['$key'];
+      delete data['$exists'];
       this.managerSelect[spkID] = data;
     });
   }

@@ -18,7 +18,7 @@
 						<label for="sessionId">Sesión <span class="required" aria-required="true">*</span></label>
 						<select name="sessionId" class="form-control" [ngModel]="addObj.sessionId">
 							<option value="..." selected="selected">- Seleccione una sesión -</option>
-							<option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title}}</option>
+							<option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title.spanish }}</option>
 						</select>
 					</div>
 					<div class="form-group form-md-line-input">

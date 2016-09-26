@@ -1,0 +1,91 @@
+<div class="page-bar">
+  <ul class="page-breadcrumb">
+    <li>
+      <a [routerLink]="['/eventos']">Inicio</a>
+      <i class="fa fa-circle"></i>
+      <span>Chat</span>
+    </li>
+  </ul>
+</div>
+<h3 class="page-title">  </h3>
+<div class="row">
+  <div class="col-md-12">
+    <!-- Begin: life time stats -->
+    <div class="portlet light portlet-fit portlet-datatable bordered">
+      <div class="portlet-body chat-container">
+    	  <main class="mdl-layout__content mdl-color--grey-100">
+
+    	  	
+
+			    <div id="messages-card-container" class="col-md-12">
+
+						<div class="col-md-12 col-sm-12 text-left">
+							<button class="btn btn-circle btn-default mrgTop10" (click)="newChat()"><i class="fa fa-plus"></i> Nuevo chat</button>
+						</div>
+						<!-- Chats container -->
+						<div id="members-card" class="col-md-6 col-sm-6">
+							<div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-shadow--2dp">
+								<div id="members">
+									<div class="message-container member-item" *ngFor="let chat of chatList">
+							      <div class="spacing"><div class="pic"></div></div>
+							      <div class="message">{{ chat.title }}</div>
+							      <button class="btn btn-circle btn-icon-only btn-default commenting"><i class="fa fa-commenting"></i></button>
+							    </div>
+								</div>
+							</div>
+						</div>
+						<!-- New Chat -->
+						<div id="new-chat-card" class="col-md-6 col-sm-6" *ngIf="isNewChat">
+							<div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-shadow--2dp">
+								<div id="new-chat">
+									<h5>Seleccione participantes</h5>
+									<ng-select 	[allowClear]="true" [items]="peopleItems"
+										   				[initData]="peopleSelect"
+							               	[multiple]="true"
+										   				(selected)="addMember($event)"
+              						   	(removed)="removeMember($event)"
+							               	placeholder="Seleccione uno o varios">
+							    </ng-select>
+							    <br/>
+							    <div class="text-right">
+										<button class="btn btn-default" (click)="addChat()"><i class="fa fa-save"></i> Crear chat</button>
+									</div>
+								</div>
+							</div>
+						</div>
+			      <!-- Messages container -->
+			      <div id="messages-card" class="col-md-6 col-sm-6" *ngIf="existChat">
+			        <div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-shadow--2dp">
+			          <div id="messages">
+			            <span id="message-filler"></span>
+
+			            <div class="message-container" *ngFor="let message of messageList">
+							      <div class="spacing"><div class="pic" [ngStyle]="{'background': message.picUrl}"></div></div>
+							      <div class="message">{{ message.text }}</div>
+							      <div class="name">{{ message.name }}</div>
+							    </div>
+
+			          </div>
+			          <form id="message-form" action="#">
+			            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			              <input class="mdl-textfield__input" type="text" id="message">
+			              <label class="mdl-textfield__label" for="message">Message...</label>
+			            </div>
+			            <button id="submit" disabled type="submit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+			              Send
+			            </button>
+			          </form>
+			        </div>
+			      </div>
+
+			      <div id="must-signin-snackbar" class="mdl-js-snackbar mdl-snackbar">
+			        <div class="mdl-snackbar__text"></div>
+			        <button class="mdl-snackbar__action" type="button"></button>
+			      </div>
+
+			    </div>
+			  </main>
+      </div>
+    </div>
+  </div>
+</div>

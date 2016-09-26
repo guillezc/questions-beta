@@ -39,7 +39,7 @@ export class EventsComponent implements OnInit{
 				evt.sessions = [];
 				for (var key in evt.sessionsId) {
 			        this.af.database.object('/sessions/'+key).subscribe(sess => {
-						evt.sessions.push(sess.title);
+						evt.sessions.push(sess.title.spanish);
 					});
 			    }
 			});

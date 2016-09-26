@@ -46,7 +46,7 @@ export class QuestionsComponent implements OnInit {
           q.userName = speakerData.name;
         });
         this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {
-          q.sessionName = sessionData.title;
+          q.sessionName = sessionData.title.spanish;
         });
       });
       this.questionsList = data;
@@ -71,7 +71,7 @@ export class QuestionsComponent implements OnInit {
           q.userName = speakerData.name;
         });
         this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {
-          q.sessionName = sessionData.title;
+          q.sessionName = sessionData.title.spanish;
         });
       });
       this.questionsListSelected = data;
@@ -86,21 +86,23 @@ export class QuestionsComponent implements OnInit {
     this.getSessions();
   }
 
-  addToSelecteds(q: Question){
+  addToSelecteds(q: any){
     var id = q.$key;
     q.selected = true;
     delete q['$key'];
     delete q['userName'];
     delete q['sessionName'];
+    delete q['$exists'];
     this.af.database.object('/questions/'+id).update(q);
   }
 
-  removeToSelecteds(q: Question){
+  removeToSelecteds(q: any){
     var id = q.$key;
     q.selected = false;
     delete q['$key'];
     delete q['userName'];
     delete q['sessionName'];
+    delete q['$exists'];
     this.af.database.object('/questions/'+id).update(q);
   }
 

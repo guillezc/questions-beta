@@ -20,7 +20,7 @@
                                 Sesión
                                 <select class="form-control input-md input-medium input-inline" #questionSession>
                                     <option value="all">Todas</option>
-                                    <option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title }}</option>
+                                    <option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title.spanish }}</option>
                                 </select>
                             </label>
                             <button id="filter-questions" (click)="filterQuestions(questionSession)" class="btn sbold green"> Filtrar

@@ -91,8 +91,6 @@ export class EventsEditComponent implements OnInit{
       this.eventObj.name = [];
       this.eventObj.name['spanish'] = data.name.spanish;
       this.eventObj.name['english'] = data.name.english;
-
-      console.log(this.eventObj);
     });
 	}
 

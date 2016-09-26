@@ -15,27 +15,40 @@
             <div class="portlet-body">
 				<form method="post" (ngSubmit)="onSubmit(sessionData.value)" #sessionData="ngForm" class="form-sessions">
 					<div class="form-body">
-						<!--<div class="form-group form-md-line-input">
-							<label for="day">Día <span class="required" aria-required="true">*</span></label>
-							<select name="day" class="form-control" [ngModel]="addObj.day">
-								<option *ngFor="let evt of events" value="{{ evt.day }}">{{ evt.day }}</option>
-							</select>
-						</div> -->
+
 						<div class="form-group form-md-line-input">
-							<label for="title">Título <span class="required" aria-required="true">*</span></label>
-							<input type="text" name="title" class="form-control" [ngModel]="addObj.title">
+							<label for="title_spanish">Título <span class="required" aria-required="true">*</span></label>
+							<input type="text" name="title_spanish" class="form-control" [ngModel]="addObj.title.spanish">
 							<span class="help-block">Ingrese el título para la sesión</span>
 						</div>
 						<div class="form-group form-md-line-input">
-							<label for="description">Descripción <span class="required" aria-required="true">*</span></label>
-							<textarea name="description" class="form-control" [ngModel]="addObj.description"></textarea>
+							<label for="title_english"></label>
+							<input type="text" name="title_english" class="form-control" [ngModel]="addObj.title.english">
+							<span class="help-block">Enter the session name</span>
+						</div>
+
+						<div class="form-group form-md-line-input">
+							<label for="description_spanish">Descripción <span class="required" aria-required="true">*</span></label>
+							<textarea name="description_spanish" class="form-control" [ngModel]="addObj.description.spanish"></textarea>
 							<span class="help-block">Ingrese la descripción para la sesión</span>
 						</div>
 						<div class="form-group form-md-line-input">
-							<label for="location">Locación <span class="required" aria-required="true">*</span></label>
-							<input type="text" name="location" class="form-control" [ngModel]="addObj.location">
+							<label for="description_english"></label>
+							<textarea name="description_english" class="form-control" [ngModel]="addObj.description.english"></textarea>
+							<span class="help-block">Enter the session description</span>
+						</div>
+
+						<div class="form-group form-md-line-input">
+							<label for="location_spanish">Locación <span class="required" aria-required="true">*</span></label>
+							<input type="text" name="location_spanish" class="form-control" [ngModel]="addObj.location.spanish">
 							<span class="help-block">Ingrese la locación para la sesión</span>
 						</div>
+						<div class="form-group form-md-line-input">
+							<label for="location_english"></label>
+							<input type="text" name="location_english" class="form-control" [ngModel]="addObj.location.english">
+							<span class="help-block">Ingrese la locación para la sesión</span>
+						</div>
+
 						<div class="form-group form-md-line-input form-md-checkboxes">
 							<div class="md-checkbox-inline">
                                 <div class="md-checkbox">
@@ -47,6 +60,7 @@
                                 </div>
 							</div>
 						</div>
+						
 						<div class="form-group form-md-line-input">
 							<div class="row">
 								<div class="col-md-6">
@@ -75,7 +89,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="form-group form-md-line-input" *ngIf="session | async">
+						<div class="form-group form-md-line-input" *ngIf="people | async">
 							<div class="row">
 								<div class="col-md-12">
 									<label for="speakers">Moderadores</label>

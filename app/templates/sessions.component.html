@@ -47,8 +47,8 @@
                                 <td>{{ session.startTime | date:"dd-MMM-yy H:mm" }} <br/>
                                     <span [hidden]="session.allDay">{{ session.endTime | date:"dd-MMM-yy H:mm" }}</span>
                                 </td>
-                                <td>{{ session.location }} </td>
-                                <td>{{ session.title | slice:0:60 }} <span *ngIf="session.title.length > 60">...</span></td>
+                                <td>{{ session.location.spanish }} </td>
+                                <td>{{ session.title.spanish | slice:0:60 }} <span *ngIf="session.title.spanish.length > 60">...</span></td>
                                 <!--<td>{{ session.description | slice:0:60 }} <span *ngIf="session.description.length > 60">...</span></td> -->
                                 <td>
                                 	<div *ngFor="let speaker of session.speakers | objToArr">- {{ speaker.name }} <br/></div>

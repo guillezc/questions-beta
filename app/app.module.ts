@@ -50,6 +50,7 @@ import { ResultSesionProyectedComponent } from './pages/resultados-sesion-proyec
 import { EventsComponent } 								from './pages/eventos.component';
 import { EventsAddComponent } 						from './pages/evento-nuevo.component';
 import { EventsEditComponent } 						from './pages/evento-editar.component';
+import { ChatComponent }                  from './pages/chat.component';
 
 enableProdMode();
 
@@ -89,20 +90,21 @@ enableProdMode();
   	ResultSesionProyectedComponent,
   	EventsComponent,
   	EventsAddComponent,
-  	EventsEditComponent
+  	EventsEditComponent,
+    ChatComponent
 	],
 	providers: [
     appRoutingProviders,
     FIREBASE_PROVIDERS,
     defaultFirebase({
-	    /**apiKey: "AIzaSyCTfrqErjXXuOPAPWK4AOJBLu3tg2-dJx8",
+	    apiKey: "AIzaSyCTfrqErjXXuOPAPWK4AOJBLu3tg2-dJx8",
 	    authDomain: "events-7d50b.firebaseapp.com",
 	    databaseURL: "https://events-7d50b.firebaseio.com",
-	    storageBucket: "events-7d50b.appspot.com"*/
-	    apiKey: "AIzaSyB5ZUgBJabSy-F18lNUiyqmb0xy72oFCx4",
+	    storageBucket: "events-7d50b.appspot.com"
+	    /*apiKey: "AIzaSyB5ZUgBJabSy-F18lNUiyqmb0xy72oFCx4",
 	    authDomain: "questions-16537.firebaseapp.com",
 	    databaseURL: "https://questions-16537.firebaseio.com",
-	    storageBucket: "questions-16537.appspot.com",
+	    storageBucket: "questions-16537.appspot.com",*/
 	  }),
 	  firebaseAuthConfig({
 	    provider: AuthProviders.Anonymous,

@@ -67,6 +67,9 @@
 .posRel{
     position: relative;
 }
+.mrgTop10{
+    margin-top: 10px;
+}
 #q-loading{
     position: absolute;
     text-align: center;
@@ -179,7 +182,7 @@
     height: 14px;
     color: #fff;
 }
-.form-sessions .form-group > label,
+.form-sessions .form-group label,
 .form-sessions .md-checkbox > label{
     font-weight: 600;
     width: 100%;
@@ -274,6 +277,9 @@ table.dataTable{
 }
 .fec-fin{
     color: rgb(227,6,19) !important;
+}
+.chat-container .mdl-layout__content{
+    width: 100%;
 }
 
 @media(min-width: 769px){
