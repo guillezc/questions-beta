@@ -29,6 +29,7 @@ var ChatJS = function(){
           }
         }).on("focus", function(){
           $(".mdl-textfield__label").addClass("is-focused");
+          if($("#message").val()=='') $("#submit").prop('disabled', true);
         }).on("blur", function(){
           if($("#message").val()!=''){
             $(".mdl-textfield__label").removeClass("is-focused");

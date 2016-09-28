@@ -124,13 +124,15 @@ export class ChatComponent implements OnInit{
   		this.af.database.object('people/'+key+'/chats/'+this.newChatID).update({active: true});
     }
 
+    //this.chatID = this.newChatID;
+    this.messagesList = [];
     this.isNewChat = false;
 		this.existChat = true;
+		this.loadMessages(this.newChatID);
 
   }
 
   onSubmit(chat:any){
-  	console.log(chat);
   	this.newMessage = "";
   	let tstamp: Date = new Date();
   	this.af.database.list('messages/'+this.chatID).push({
@@ -141,7 +143,6 @@ export class ChatComponent implements OnInit{
   }
 
   loadMessages(value:any){
-  	this.newMessage = "";
   	this.existChat = true;
   	this.chatID = value;
   	this.messages = this.af.database.list('messages/'+value);

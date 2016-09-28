@@ -30,7 +30,7 @@
 							<div class="mdl-card__supporting-text mdl-color-text--grey-600 mdl-shadow--2dp">
 								<div id="members" *ngIf="chats | async">
 									<div class="message-container member-item" *ngFor="let chat of chatList">
-							      <div>
+							      <div [ngClass]="chatID == chat.key ? 'is-selected' : 'no-selected'">
 							      	<div class="spacing"><div class="pic"></div></div>
 								      <div class="message">{{ chat.title }}</div>
 								      <button class="btn btn-circle btn-icon-only btn-default commenting" (click)="loadMessages(chat.key)"><i class="fa fa-commenting"></i></button>

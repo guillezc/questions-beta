@@ -47,10 +47,13 @@ main, #messages-card {
   padding: 0;
   margin: 0 auto;
 }
+#members-card .mdl-card__supporting-text{
+  padding: 0;
+}
 .mdl-card__supporting-text {
   width: auto;
   height: calc(100% - 90px);
-  padding-top: 0;
+  padding: 10px;
   background: #fff;
 }
 #messages {
@@ -66,6 +69,19 @@ main, #messages-card {
 }
 .message-container.member-item{
   opacity: 1 !important;
+  margin: 0;
+  padding: 0;
+}
+.message-container.member-item > div{
+  padding: 15px;
+}
+.message-container.member-item > div.is-selected{
+  background: #f2f2f2;
+  box-shadow: 0 0 5px #c2c2c2;
+}
+.message-container.member-item > div.is-selected .commenting{
+  background: #d2d2d2;
+  color: #fff;
 }
 .message-container:first-of-type {
   border-top-width: 0;
