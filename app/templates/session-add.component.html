@@ -105,11 +105,13 @@
 						</div>
 						<div class="form-group form-md-line-input">
 							<label for="tags">Temas <span class="required" aria-required="true">*</span></label>
-							<tag-input [ngModel]="addObj.tags"
-										separatorKeys="[32]"
-										name="tags"
-										placeholder="Agregar tema"
-										secondaryPlaceholder="Agregar tema"></tag-input>
+							<ng-select [allowClear]="true" [items]="tagsItems"
+									   [initData]="[]"
+						               [multiple]="true"
+									   (selected)="addTag($event)"
+              						   (removed)="removeTag($event)"
+						               placeholder="Seleccione uno o varios">
+						    </ng-select>
 						</div>
 						
 					</div>

@@ -27,6 +27,7 @@ import { EventsAddComponent } from './pages/evento-nuevo.component';
 import { EventsEditComponent } from './pages/evento-editar.component';
 
 import { ChatComponent } from './pages/chat.component';
+import { TagsComponent } from './pages/temas.component';
 
 const appRoutes: Routes = [
   {
@@ -109,6 +110,10 @@ const appRoutes: Routes = [
   {
     path: 'chat',
     component: ChatComponent
+  },
+  {
+    path: 'temas',
+    component: TagsComponent
   }
 ];
 

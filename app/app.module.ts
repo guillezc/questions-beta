@@ -51,6 +51,7 @@ import { EventsComponent } 								from './pages/eventos.component';
 import { EventsAddComponent } 						from './pages/evento-nuevo.component';
 import { EventsEditComponent } 						from './pages/evento-editar.component';
 import { ChatComponent }                  from './pages/chat.component';
+import { TagsComponent }                  from './pages/temas.component';
 
 enableProdMode();
 
@@ -91,7 +92,8 @@ enableProdMode();
   	EventsComponent,
   	EventsAddComponent,
   	EventsEditComponent,
-    ChatComponent
+    ChatComponent,
+    TagsComponent
 	],
 	providers: [
     appRoutingProviders,

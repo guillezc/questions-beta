@@ -285,6 +285,35 @@ input#new-chat-title{
     border: none;
     border-bottom: 1px solid #ccc;
 }
+.tag-list{
+    padding: 0;
+    list-style: none;
+}
+.tag-list > li{
+    width: 50%;
+    float: left;
+}
+.tag-list > li label{
+    margin: 0;
+    line-height: 28px;
+}
+.tag-list > li > div{
+    margin-right: 45px;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+.tag-list > li .btn{
+    height: 28px;
+    width: 28px;
+    padding: 5px;
+}
+.form-tags{
+    margin-bottom: 50px;
+}
+.form-tags .form-group.form-md-line-input {
+    margin: 0 0 5px;
+    padding-top: 5px;
+}
 
 @media(min-width: 769px){
     .chart-container .chart canvas{

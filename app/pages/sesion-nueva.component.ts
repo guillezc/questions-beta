@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 
 import { Session }  from '../classes/session';
 import { Speaker }  from '../classes/speaker';
+import { Tag }      from '../classes/tag';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
@@ -24,6 +25,9 @@ export class SessionAddComponent implements OnInit {
   oratorSelect: Array<any> = [];
   eventItems: Array<any> = [];
   events: any[];
+  tags: FirebaseListObservable<any>;
+  tagsItems: Array<any> = [];
+  tagsSelect: Array<any> = [];
 
   firebase: AngularFire; 
   isAllDays: Boolean = false;
@@ -64,6 +68,7 @@ export class SessionAddComponent implements OnInit {
      this.setTitle("Agregar sesión - México Cumbre de Negocios");
      this.initSession();
      this.getPeople();
+     this.getTags();
   }
 
   getPeople(){
@@ -73,13 +78,19 @@ export class SessionAddComponent implements OnInit {
     });
   }
 
+  getTags(){
+    this.tags = this.af.database.list('tags');
+    this.tags.subscribe(data => {
+      this.tagsItems = this.setTagsItems(data);
+    });
+  }
+
   initSession(){
     this.addObj.startTime = new Date();
     this.addObj.endTime = new Date();
     this.addObj.allDay = false;
     this.addObj.hasDetails = false;
     this.addObj.onMySchedule = false;
-    this.addObj.tags = [];
     this.addObj.title = [];
     this.addObj.title['spanish'] = "";
     this.addObj.title['english'] = "";
@@ -120,6 +131,16 @@ export class SessionAddComponent implements OnInit {
     for (var mkey in this.managerSelect) {
       if (this.managerSelect.hasOwnProperty(mkey)) {
         this.af.database.object('/sessions/'+newID+'/managers/'+mkey).update(this.managerSelect[mkey]);
+      }
+    }
+    for (var tkey in this.tagsSelect) {
+      if (this.tagsSelect.hasOwnProperty(tkey)) {
+        this.af.database.object('/sessions/'+newID+'/tags/'+tkey).update({ 
+          name: {
+            spanish: this.tagsSelect[tkey].name.spanish,
+            english: this.tagsSelect[tkey].name.english
+          } 
+        });
       }
     }
     
@@ -163,6 +184,19 @@ export class SessionAddComponent implements OnInit {
     delete this.managerSelect[value.id];
   }
 
+  addTag(value:any){
+    this.af.database.object('/tags/'+value.id).subscribe(data => {
+      var tgID = data['$key'];
+      delete data['$key'];
+      delete data['$exists'];
+      this.tagsSelect[tgID] = data;
+    });
+  }
+
+  removeTag(value:any):void {
+    delete this.tagsSelect[value.id];
+  }
+
   setSpeakersItems(speakers: Speaker[]){
 
     let items: Array<any> = [];
@@ -171,6 +205,21 @@ export class SessionAddComponent implements OnInit {
         items.push( {
           id  : spk.$key,
           text: spk.name
+        });
+      });
+    }
+
+    return items;
+  }
+
+  setTagsItems(tags: Tag[]){
+
+    let items: Array<any> = [];
+    if(tags.length>0){
+      tags.forEach((tg: Tag) => {
+        items.push( {
+          id  : tg.$key,
+          text: tg.name.spanish
         });
       });
     }

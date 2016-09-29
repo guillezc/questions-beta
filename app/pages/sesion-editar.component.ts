@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 
 import { Session }  from '../classes/session';
 import { Speaker }  from '../classes/speaker';
+import { Tag }      from '../classes/tag';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
@@ -24,6 +25,9 @@ export class SessionEditComponent implements OnInit{
   managerSelect: Array<any> = [];
   oratorSelect: Array<any> = [];
   eventItems: Array<any> = [];
+  tags: FirebaseListObservable<any>;
+  tagsItems: Array<any> = [];
+  tagsSelect: Array<any> = [];
   firebase: AngularFire;
   submitted = false;
   sub: any;
@@ -65,15 +69,23 @@ export class SessionEditComponent implements OnInit{
     this.setTitle("Editar sesión - México Cumbre de Negocios");
     this.sub = this.route.params.subscribe(params => {
       this.sessionID = params['id'];
+      this.getPeople();
+      this.getTags();
       this.getSession();
     });
-    this.getPeople();
   }
 
   getPeople(){
     this.people = this.af.database.list('people');
     this.people.subscribe(data => {
       this.peopleItems = this.setSpeakersItems(data);
+    });
+  }
+
+  getTags(){
+    this.tags = this.af.database.list('tags');
+    this.tags.subscribe(data => {
+      this.tagsItems = this.setTagsItems(data);
     });
   }
 
@@ -104,6 +116,7 @@ export class SessionEditComponent implements OnInit{
     this.session.subscribe(data => {
       this.getSessionManagers();
       this.getSessionOrators();
+      this.getSessionTags();
 
       this.sessionObj.tags = data.tags ? data.tags : [];
       this.sessionObj.startTime = new Date(data.startTime);
@@ -133,6 +146,12 @@ export class SessionEditComponent implements OnInit{
     });
   }
 
+  getSessionTags(){
+    this.af.database.list('/sessions/'+this.sessionID+'/tags').subscribe(data => {
+      this.tagsSelect = this.setTagsItems(data);
+    });
+  }
+
   setSpeakersItems(speakers: Speaker[]){
 
     let items: Array<any> = [];
@@ -141,6 +160,21 @@ export class SessionEditComponent implements OnInit{
         items.push( {
           id  : spk.$key,
           text: spk.name
+        });
+      });
+    }
+
+    return items;
+  }
+
+  setTagsItems(tags: Tag[]){
+
+    let items: Array<any> = [];
+    if(tags.length>0){
+      tags.forEach((tg: Tag) => {
+        items.push( {
+          id  : tg.$key,
+          text: tg.name.spanish
         });
       });
     }
@@ -178,6 +212,20 @@ export class SessionEditComponent implements OnInit{
 
   removeManager(value:any):void {
     this.af.database.list('sessions/'+this.sessionID+'/managers').remove(value.id);
+  }
+
+  addTag(value:any):void {
+    this.af.database.object('/tags/'+value.id).subscribe(data => {
+      var tkey = data['$key'];
+      delete data['$key'];
+      delete data['$exists'];
+      this.af.database.object('sessions/'+this.sessionID+'/tags/'+tkey).update(data);
+    });
+    
+  }
+
+  removeTag(value:any):void {
+    this.af.database.list('sessions/'+this.sessionID+'/tags').remove(value.id);
   }
 
 }

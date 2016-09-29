@@ -104,11 +104,13 @@
 						</div>
 						<div class="form-group form-md-line-input" *ngIf="session | async">
 							<label for="tags">Temas <span class="required" aria-required="true">*</span></label>
-							<tag-input [ngModel]="sessionObj.tags"
-										separatorKeys="[32]"
-										name="tags"
-										placeholder="Agregar tema"
-										secondaryPlaceholder="Agregar tema"></tag-input>
+							<ng-select [allowClear]="true" [items]="tagsItems"
+									   [initData]="tagsSelect"
+						               [multiple]="true"
+									   (selected)="addTag($event)"
+              						   (removed)="removeTag($event)"
+						               placeholder="Seleccione uno o varios">
+						    </ng-select>
 						</div>
 					</div>
 					<div class="form-actions">
