@@ -27,7 +27,7 @@ export class ChatComponent implements OnInit{
 	messagesList: any[] = [];
 	peopleItems: Array<any> = [];
   peopleSelect: Array<any> = [];
-	userID = '-KPCMKA-InT8eGDHER2P';
+	userID = '-KPCMKA-InT8eGDHEDEF';
 	newMessage: any = "";
 	newChatID: any;
 	chatID: any;
