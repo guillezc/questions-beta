@@ -80,7 +80,7 @@ export class ResultSesionProyectedComponent implements OnInit {
     optionsArr.forEach((opt: any) => {
       this.af.database.object('/votes/'+opt.voteId).subscribe(vote => {
 
-        xchartLabels.push(opt.name);
+        xchartLabels.push(opt.name.spanish);
         var voteNum = (vote.users != false) ? vote.users.length : 0;
         xchartData.push(voteNum);
 
@@ -92,7 +92,6 @@ export class ResultSesionProyectedComponent implements OnInit {
           this.surveysList[index_chart].chartValues = xchartData;
           ResultSesionProyectedsVar.init();
           this.isLoaded = true;
-          console.log(this.surveysList[index_chart])
         }
 
       });

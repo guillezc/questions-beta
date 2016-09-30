@@ -7,10 +7,10 @@
         </li>
     </ul>
 </div>
-<h3 class="page-title results-title">
-    {{ surveyObj.question }} <br />
-    <small>
-        Sesión: {{ sessionObj.title }} <br />
+<h3 class="page-title results-title" *ngIf="survey | async">
+    {{ surveyObj.question.spanish }} <br />
+    <small *ngIf="session | async">
+        Sesión: {{ sessionObj.title.spanish }} <br />
         Inicio: {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
     </small>
     <a id="go-to-rproyecteds" class="btn btn-sm sbold green pull-right"><i class="fa fa-tv"></i> Proyectar</a>

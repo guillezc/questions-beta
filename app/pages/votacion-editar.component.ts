@@ -48,28 +48,49 @@ export class VoteEditComponent implements OnInit {
   getSurvey(){
     this.survey = this.af.database.object('/surveys/'+this.surveyID);
     this.survey.subscribe(data => {
-      this.af.database.object('/sessions/'+data.sessionId).subscribe(sessionData => {
-          var arr: any[] = [];
-          arr[0] = sessionData;
-          data.session = arr;
-        });
-      this.surveyObj = data;
+      this.surveyObj.sessionId = data.sessionId;
+      this.surveyObj.question = [];
+      this.surveyObj.question['spanish'] = data.question.spanish;
+      this.surveyObj.question['english'] = data.question.english;
+      this.surveyObj.options = data.options;
     });
-    this.optionToAdd = {"name": "", "voteId": false};
+    this.resetOptionsToAdd();
+  }
+
+  resetOptionsToAdd(){
+    this.optionToAdd = {
+      name: {
+        spanish: "",
+        english: ""
+      }, 
+      voteId: false
+    };
   }
 
   onSubmit(srv: any){
-    delete srv["optionToAdd"];
+    srv.question = {spanish: srv.question_spanish, english: srv.question_english}
+    delete srv["question_spanish"];
+    delete srv["question_english"];
+    delete srv["optionToAddSpanish"];
+    delete srv["optionToAddEnglish"];
     this.af.database.object('/surveys/'+this.surveyID).update(srv);
     this.redirectToSessions();
   }
 
   addOption(){
-    if(this.optionToAdd.name != ""){
+    if(this.optionToAdd.name.spanish != "" && this.optionToAdd.name.english != ""){
       const newID = this.votes.push({"users": false}).key;
-      var optemp = {"name": this.optionToAdd.name, "voteId": newID};
+      var optemp = {
+        name: {
+          spanish: this.optionToAdd.name.spanish,
+          english: this.optionToAdd.name.english
+        }, 
+        voteId: newID
+      };
       this.af.database.list('/surveys/'+this.surveyID+"/options").push(optemp);
-      this.optionToAdd.name = "";
+      this.resetOptionsToAdd();
+    }else{
+      alert('Ingrese el nombre de la opción');
     }
   }
 
@@ -77,8 +98,13 @@ export class VoteEditComponent implements OnInit {
     this.af.database.list('/surveys/'+this.surveyID+"/options").remove(opt.$key);
   }
 
-  editOption(name: any, key: any){
-    this.af.database.object('/surveys/'+this.surveyID+"/options/"+key).update({"name": name});
+  editOption(nameES: any, nameEN: any, key: any){
+    this.af.database.object('/surveys/'+this.surveyID+"/options/"+key).update({
+      name: {
+        spanish: nameES,
+        english: nameEN
+      }
+    });
   }
 
   redirectToSessions(){

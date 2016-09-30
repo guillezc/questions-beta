@@ -22,9 +22,14 @@
 						</select>
 					</div>
 					<div class="form-group form-md-line-input">
-						<label for="question">Pregunta <span class="required" aria-required="true">*</span></label>
-						<input type="text" name="question" class="form-control" [ngModel]="addObj.question">
+						<label for="question_spanish">Pregunta <span class="required" aria-required="true">*</span></label>
+						<input type="text" name="question_spanish" class="form-control" [ngModel]="addObj.question.spanish">
 						<span class="help-block">Ingrese la pregunta que será votada</span>
+					</div>
+					<div class="form-group form-md-line-input">
+						<label for="question_english"></label>
+						<input type="text" name="question_english" class="form-control" [ngModel]="addObj.question.english">
+						<span class="help-block">Enter the question to be voted</span>
 					</div>
 					<div class="form-group form-md-line-input">
 						<label for="tags">Opciones <span class="required" aria-required="true">*</span></label>
@@ -33,19 +38,33 @@
 									name="options"
 									placeholder="Agregar opción"
 									secondaryPlaceholder="Agregar opción"></tag-input> -->
-						<ul class="surveys-options-list new-opt">
+						<ul class="surveys-options-list new-opt clearfix">
 							<li>
-								<input class="form-control" type="text" name="optionToAdd" [(ngModel)]="optionToAdd.name" placeholder="Agrega una opción"/>
-								<span class="help-block">Agregue la opción dando click en +</span>
-								<button type="button" id="add-options" (click)="addOption()" class="btn sbold green"><i class="fa fa-plus"></i></button>
+								<div>
+									<input class="form-control" type="text" name="optionToAddSpanish" [(ngModel)]="optionToAdd.name.spanish" placeholder="Agrega una opción"/>
+									<span class="help-block">Agregue la opción dando click en +</span>
+									<button type="button" id="add-options" (click)="addOption()" class="btn sbold green"><i class="fa fa-plus"></i></button>
+								</div>
+								<br>
+								<div>
+									<input class="form-control" type="text" name="optionToAddEnglish" [(ngModel)]="optionToAdd.name.english" placeholder="Add option"/>
+									<span class="help-block">Add option clicking to +</span>
+								</div>
 							</li>
 						</ul>
 						<br/>
 						<ul class="surveys-options-list">
 							<li *ngFor="let opt of options; let i = index">
-								<input class="form-control" type="text" value="{{ opt.name }}" #optEditing (blur)="editOption(optEditing.value, i)"/>
-								<button type="button" (click)="deleteOption(i)" class="btn red"><i class="fa fa-trash"></i></button>
+								<div>
+									<input class="form-control" type="text" value="{{ opt.name.spanish }}" #optEditingSpanish (blur)="editOption(optEditingSpanish.value,optEditingEnglish.value,i)" />
+									<button type="button" (click)="deleteOption(i)" class="btn red"><i class="fa fa-trash"></i></button>
+								</div>
+								<div>
+									<input class="form-control" type="text" value="{{ opt.name.english }}" #optEditingEnglish (blur)="editOption(optEditingSpanish.value,optEditingEnglish.value,i)" />
+								</div>
+								<br/>
 							</li>
+								
 						</ul>
 
 					</div>

@@ -38,7 +38,7 @@
                                 <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.title.spanish }}</div></td>
                                 <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.startTime | date:"dd MMM y - H:mm" }} hrs</div></td>
                                 <td>
-                                    {{ survey.question }}
+                                    {{ survey.question.spanish }}
                                 </td>
                             </tr>
                         </tbody>

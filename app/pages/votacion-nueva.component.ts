@@ -43,29 +43,64 @@ export class VoteAddComponent implements OnInit {
   initSurvey(){
     this.addObj.sessionId = "...";
     this.addObj.session = [];
-    this.addObj.question = "";
+    this.addObj.question = [];
+    this.addObj.question['spanish'] = "";
+    this.addObj.question['english'] = "";
     this.addObj.options = [];
 
-    this.optionToAdd = {"name": "", "voteId": false};
+    this.resetOptionsToAdd();
+  }
+
+  resetOptionsToAdd(){
+    this.optionToAdd = {
+      name: {
+        spanish: "",
+        english: ""
+      }, 
+      voteId: false
+    };
   }
 
   onSubmit(srv: any){
-    delete srv["options"];
+    srv.question = {spanish: srv.question_spanish, english: srv.question_english}
+    delete srv["question_spanish"];
+    delete srv["question_english"];
+    delete srv["optionToAddSpanish"];
+    delete srv["optionToAddEnglish"];
+
+    if(srv.sessionId == "..."){
+      alert('Seleccione una sesión');
+      return;
+    }
+
     const surveyID = this.af.database.list('/surveys').push(srv).key;
     this.options.forEach((opt: any) => {
       const voteID = this.votes.push({"users": false}).key;
-      var optemp = {"name": opt.name, "voteId": voteID}
+      var optemp = {
+        name: {
+          spanish: opt.name.spanish,
+          english: opt.name.english
+        }, 
+        voteId: voteID
+      }
       this.af.database.list('/surveys/'+surveyID+"/options").push(optemp);
     });
     this.redirectToSessions();
+
   }
 
   addOption(){
-    if(this.optionToAdd.name != ""){
+    if(this.optionToAdd.name.spanish != "" && this.optionToAdd.name.english != ""){
       var optL = this.options.length;
-      var opt = {"name": this.optionToAdd.name, "voteId": false};
+      var opt = {
+        name: {
+          spanish: this.optionToAdd.name.spanish,
+          english: this.optionToAdd.name.english
+        }, 
+        voteId: false
+      };
       this.options[optL] = opt;
-      this.optionToAdd.name = "";
+      this.resetOptionsToAdd();
     }
   }
 
@@ -83,8 +118,9 @@ export class VoteAddComponent implements OnInit {
     this.options = opts;
   }
 
-  editOption(name: any, key: any){
-    this.options[key]["name"] = name;
+  editOption(nameES: any, nameEN: any,key: any){
+    this.options[key]["name"]["spanish"] = nameES;
+    this.options[key]["name"]["english"] = nameEN;
   }
 
   redirectToSessions(){

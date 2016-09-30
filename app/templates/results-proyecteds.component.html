@@ -3,10 +3,10 @@
     </div>
 <div class="chart-container" [hidden]="isEmpty">
 	<div class="chart-inn">
-		<h3 class="page-title results-title">
-		    {{ surveyObj.question }} <br />
-		    <small>
-		        Sesión: {{ sessionObj.title }} <br />
+		<h3 class="page-title results-title"  *ngIf="survey | async">
+		    {{ surveyObj.question.spanish }} <br />
+		    <small *ngIf="session | async">
+		        Sesión: {{ sessionObj.title.spanish }} <br />
 		        Inicio: {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
 		    </small>
 		</h3>

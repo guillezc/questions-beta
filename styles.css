@@ -198,8 +198,12 @@ table.dataTable{
 .surveys-options-list{
     padding: 0;
     margin-top: 10px;
-    width: 320px;
+    width: 100%;
     list-style: none;
+}
+.surveys-options-list > li{
+    width: 50%;
+    float: left;
 }
 .surveys-options-list li .btn{
     padding: 4px 2px !important;
@@ -319,5 +323,9 @@ input#new-chat-title{
     .chart-container .chart canvas{
         width: 80% !important;
         max-width: 768px;
+    }
+    .page-proyecteds .chart-container .chart canvas{
+        width: 100% !important;
+        max-width: 100%;
     }
 }

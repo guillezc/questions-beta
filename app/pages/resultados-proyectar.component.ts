@@ -16,6 +16,8 @@ import  'app/js/results-proyecteds.js';
 })
 
 export class ResultsProyectedComponent implements OnInit {
+  survey: FirebaseObjectObservable<any>;
+  session: FirebaseObjectObservable<any>;
   surveyObj: Survey = new Survey();
   sessionObj: Session = new Session();
   surveyID: any;
@@ -41,11 +43,17 @@ export class ResultsProyectedComponent implements OnInit {
     this.setTitle("Resultados - México Cumbre de Negocios");
     this.route.params.subscribe(params => {
       this.surveyID = params['id'];
-      this.af.database.object('/surveys/'+this.surveyID).subscribe(srvObj => {
-        this.surveyObj = srvObj;
+      this.survey = this.af.database.object('/surveys/'+this.surveyID)
+      this.survey.subscribe(srvObj => {
+        this.surveyObj.question = [];
+        this.surveyObj.question['spanish'] = srvObj.question.spanish;
+        this.surveyObj.options = srvObj.options;
         this.getOptions();
-        this.af.database.object('/sessions/'+srvObj.sessionId).subscribe(sessObj => {
-          this.sessionObj = sessObj;
+        this.session = this.af.database.object('/sessions/'+srvObj.sessionId);
+        this.session.subscribe(sessObj => {
+          this.sessionObj.startTime = sessObj.startTime;
+          this.sessionObj.title = [];
+          this.sessionObj.title['spanish'] = sessObj.title.spanish;
         });
       });
     });
@@ -64,7 +72,7 @@ export class ResultsProyectedComponent implements OnInit {
     optionsArr.forEach((opt: any) => {
       this.af.database.object('/votes/'+opt.voteId).subscribe(vote => {
         
-        xchartLabels.push(opt.name);
+        xchartLabels.push(opt.name.spanish);
         var voteNum = (vote.users != false) ? vote.users.length : 0;
         xchartData.push(voteNum);
 

@@ -12,9 +12,9 @@
 					<div class="chart-container" [hidden]="isEmpty">
 						<div class="chart-inn" *ngIf="surveys | async">
 							<h3 class="page-title results-title">
-							    <strong>{{ slide.question }}</strong><br />
+							    <strong>{{ slide.question.spanish }}</strong><br />
 							    <small>
-							        <strong>Sesión:</strong> {{ session.title }} <br />
+							        <strong>Sesión:</strong> {{ session.title.spanish }} <br />
 							        <strong>Inicio:</strong> {{ session.startTime | date:"dd MMM y - H:mm" }}
 							    </small>
 							</h3>
