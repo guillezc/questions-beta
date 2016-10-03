@@ -8,6 +8,8 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 
 declare var SessionJS: any;
 import  'app/js/sessions.js';
+import  'app/assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js';
+import  'app/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js';
 
 @Component({
   selector: 'q-sessions',
@@ -22,6 +24,13 @@ export class SessionsComponent implements OnInit {
   isLoaded: Boolean = false;
   events: any[];
   eventItems: Array<any> = [];
+  dayFilter: Date = new Date();
+
+  datepickerOpts: any = {
+    autoclose: true,
+    todayBtn: 'linked',
+    todayHighlight: true
+  };
 
   constructor(
     private router         : Router,
@@ -37,7 +46,7 @@ export class SessionsComponent implements OnInit {
   ngOnInit() {  
   	this.getSessions();
     this.setTitle("Sesiones - México Cumbre de Negocios");
-    //this.getEvents();
+    //this.af.database.list('sessions').
   }
 
   getSessions(){
@@ -83,41 +92,50 @@ export class SessionsComponent implements OnInit {
   	this.af.database.object('/sessions/'+session.$key).remove();
   }
 
-  filtraPorDias(day: any){
+  showAll(){
     this.isLoaded = false;
     SessionJS.destroyTable();
-    if(day == '...'){
-      this.getSessions();
-    }else{
-      this.sessions = this.af.database.list('sessions', {
-        query: {
-          orderByChild: 'eventId',
-          equalTo: this.eventItems[day]
-        }
-      });
-      this.sessions.subscribe(data => {
-        data.forEach((sess: any) => {
-          this.survey = this.af.database.list('/surveys', {
-            query: {
-              orderByChild: 'sessionId',
-              equalTo: sess.$key 
-            }
-          });
-          this.survey.subscribe(srv => {
-            sess.hasSurvey = (srv.length > 0) ? true : false; 
-          });
-        });
-        this.sessionList = data;
-        SessionJS.init();
-        this.isLoaded = true;
-      });
-    }
-    
+    this.getSessions();
   }
 
   goToVotes(session: Session){
     let link = ['/votaciones/sesion', session.$key];
     this.router.navigate(link);
+  }
+
+  handleDateFromChange(evt: Date){
+    this.isLoaded = false;
+    SessionJS.destroyTable();
+
+    let eDay: any = evt.getUTCDate();
+    let eMon: any = evt.getMonth() + 1;
+    let eYea: any = evt.getFullYear();
+    let sDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 00:00:00');
+    let eDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 23:59:59');
+
+    this.sessions = this.af.database.list('sessions', {
+      query: {
+        orderByChild: 'startTime',
+        startAt: sDate.getTime(),
+        endAt: eDate.getTime()
+      }
+    });
+    this.sessions.subscribe(data => {
+      data.forEach((sess: any) => {
+        this.survey = this.af.database.list('/surveys', {
+          query: {
+            orderByChild: 'sessionId',
+            equalTo: sess.$key 
+          }
+        });
+        this.survey.subscribe(srv => {
+          sess.hasSurvey = (srv.length > 0) ? true : false; 
+        });
+      });
+      this.sessionList = data;
+      SessionJS.init();
+      this.isLoaded = true;
+    });
   }
 
 }

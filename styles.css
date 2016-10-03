@@ -272,9 +272,31 @@ table.dataTable{
     top: 54px;
     z-index: 9;
 }
-
+}
+.day-filter datetime, .day-filter .date{
+    float: left;
+}
+.day-filter .timepicker{
+    display: none;
+}
+.day-filter .date input{
+    height: 20px;
+    padding: 0 6px;
+    font-size: 12px;
+    border-color: rgb(169, 169, 169);
+}
+.day-filter .date .input-group-addon{
+    height: 20px;
+    padding: 0 6px;
+    border-color: rgb(169, 169, 169);
+}
+.day-filter .date .input-group-addon .glyphicon{
+    font-size: 12px;
+    line-height: 11px;
+}
 .day-filter label{
     margin-right: 5px;
+    float: left;
 }
 .fec-ini{
     color: #32c5d2 !important;

@@ -52,6 +52,9 @@ import { EventsAddComponent } 						from './pages/evento-nuevo.component';
 import { EventsEditComponent } 						from './pages/evento-editar.component';
 import { ChatComponent }                  from './pages/chat.component';
 import { TagsComponent }                  from './pages/temas.component';
+import { FrequentQuestionsComponent }     from './pages/preguntas-frecuentes.component';
+import { FrequentQuestionsAddComponent }  from './pages/preguntas-frecuentes-nuevo.component';
+import { FrequentQuestionsEditComponent } from './pages/preguntas-frecuentes-editar.component';
 
 enableProdMode();
 
@@ -93,7 +96,10 @@ enableProdMode();
   	EventsAddComponent,
   	EventsEditComponent,
     ChatComponent,
-    TagsComponent
+    TagsComponent,
+    FrequentQuestionsComponent,
+    FrequentQuestionsAddComponent,
+    FrequentQuestionsEditComponent
 	],
 	providers: [
     appRoutingProviders,
@@ -106,7 +112,7 @@ enableProdMode();
 	    /*apiKey: "AIzaSyB5ZUgBJabSy-F18lNUiyqmb0xy72oFCx4",
 	    authDomain: "questions-16537.firebaseapp.com",
 	    databaseURL: "https://questions-16537.firebaseio.com",
-	    storageBucket: "questions-16537.appspot.com",*/
+	    storageBucket: "questions-16537.appspot.com"*/
 	  }),
 	  firebaseAuthConfig({
 	    provider: AuthProviders.Anonymous,

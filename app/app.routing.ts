@@ -28,6 +28,9 @@ import { EventsEditComponent } from './pages/evento-editar.component';
 
 import { ChatComponent } from './pages/chat.component';
 import { TagsComponent } from './pages/temas.component';
+import { FrequentQuestionsComponent } from './pages/preguntas-frecuentes.component';
+import { FrequentQuestionsAddComponent } from './pages/preguntas-frecuentes-nuevo.component';
+import { FrequentQuestionsEditComponent } from './pages/preguntas-frecuentes-editar.component';
 
 const appRoutes: Routes = [
   {
@@ -114,6 +117,18 @@ const appRoutes: Routes = [
   {
     path: 'temas',
     component: TagsComponent
+  },
+  {
+    path: 'preguntas-frecuentes',
+    component: FrequentQuestionsComponent
+  },
+  {
+    path: 'pregunta-frecuente/nuevo',
+    component: FrequentQuestionsAddComponent
+  },
+  {
+    path: 'pregunta-frecuente/editar/:id',
+    component: FrequentQuestionsEditComponent
   }
 ];
 

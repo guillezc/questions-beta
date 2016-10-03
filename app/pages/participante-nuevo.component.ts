@@ -51,6 +51,4 @@ export class ParticipantAddComponent implements OnInit{
     this.router.navigate(link);
   }
 
-  get diagnostic() { return JSON.stringify(this.speakerObj); }
-
 }
