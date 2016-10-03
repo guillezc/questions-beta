@@ -7,11 +7,11 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  selector: 'q-frequent-edit',
-  templateUrl: 'app/templates/frequent-questions-form.component.html'
+  selector: 'q-generalinfo-edit',
+  templateUrl: 'app/templates/generalinfo-form.component.html'
 })
 
-export class FrequentQuestionsEditComponent implements OnInit{
+export class GeneralInfoEditComponent implements OnInit{
   frequentObj: Frequent = new Frequent();
   frequents: FirebaseListObservable<any>;
   frequent: FirebaseObjectObservable<any>;
@@ -39,7 +39,7 @@ export class FrequentQuestionsEditComponent implements OnInit{
   }
 
   getFrequent(){
-    this.frequent = this.af.database.object('/frequents/'+this.frequentID);
+    this.frequent = this.af.database.object('/generalinfo/'+this.frequentID);
     this.frequent.subscribe(data => {
       this.frequentObj.title = [];
       this.frequentObj.title['spanish'] = data.title.spanish;
@@ -48,7 +48,7 @@ export class FrequentQuestionsEditComponent implements OnInit{
       this.frequentObj.description['spanish'] = data.description.spanish;
       this.frequentObj.description['english'] = data.description.english;
     });
-    this.frequents = this.af.database.list('frequents');
+    this.frequents = this.af.database.list('generalinfo');
   }
 
   onSubmit(freq: any) { 
@@ -67,7 +67,7 @@ export class FrequentQuestionsEditComponent implements OnInit{
   }
 
   redirectToFrequents(){
-  	let link = ['/preguntas-frecuentes'];
+  	let link = ['/info-general'];
     this.router.navigate(link);
   }
 

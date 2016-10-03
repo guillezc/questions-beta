@@ -1,0 +1,51 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a [routerLink]="['/info-general']">Información general</a>
+            <i class="fa fa-circle"></i>
+            <span>Nuevo</span>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title"></h3>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-body" *ngIf="frequents | async">
+				<form method="post" (ngSubmit)="onSubmit(frequentData.value)" #frequentData="ngForm" class="form-sessions">
+					<div class="form-body">
+						<div class="form-group form-md-line-input">
+							<label for="title_spanish">Título <span class="required" aria-required="true">*</span></label>
+							<input type="text" required name="title_spanish" class="form-control" [ngModel]="frequentObj.title.spanish">
+							<span class="help-block">Ingrese el título para la pregunta</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="title_english"></label>
+							<input type="text" name="title_english" class="form-control" [ngModel]="frequentObj.title.english">
+							<span class="help-block">Enter the title for the question</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="descrip_spanish">Bio <span class="required" aria-required="true">*</span></label>
+							<textarea name="descrip_spanish" required class="form-control" [ngModel]="frequentObj.description.spanish"></textarea>
+							<span class="help-block">Ingrese la descripción para la pregunta</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="descrip_english"></label>
+							<textarea name="descrip_english" class="form-control" [ngModel]="frequentObj.description.english"></textarea>
+							<span class="help-block">Enter the description for the question</span>
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="row">
+				            <div class="col-md-12 text-right">
+				            	<a [routerLink]="['/info-general']" class="btn default"><i class="fa fa-arrow-left"></i> Regresar</a>
+				                <button type="submit" class="btn green"><i class="fa fa-save"></i> Guardar</button>		                
+				            </div>
+				        </div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

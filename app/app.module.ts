@@ -55,6 +55,9 @@ import { TagsComponent }                  from './pages/temas.component';
 import { FrequentQuestionsComponent }     from './pages/preguntas-frecuentes.component';
 import { FrequentQuestionsAddComponent }  from './pages/preguntas-frecuentes-nuevo.component';
 import { FrequentQuestionsEditComponent } from './pages/preguntas-frecuentes-editar.component';
+import { GeneralInfoComponent }           from './pages/info-general.component';
+import { GeneralInfoAddComponent }        from './pages/info-general-nuevo.component';
+import { GeneralInfoEditComponent }       from './pages/info-general-editar.component';
 
 enableProdMode();
 
@@ -99,7 +102,10 @@ enableProdMode();
     TagsComponent,
     FrequentQuestionsComponent,
     FrequentQuestionsAddComponent,
-    FrequentQuestionsEditComponent
+    FrequentQuestionsEditComponent,
+    GeneralInfoComponent,
+    GeneralInfoAddComponent,
+    GeneralInfoEditComponent
 	],
 	providers: [
     appRoutingProviders,

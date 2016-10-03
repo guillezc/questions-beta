@@ -28,9 +28,15 @@ import { EventsEditComponent } from './pages/evento-editar.component';
 
 import { ChatComponent } from './pages/chat.component';
 import { TagsComponent } from './pages/temas.component';
+
 import { FrequentQuestionsComponent } from './pages/preguntas-frecuentes.component';
 import { FrequentQuestionsAddComponent } from './pages/preguntas-frecuentes-nuevo.component';
 import { FrequentQuestionsEditComponent } from './pages/preguntas-frecuentes-editar.component';
+
+
+import { GeneralInfoComponent } from './pages/info-general.component';
+import { GeneralInfoAddComponent } from './pages/info-general-nuevo.component';
+import { GeneralInfoEditComponent } from './pages/info-general-editar.component';
 
 const appRoutes: Routes = [
   {
@@ -129,6 +135,18 @@ const appRoutes: Routes = [
   {
     path: 'pregunta-frecuente/editar/:id',
     component: FrequentQuestionsEditComponent
+  },
+  {
+    path: 'info-general',
+    component: GeneralInfoComponent
+  },
+  {
+    path: 'info-general/nuevo',
+    component: GeneralInfoAddComponent
+  },
+  {
+    path: 'info-general/editar/:id',
+    component: GeneralInfoEditComponent
   }
 ];
 
