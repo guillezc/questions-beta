@@ -49,7 +49,6 @@ export class ChatComponent implements OnInit{
 
 	ngOnInit() {  
 		this.setTitle("Chat - México Cumbre de Negocios");
-		//ChatJS.init();
 		this.getChats();
 		this.getPeople();
 	}

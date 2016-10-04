@@ -20,6 +20,9 @@ var ChatJS = function(){
   return {
     init: function(){
       window.setTimeout(function(){
+        var messageList = document.getElementById('messages');
+        var messageInput = document.getElementById('message');
+
         $(".message-container").css("opacity", 1);
         $("#message").on("keyup", function(){
           if ($(this).val()) {
@@ -38,6 +41,9 @@ var ChatJS = function(){
             $(".mdl-textfield__label").removeClass("is-focused");
           }
         });
+
+        messageList.scrollTop = messageList.scrollHeight;
+        messageInput.focus();
       }, 500)
     }
   }
