@@ -6,6 +6,9 @@ import { Frequent }  from '../classes/frequents';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
+declare var InfoJS: any;
+import  'app/js/infogral.js';
+
 @Component({
 	selector: 'q-general-info',
 	templateUrl: 'app/templates/general-info.component.html'
@@ -44,6 +47,7 @@ export class GeneralInfoComponent implements OnInit{
 				tmpList.push(freq);
 			});
 			this.frequentsList = tmpList;
+			InfoJS.init();
 		});
 	}
 

@@ -21,13 +21,13 @@
         <div class="portlet light portlet-fit portlet-datatable bordered posRel">
             <div class="portlet-body">
             	<div [hidden]="isLoaded" class="sessions-loading" id="q-loading">
-                        <img src="app/assets/global/img/loading.gif" alt="loading" />
-                    </div>
+                  <img src="app/assets/global/img/loading.gif" alt="loading" />
+              </div>
             	<div class="chart-container" [hidden]="isEmpty">
-                    <q-chart 
-                       [pieChartData]="chartData"
-                       [pieChartLabels]="chartLabels">
-                    </q-chart>
+                <q-chart 
+                   [pieChartData]="chartData"
+                   [pieChartLabels]="chartLabels">
+                </q-chart>
             	</div>
             	<h3 class="text-center" [hidden]="!isEmpty">No hay resultados para esta encuesta</h3>
             </div>

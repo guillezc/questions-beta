@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 import { Title } from '@angular/platform-browser';
 
 import { Session }  from '../classes/session';
@@ -26,6 +27,8 @@ export class ResultSesionProyectedComponent implements OnInit {
   isEmpty: boolean = false;
   isLoaded: boolean = false;
   surveySData: any[] = [];
+  isInit: boolean = true;
+  intervalObs: any;
 
   chartData: any[] = [];
 

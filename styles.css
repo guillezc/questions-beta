@@ -87,7 +87,9 @@
 }
 #datatable_sessions .btn,
 #datatable_participants .btn,
-#datatable_events .btn{
+#datatable_events .btn,
+#datatable_frequents .btn,
+#datatable_infogral .btn{
     height: 26px;
     width: 26px;
     line-height: 26px;

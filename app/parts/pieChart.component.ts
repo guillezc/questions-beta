@@ -11,18 +11,17 @@ export class PieChartComponent implements OnInit {
 	@Input()
   	pieChartLabels: string[];
 
-  	@Input()
+  @Input()
   	pieChartData: number[];
 
   	pieChartTitle: string = 'Votaciones';
   	pieChartType: string = 'pie';
   	pieLegend: boolean = true;
   	pieOptions: any = {
-  		defaults: {
-  			global:{
-  				title: true
-  			}
-  		}
+      animation:{
+        animateRotate: false,
+        animateScale: false
+      }
   	};
 
 	constructor() {

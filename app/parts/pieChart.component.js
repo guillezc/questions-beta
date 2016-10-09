@@ -15,10 +15,9 @@ var PieChartComponent = (function () {
         this.pieChartType = 'pie';
         this.pieLegend = true;
         this.pieOptions = {
-            defaults: {
-                global: {
-                    title: true
-                }
+            animation: {
+                animateRotate: false,
+                animateScale: false
             }
         };
     }

@@ -6,6 +6,9 @@ import { Frequent }  from '../classes/frequents';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
+declare var FrequentJS: any;
+import  'app/js/frequents.js';
+
 @Component({
 	selector: 'q-frequent-questions',
 	templateUrl: 'app/templates/frequent-questions.component.html'
@@ -44,6 +47,7 @@ export class FrequentQuestionsComponent implements OnInit{
 				tmpList.push(freq);
 			});
 			this.frequentsList = tmpList;
+			FrequentJS.init();
 		});
 	}
 

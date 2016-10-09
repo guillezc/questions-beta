@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs/Rx';
 import { Title } from '@angular/platform-browser';
 
 import { Session }  from '../classes/session';
@@ -15,7 +16,7 @@ import  'app/js/results-proyecteds.js';
   templateUrl: 'app/templates/results-proyecteds.component.html'
 })
 
-export class ResultsProyectedComponent implements OnInit {
+export class ResultsProyectedComponent implements OnInit, OnDestroy {
   survey: FirebaseObjectObservable<any>;
   session: FirebaseObjectObservable<any>;
   surveyObj: Survey = new Survey();
@@ -23,6 +24,8 @@ export class ResultsProyectedComponent implements OnInit {
   surveyID: any;
   isEmpty: boolean = false;
   isLoaded: boolean = false;
+  isInit: boolean = true;
+  intervalObs: any;
 
   chartLabels:string[] = [];
   chartData:number[] = [];
@@ -54,6 +57,7 @@ export class ResultsProyectedComponent implements OnInit {
           this.sessionObj.startTime = sessObj.startTime;
           this.sessionObj.title = [];
           this.sessionObj.title['spanish'] = sessObj.title.spanish;
+          this.initInterval();
         });
       });
     });
@@ -82,13 +86,23 @@ export class ResultsProyectedComponent implements OnInit {
         if(load == dataSize){
           this.chartLabels = xchartLabels;
           this.chartData = xchartData;
-          this.isLoaded = true;
-          ResultsProyectedsVar.init();
+          if(this.isInit){
+            this.isLoaded = true;
+            ResultsProyectedsVar.init();
+          }
         }
 
       });
     });
     
+  }
+
+  initInterval(){
+    const inter = Observable.interval(5000);
+    this.intervalObs = inter.subscribe((x: number) => {
+      this.isInit = false;
+      this.getOptions();
+    })
   }
 
   getArrayOf(object: any) {
@@ -98,6 +112,10 @@ export class ResultsProyectedComponent implements OnInit {
       newArr.push(object[key]);
     }
     return newArr;
+  }
+
+  ngOnDestroy(): void {
+    this.intervalObs.unsubscribe();
   }
 
 }
