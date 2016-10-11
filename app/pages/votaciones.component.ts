@@ -71,4 +71,32 @@ export class VotesComponent implements OnInit {
     VoteJS.init();
   }
 
+  filterByType(srvType: any){
+    this.isLoaded = false;
+    VoteJS.destroyTable();
+
+    if(srvType=="..."){
+      this.getSurveys();
+    }else{
+      this.votes = this.af.database.list('surveys', {
+        query: {
+          orderByChild: 'type',
+          equalTo: srvType
+        }
+      });  
+      this.votes.subscribe(data => {
+        data.forEach((s: Survey) => {
+          this.af.database.object('/sessions/'+s.sessionId).subscribe(sessionData => {
+            var arr: any[] = [];
+            arr[0] = sessionData;
+            s.session = arr;
+          });
+        });
+        this.surveyList = data;
+        VoteJS.init();
+        this.isLoaded = true;
+      });
+    }
+  }
+
 }

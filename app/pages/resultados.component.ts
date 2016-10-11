@@ -56,13 +56,17 @@ export class ResultsComponent implements OnInit, OnDestroy {
         this.surveyObj.question['spanish'] = srvObj.question.spanish;
         this.surveyObj.options = srvObj.options;
         this.getOptions();
-        this.session = this.af.database.object('/sessions/'+srvObj.sessionId);
-        this.session.subscribe(sessObj => {
-          this.sessionObj.startTime = sessObj.startTime;
-          this.sessionObj.title = [];
-          this.sessionObj.title['spanish'] = sessObj.title.spanish;
-          this.initInterval();
-        });
+        
+        if(srvObj.sessionId != "" && srvObj.sessionId != " "){
+          this.session = this.af.database.object('/sessions/'+srvObj.sessionId);
+          this.session.subscribe(sessObj => {
+              this.sessionObj.startTime = sessObj.startTime ? sessObj.startTime : "";
+              this.sessionObj.title = [];
+              this.sessionObj.title['spanish'] = sessObj.title ? sessObj.title.spanish : "";
+            
+          });
+        }
+        this.initInterval();
       });
     });
   }
@@ -76,10 +80,16 @@ export class ResultsComponent implements OnInit, OnDestroy {
     var load = 0;
     var dataSize = optionsArr.length;
 
+    if(optionsArr.length == 0){
+      this.isLoaded = true;
+      this.isEmpty = true
+    }
+
     optionsArr.forEach((opt: any) => {
       this.vote = this.af.database.object('/votes/'+opt.voteId);
       this.vote.subscribe(vote => {
         xchartLabels.push(opt.name.spanish);
+
         var voteNum = (vote.users != false) ? vote.users.length : 0;
         xchartData.push(voteNum);
 

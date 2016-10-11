@@ -52,13 +52,16 @@ export class ResultsProyectedComponent implements OnInit, OnDestroy {
         this.surveyObj.question['spanish'] = srvObj.question.spanish;
         this.surveyObj.options = srvObj.options;
         this.getOptions();
-        this.session = this.af.database.object('/sessions/'+srvObj.sessionId);
-        this.session.subscribe(sessObj => {
-          this.sessionObj.startTime = sessObj.startTime;
-          this.sessionObj.title = [];
-          this.sessionObj.title['spanish'] = sessObj.title.spanish;
-          this.initInterval();
-        });
+        if(srvObj.sessionId != "" && srvObj.sessionId != " "){
+          this.session = this.af.database.object('/sessions/'+srvObj.sessionId);
+          this.session.subscribe(sessObj => {
+              this.sessionObj.startTime = sessObj.startTime ? sessObj.startTime : "";
+              this.sessionObj.title = [];
+              this.sessionObj.title['spanish'] = sessObj.title ? sessObj.title.spanish : "";
+            
+          });
+        }
+        this.initInterval();
       });
     });
     
@@ -72,6 +75,11 @@ export class ResultsProyectedComponent implements OnInit, OnDestroy {
     var counter = 0;
     var load = 0;
     var dataSize = optionsArr.length;
+
+    if(optionsArr.length == 0){
+      this.isLoaded = true;
+      this.isEmpty = true
+    }
 
     optionsArr.forEach((opt: any) => {
       this.af.database.object('/votes/'+opt.voteId).subscribe(vote => {

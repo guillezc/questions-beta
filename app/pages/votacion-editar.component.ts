@@ -19,6 +19,7 @@ export class VoteEditComponent implements OnInit {
   surveyID: any;
   optionToAdd: any;
   sub: any;
+  isEncuesta: boolean = false;
 
   constructor(
     private router         : Router,
@@ -53,6 +54,11 @@ export class VoteEditComponent implements OnInit {
       this.surveyObj.question['spanish'] = data.question.spanish;
       this.surveyObj.question['english'] = data.question.english;
       this.surveyObj.options = data.options;
+      this.surveyObj.type = data.type;
+      if(data.type == 'e'){
+        this.surveyObj.sessionId = '...';
+        this.isEncuesta = true;
+      }
     });
     this.resetOptionsToAdd();
   }
@@ -68,11 +74,26 @@ export class VoteEditComponent implements OnInit {
   }
 
   onSubmit(srv: any){
+
+    const vote_type = srv.votetype;
+
     srv.question = {spanish: srv.question_spanish, english: srv.question_english}
+    srv.type = vote_type;
     delete srv["question_spanish"];
     delete srv["question_english"];
     delete srv["optionToAddSpanish"];
     delete srv["optionToAddEnglish"];
+    delete srv["votetype"];
+
+    if(vote_type=="e"){
+      srv.sessionId = "";
+    }else{
+      if(srv.sessionId == "..."){
+        alert('Seleccione una sesión');
+        return;
+      }
+    }
+
     this.af.database.object('/surveys/'+this.surveyID).update(srv);
     this.redirectToSessions();
   }
@@ -110,6 +131,13 @@ export class VoteEditComponent implements OnInit {
   redirectToSessions(){
     let link = ['/votaciones'];
     this.router.navigate(link);
+  }
+
+  hideSession(type: any){
+    if(type=='e')
+      this.isEncuesta = true;
+    else
+      this.isEncuesta = false;
   }
 
 }

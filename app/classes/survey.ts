@@ -5,6 +5,7 @@ export class Survey {
 
     public $key: number;
     public sessionId: string;
+    public type: string;
     public session: Session[];
     public question: any;
     public options: Vote[];

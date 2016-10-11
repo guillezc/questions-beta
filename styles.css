@@ -353,3 +353,8 @@ input#new-chat-title{
         max-width: 100%;
     }
 }
+@media(max-width: 768px){
+    table tr > td > .btn{
+        margin-bottom: 2px !important;
+    }
+}

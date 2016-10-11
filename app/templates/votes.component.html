@@ -21,6 +21,16 @@
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
+                            <br />
+                            <br />
+                            <div class="vote-filters">
+                                <label for="votetype">Tipo</label>
+                                <select name="votetype" class="" #typeVote (change)="filterByType(typeVote.value)">
+                                    <option value="...">Todas</option>
+                                    <option value="v">Votación</option>
+                                    <option value="e">Encuesta</option>
+                                </select>
+                            </div>
             			</div>
             		</div>
             	</div>
@@ -28,20 +38,19 @@
                     <table class="table table-striped table-bordered table-hover" id="datatable_votes">
                         <thead>
                             <tr role="row" class="heading">
-                                <th width="25%"> Sesión </th>
+                                <th width="20%"> Sesión </th>
                                 <th width="20%"> Hora </th>
-                                <th width="25%">  </th>
-                                <th width="30%">  </th>
+                                <th width="25%"> Pregunta </th>
+                                <th width="35%">  </th>
                             </tr>
                         </thead>
                         <tbody *ngIf="votes | async">
                         	<tr *ngFor="let survey of surveyList">
-                                <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.title.spanish }}</div></td>
-                                <td><div *ngFor="let sess of survey.session | objToArr">{{ sess.startTime | date:"dd MMM y - H:mm" }} hrs</div></td>
+                                <td><div *ngFor="let sess of survey.session | objToArr"><span *ngIf="sess.title">{{ sess.title.spanish }}</span></div></td>
+                                <td><div *ngFor="let sess of survey.session | objToArr"><span *ngIf="sess.startTime">{{ sess.startTime | date:"dd MMM y - H:mm" }} hrs</span></div></td>
+                                <td>{{ survey.question.spanish }}</td>
                                 <td>
                                     <a [routerLink]="['/resultados', survey.$key]" class="btn btn-sm btn-outline grey-salsa"><i class="fa fa-external-link"></i> Resultados</a>
-                                </td>
-                                <td>
                                     <a href="javascript:;" (click)="editSurvey(survey)" class="btn btn-sm btn-outline grey-salsa"><i class="fa fa-edit"></i> Editar</a>
                                     <a href="javascript:;" (click)="deleteSurvey(survey)" class="btn btn-sm btn-outline grey-salsa"><i class="fa fa-trash"></i> Eliminar</a>
                                 </td>

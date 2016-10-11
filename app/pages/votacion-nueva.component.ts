@@ -16,6 +16,8 @@ export class VoteAddComponent implements OnInit {
   sessions: FirebaseListObservable<any>;
   votes: FirebaseListObservable<any>;
   optionToAdd: any;
+  voteType: string = 'v';
+  isEncuesta: boolean = false;
   options: any[] = [];
 
   constructor(
@@ -62,15 +64,24 @@ export class VoteAddComponent implements OnInit {
   }
 
   onSubmit(srv: any){
+
+    const vote_type = srv.votetype;
+
     srv.question = {spanish: srv.question_spanish, english: srv.question_english}
+    srv.type = srv.votetype;
     delete srv["question_spanish"];
     delete srv["question_english"];
     delete srv["optionToAddSpanish"];
     delete srv["optionToAddEnglish"];
+    delete srv["votetype"];
 
-    if(srv.sessionId == "..."){
-      alert('Seleccione una sesión');
-      return;
+    if(vote_type=="e"){
+      srv.sessionId = "";
+    }else{
+      if(srv.sessionId == "..."){
+        alert('Seleccione una sesión');
+        return;
+      }
     }
 
     const surveyID = this.af.database.list('/surveys').push(srv).key;
@@ -126,6 +137,13 @@ export class VoteAddComponent implements OnInit {
   redirectToSessions(){
     let link = ['/votaciones'];
     this.router.navigate(link);
+  }
+
+  hideSession(type: any){
+    if(type=='e')
+      this.isEncuesta = true;
+    else
+      this.isEncuesta = false;
   }
 
 }

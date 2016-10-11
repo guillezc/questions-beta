@@ -34,6 +34,9 @@ var VoteJS = function(){
 				    } );
 				}
 			}, 100)
+		},
+		destroyTable: function(){
+			$('#datatable_votes').dataTable().fnDestroy();
 		}
 	}
 }();
