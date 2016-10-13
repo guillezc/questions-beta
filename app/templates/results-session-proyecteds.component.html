@@ -18,10 +18,12 @@
 							        <strong>Inicio:</strong> {{ session.startTime | date:"dd MMM y - H:mm" }}
 							    </small>
 							</h3>
-							<q-chart 
-                 [pieChartData]="slide.chartValues"
-                 [pieChartLabels]="slide.chartLabels">
-              </q-chart>
+              <div [hidden]="isEmpty" *ngIf="surveys | async">
+  							<q-chart 
+                   [pieChartData]="slide.chartValues"
+                   [pieChartLabels]="slide.chartLabels">
+                </q-chart>
+              </div>
 						</div>
 					</div>
                 </div>

@@ -21,6 +21,7 @@ export class ResultSesionProyectedComponent implements OnInit {
   sessionObj: Session = new Session();
   surveys: FirebaseListObservable<any[]>;
   option: FirebaseObjectObservable<any[]>;
+  votes: FirebaseListObservable<any[]>;
   session: any;
   surveysList: Survey[] = [];
   sessionID: any;
@@ -60,10 +61,10 @@ export class ResultSesionProyectedComponent implements OnInit {
       this.surveys.subscribe(data => {
         this.surveysList = data;
         var index_chart = 0;
-
+        var data_size = data.length;
         data.forEach((s: Survey) => {
           this.surveyObj = s;
-          this.getOptions(index_chart);
+          this.getOptions(index_chart, data_size, s.options);
           index_chart++;
         });
       }); 
@@ -71,43 +72,70 @@ export class ResultSesionProyectedComponent implements OnInit {
     
   }
 
-  getOptions(index_chart: any){
-    let xchartLabels: any[] = [];
-    let xchartData: any[] = [];
+  getOptions(index_chart: any, data_size: any, srvOptions: any){
+    this.votes = this.af.database.list('votes');
+    this.votes.subscribe(data => {
+      var indexes = this.getIndexesOf(srvOptions);
+      var optionsNames = this.getOptionsName(srvOptions);
 
-    var optionsArr = this.getArrayOf(this.surveyObj.options);
-    var counter = 0;
-    var load = 0;
-    var dataSize = optionsArr.length;
+      let xchartLabels: any[] = [];
+      let xchartData: any[] = [];
 
-    optionsArr.forEach((opt: any) => {
-      this.af.database.object('/votes/'+opt.voteId).subscribe(vote => {
+      var counter = 0;
+      var load = 0;
+      var dataSize = indexes.length;
 
-        xchartLabels.push(opt.name.spanish);
-        var voteNum = (vote.users != false) ? vote.users.length : 0;
-        xchartData.push(voteNum);
+      if(dataSize == 0){
+        this.isLoaded = true;
+        this.isEmpty = true;
+      }
 
-        load++;
-        if(voteNum == 0) counter++;
-        if(counter == dataSize) this.isEmpty = true;
-        if(load == dataSize){
-          this.surveysList[index_chart].chartLabels = xchartLabels;
-          this.surveysList[index_chart].chartValues = xchartData;
-          ResultSesionProyectedsVar.init();
-          this.isLoaded = true;
+      data.forEach((vote: any) => {
+        if(this.inArray(vote.$key, indexes)){
+
+          var voteNum = (vote.users != false) ? vote.users.length : 0;
+          xchartLabels.push(optionsNames[vote.$key]);
+          xchartData.push(voteNum); 
+
+          load++;
+          if(voteNum == 0) counter++;
+          if(counter == dataSize) this.isEmpty = true;
+          if(load == dataSize){
+            this.surveysList[index_chart].chartLabels = xchartLabels;
+            this.surveysList[index_chart].chartValues = xchartData;
+            console.log(this.surveysList);
+            if(index_chart == (data_size-1)){
+              ResultSesionProyectedsVar.init();
+              this.isLoaded = true;
+            }
+          }
         }
-
       });
     });
   }
 
-  getArrayOf(object: any) {
+  getIndexesOf(object: any){
     let newArr: any[] = [];
     for (var key in object) {
-      object[key]["$key"] = key;
-      newArr.push(object[key]);
+      newArr.push(object[key].voteId);
     }
     return newArr;
+  }
+
+  getOptionsName(object: any){
+    let newArr: any[] = [];
+    for (var key in object) {
+      newArr[object[key].voteId] = object[key].name.spanish;
+    }
+    return newArr;
+  }
+
+  inArray(needle: any, haystack: any) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+      if(haystack[i] == needle) return true;
+    }
+    return false;
   }
 
 }

@@ -21,6 +21,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   survey: FirebaseObjectObservable<any>;
   session: FirebaseObjectObservable<any>;
   vote: FirebaseObjectObservable<any>;
+  votes: FirebaseListObservable<any[]>;
   sessionObj: Session = new Session();
 	surveyID: any;
 	isEmpty: boolean = false;
@@ -66,68 +67,77 @@ export class ResultsComponent implements OnInit, OnDestroy {
             
           });
         }
-        this.initInterval();
       });
     });
   }
 
   getOptions(){
-    let xchartLabels: any[] = [];
-    let xchartData: any[] = [];
+    this.votes = this.af.database.list('votes');
+    this.votes.subscribe(data => {
+      var indexes = this.getIndexesOf(this.surveyObj.options);
+      var optionsNames = this.getOptionsName(this.surveyObj.options);
 
-    var optionsArr = this.getArrayOf(this.surveyObj.options);
-    var counter = 0;
-    var load = 0;
-    var dataSize = optionsArr.length;
+      let xchartLabels: any[] = [];
+      let xchartData: any[] = [];
 
-    if(optionsArr.length == 0){
-      this.isLoaded = true;
-      this.isEmpty = true
-    }
+      var counter = 0;
+      var load = 0;
+      var dataSize = indexes.length;
 
-    optionsArr.forEach((opt: any) => {
-      this.vote = this.af.database.object('/votes/'+opt.voteId);
-      this.vote.subscribe(vote => {
-        xchartLabels.push(opt.name.spanish);
+      if(dataSize == 0){
+        this.isLoaded = true;
+        this.isEmpty = true;
+      }
 
-        var voteNum = (vote.users != false) ? vote.users.length : 0;
-        xchartData.push(voteNum);
+      data.forEach((vote: any) => {
+        if(this.inArray(vote.$key, indexes)){
 
-        load++;
-        if(voteNum == 0) counter++;
-        if(counter == dataSize) this.isEmpty = true;
-        if(load == dataSize){
-          this.chartLabels = xchartLabels;
-          this.chartData = xchartData;
-          if(this.isInit){
-            this.isLoaded = true;
-            ResultsVar.init();
+          var voteNum = (vote.users != false) ? vote.users.length : 0;
+          xchartLabels.push(optionsNames[vote.$key]);
+          xchartData.push(voteNum); 
+
+          load++;
+          if(voteNum == 0) counter++;
+          if(counter == dataSize) this.isEmpty = true;
+          if(load == dataSize){
+            this.chartLabels = xchartLabels;
+            this.chartData = xchartData;
+            if(this.isInit){
+              this.isLoaded = true;
+              ResultsVar.init();
+            }
           }
         }
       });
     });
-    
   }
 
-  initInterval(){
-    const inter = Observable.interval(5000);
-    this.intervalObs = inter.subscribe((x: number) => {
-      this.isInit = false;
-      this.getOptions();
-    })
-  }
-
-  getArrayOf(object: any) {
+  getIndexesOf(object: any){
     let newArr: any[] = [];
     for (var key in object) {
-      object[key]["$key"] = key;
-      newArr.push(object[key]);
+      newArr.push(object[key].voteId);
     }
     return newArr;
   }
 
+  getOptionsName(object: any){
+    let newArr: any[] = [];
+    for (var key in object) {
+      newArr[object[key].voteId] = object[key].name.spanish;
+    }
+    return newArr;
+  }
+
+  inArray(needle: any, haystack: any) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+      if(haystack[i] == needle) return true;
+    }
+    return false;
+  }
+
   ngOnDestroy(): void {
-    this.intervalObs.unsubscribe();
+
   }
 
 }

@@ -10,9 +10,11 @@
 		        Inicio: {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
 		    </small>
 		</h3>
-		<q-chart 
-           [pieChartData]="chartData"
-           [pieChartLabels]="chartLabels">
-        </q-chart>
+		<div [hidden]="isEmpty" *ngIf="votes | async">
+            <q-chart 
+               [pieChartData]="chartData"
+               [pieChartLabels]="chartLabels">
+            </q-chart>
+    	</div>
 	</div>
 </div>
