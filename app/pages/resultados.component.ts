@@ -90,10 +90,13 @@ export class ResultsComponent implements OnInit, OnDestroy {
       }
 
       data.forEach((vote: any) => {
-        if(this.inArray(vote.$key, indexes)){
+        const voteId = vote.$key;
+        const voteArr = this.getVotesOf(vote);
 
-          var voteNum = (vote.users != false) ? vote.users.length : 0;
-          xchartLabels.push(optionsNames[vote.$key]);
+        if(this.inArray(voteId, indexes)){
+
+          var voteNum = (vote != false) ? voteArr.length : 0;
+          xchartLabels.push(optionsNames[voteId]);
           xchartData.push(voteNum); 
 
           load++;
@@ -134,6 +137,17 @@ export class ResultsComponent implements OnInit, OnDestroy {
       if(haystack[i] == needle) return true;
     }
     return false;
+  }
+
+  getVotesOf(object: any) {
+    delete object['$key'];
+    delete object['$exists'];
+    delete object['empty'];
+    let newArr: any[] = [];
+    for (var key in object) {
+      newArr.push(key);
+    }
+    return newArr;
   }
 
   ngOnDestroy(): void {

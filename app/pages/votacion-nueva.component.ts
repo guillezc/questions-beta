@@ -39,7 +39,6 @@ export class VoteAddComponent implements OnInit {
     this.initSurvey();
     this.getSessions();
     this.votes = this.af.database.list('/votes');
-    //this.logger.log(this.addObj);
   }
 
   initSurvey(){
@@ -86,7 +85,7 @@ export class VoteAddComponent implements OnInit {
 
     const surveyID = this.af.database.list('/surveys').push(srv).key;
     this.options.forEach((opt: any) => {
-      const voteID = this.votes.push({"users": false}).key;
+      const voteID = this.votes.push({empty: true}).key;
       var optemp = {
         name: {
           spanish: opt.name.spanish,

@@ -100,7 +100,7 @@ export class VoteEditComponent implements OnInit {
 
   addOption(){
     if(this.optionToAdd.name.spanish != "" && this.optionToAdd.name.english != ""){
-      const newID = this.votes.push({"users": false}).key;
+      const newID = this.votes.push({empty: true}).key;
       var optemp = {
         name: {
           spanish: this.optionToAdd.name.spanish,
