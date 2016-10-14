@@ -30,21 +30,21 @@ export class FrequentQuestionsAddComponent implements OnInit{
 
   ngOnInit() {
     this.setTitle("Agregar participante - México Cumbre de Negocios");
-    this.frequents = this.af.database.list('frequents');
+    this.frequents = this.af.database.list('faq');
 
-    this.frequentObj.title = [];
-    this.frequentObj.title['spanish'] = '';
-    this.frequentObj.title['english'] = '';
-    this.frequentObj.description = [];
-    this.frequentObj.description['spanish'] = '';
-    this.frequentObj.description['english'] = '';
+    this.frequentObj.question = [];
+    this.frequentObj.question['spanish'] = '';
+    this.frequentObj.question['english'] = '';
+    this.frequentObj.answer = [];
+    this.frequentObj.answer['spanish'] = '';
+    this.frequentObj.answer['english'] = '';
 
   }
 
   onSubmit(freq: any) { 
 
-    freq.title = {spanish: freq.title_spanish, english: freq.title_english};
-    freq.description = {spanish: freq.descrip_spanish, english: freq.descrip_english};
+    freq.question = {spanish: freq.title_spanish, english: freq.title_english};
+    freq.answer = {spanish: freq.descrip_spanish, english: freq.descrip_english};
 
     delete freq['title_spanish'];
     delete freq['title_english'];

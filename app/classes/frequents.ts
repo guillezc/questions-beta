@@ -1,8 +1,8 @@
 export class Frequent {
 
     public $key: number;
-    public title: any;
-    public description: any;
+    public question: any;
+    public answer: any;
 
     constructor(){}
 

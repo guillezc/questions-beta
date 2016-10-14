@@ -35,14 +35,14 @@ export class FrequentQuestionsComponent implements OnInit{
 	}
 
 	getFrequents(){
-		this.frequents = this.af.database.list('frequents');
+		this.frequents = this.af.database.list('faq');
 		this.frequents.subscribe(data => {
 			let tmpList: Frequent[] = [];
 			data.forEach((f: any) => {
 				let freq: Frequent = new Frequent();
 				freq.$key = f.$key;
-				freq.title = f.title.spanish;
-				freq.description = f.description.spanish;
+				freq.question = f.question.spanish;
+				freq.answer = f.answer.spanish;
 
 				tmpList.push(freq);
 			});
@@ -62,6 +62,6 @@ export class FrequentQuestionsComponent implements OnInit{
 	}
 
 	deleteFrequent(freq: Frequent){
-		this.af.database.object('/frequents/'+freq.$key).remove();
+		this.af.database.object('/faq/'+freq.$key).remove();
 	}
 }

@@ -39,22 +39,22 @@ export class FrequentQuestionsEditComponent implements OnInit{
   }
 
   getFrequent(){
-    this.frequent = this.af.database.object('/frequents/'+this.frequentID);
+    this.frequent = this.af.database.object('/faq/'+this.frequentID);
     this.frequent.subscribe(data => {
-      this.frequentObj.title = [];
-      this.frequentObj.title['spanish'] = data.title.spanish;
-      this.frequentObj.title['english'] = data.title.english;
-      this.frequentObj.description = [];
-      this.frequentObj.description['spanish'] = data.description.spanish;
-      this.frequentObj.description['english'] = data.description.english;
+      this.frequentObj.question = [];
+      this.frequentObj.question['spanish'] = data.question.spanish;
+      this.frequentObj.question['english'] = data.question.english;
+      this.frequentObj.answer = [];
+      this.frequentObj.answer['spanish'] = data.answer.spanish;
+      this.frequentObj.answer['english'] = data.answer.english;
     });
-    this.frequents = this.af.database.list('frequents');
+    this.frequents = this.af.database.list('faq');
   }
 
   onSubmit(freq: any) { 
 
-    freq.title = {spanish: freq.title_spanish, english: freq.title_english};
-    freq.description = {spanish: freq.descrip_spanish, english: freq.descrip_english};
+    freq.question = {spanish: freq.title_spanish, english: freq.title_english};
+    freq.answer = {spanish: freq.descrip_spanish, english: freq.descrip_english};
 
     delete freq['title_spanish'];
     delete freq['title_english'];
