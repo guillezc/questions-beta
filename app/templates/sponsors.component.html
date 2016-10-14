@@ -1,0 +1,52 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a [routerLink]="['/eventos']">Inicio</a>
+            <i class="fa fa-circle"></i>
+            <a href="javascript:void(0);">Patrocinadores</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title"> Patrocinadores </h3>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-body">
+            	<div class="table-container posRel" *ngIf="sponsors | async">
+            		<div class="table-toolbar questions-toolbar">
+                    	<div class="row">
+	                        <div class="col-md-12">
+	                        	<button id="add-session" (click)="addSponsor()" class="btn sbold green">
+	                        		Agregar <i class="fa fa-plus"></i>
+                            	</button>
+	                        </div>
+	                    </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="datatable_participants">
+                        <thead>
+                            <tr role="row" class="heading">
+                                <th width="30%"> Logo </th>
+                                <th width="30%"> Título </th>
+                                <th width="20%"> Tipo </th>
+                                <th width="20%"> Acciones </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let sponsor of sponsorsList">
+                                <td><img [src]="sponsor.image" title="{{ sponsor.title }}" height="30" /></td>
+                                <td>{{ sponsor.title }}</td>
+                                <td>{{ sponsor.type }}</td>
+                                <td>
+                                	<input type="hidden" value="{{ sponsor.$key }}" #sessionId>
+                                    <a href="javascript:;" (click)="editSponsor(sponsor)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-edit"></i></a>
+                                    <a href="javascript:;" (click)="deleteSponsor(sponsor)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

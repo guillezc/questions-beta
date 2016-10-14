@@ -33,10 +33,13 @@ import { FrequentQuestionsComponent } from './pages/preguntas-frecuentes.compone
 import { FrequentQuestionsAddComponent } from './pages/preguntas-frecuentes-nuevo.component';
 import { FrequentQuestionsEditComponent } from './pages/preguntas-frecuentes-editar.component';
 
-
 import { GeneralInfoComponent } from './pages/info-general.component';
 import { GeneralInfoAddComponent } from './pages/info-general-nuevo.component';
 import { GeneralInfoEditComponent } from './pages/info-general-editar.component';
+
+import { SponsorsComponent } from './pages/patrocinadores.component';
+import { SponsorAddComponent } from './pages/patrocinador-nuevo.component';
+import { SponsorEditComponent } from './pages/patrocinador-editar.component';
 
 const appRoutes: Routes = [
   {
@@ -147,6 +150,18 @@ const appRoutes: Routes = [
   {
     path: 'info-general/editar/:id',
     component: GeneralInfoEditComponent
+  },
+  {
+    path: 'patrocinadores',
+    component: SponsorsComponent
+  },
+  {
+    path: 'patrocinador/nuevo',
+    component: SponsorAddComponent
+  },
+  {
+    path: 'patrocinador/editar/:id',
+    component: SponsorEditComponent
   }
 ];
 

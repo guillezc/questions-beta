@@ -58,6 +58,9 @@ import { FrequentQuestionsEditComponent } from './pages/preguntas-frecuentes-edi
 import { GeneralInfoComponent }           from './pages/info-general.component';
 import { GeneralInfoAddComponent }        from './pages/info-general-nuevo.component';
 import { GeneralInfoEditComponent }       from './pages/info-general-editar.component';
+import { SponsorsComponent }              from './pages/patrocinadores.component';
+import { SponsorAddComponent }            from './pages/patrocinador-nuevo.component';
+import { SponsorEditComponent }           from './pages/patrocinador-editar.component';
 
 enableProdMode();
 
@@ -105,7 +108,10 @@ enableProdMode();
     FrequentQuestionsEditComponent,
     GeneralInfoComponent,
     GeneralInfoAddComponent,
-    GeneralInfoEditComponent
+    GeneralInfoEditComponent,
+    SponsorsComponent,
+    SponsorAddComponent,
+    SponsorEditComponent
 	],
 	providers: [
     appRoutingProviders,
