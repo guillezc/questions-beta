@@ -41,6 +41,8 @@ import { SponsorsComponent } from './pages/patrocinadores.component';
 import { SponsorAddComponent } from './pages/patrocinador-nuevo.component';
 import { SponsorEditComponent } from './pages/patrocinador-editar.component';
 
+import { MaterialsComponent } from './pages/materiales.component';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -162,6 +164,10 @@ const appRoutes: Routes = [
   {
     path: 'patrocinador/editar/:id',
     component: SponsorEditComponent
+  },
+  {
+    path: 'materiales',
+    component: MaterialsComponent
   }
 ];
 

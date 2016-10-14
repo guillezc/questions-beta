@@ -61,6 +61,7 @@ import { GeneralInfoEditComponent }       from './pages/info-general-editar.comp
 import { SponsorsComponent }              from './pages/patrocinadores.component';
 import { SponsorAddComponent }            from './pages/patrocinador-nuevo.component';
 import { SponsorEditComponent }           from './pages/patrocinador-editar.component';
+import { MaterialsComponent }             from './pages/materiales.component';
 
 enableProdMode();
 
@@ -111,7 +112,8 @@ enableProdMode();
     GeneralInfoEditComponent,
     SponsorsComponent,
     SponsorAddComponent,
-    SponsorEditComponent
+    SponsorEditComponent,
+    MaterialsComponent
 	],
 	providers: [
     appRoutingProviders,

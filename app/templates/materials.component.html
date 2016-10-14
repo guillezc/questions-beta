@@ -1,0 +1,42 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a [routerLink]="['/eventos']">Inicio</a>
+            <i class="fa fa-circle"></i>
+            <a href="javascript:void(0);">Materiales</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title"> Materiales Relacionados </h3>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-body">
+                <div class="panel-group accordion" id="accordion-materials">
+
+                    <div class="panel panel-default" *ngFor="let summary of summaryList; let i = index">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-materials" 
+                                    href="#collapse_{{i}}" aria-expanded="false">
+                                    <strong>{{ summary.name }}</strong> - {{summary.total}} documento(s) dentro
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse_{{i}}" class="panel-collapse collapse" aria-expanded="false">
+                            <div class="panel-body">
+                                <ul class="list-group">
+                                    <li class="list-group-item list-group-item-info" *ngFor="let material of summary.childs">
+                                        <a href="{{material.url}}" target="_blank"><i class="fa fa-file-pdf-o"></i> {{material.name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>               
+            </div>
+        </div>
+    </div>
+</div>
