@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Frequent }  from '../classes/frequents';
+import { Frequent }  from '../classes/info';
 
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm, FormsModule } from '@angular/forms';
 
-import { Frequent }  from '../classes/frequents';
+import { Frequent }  from '../classes/info';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
