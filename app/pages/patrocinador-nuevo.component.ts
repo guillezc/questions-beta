@@ -60,6 +60,8 @@ export class SponsorAddComponent implements OnInit{
         }, function(error: any) {
 
         }, function() {
+          var downloadURL = uploadTask.snapshot.downloadURL;
+          spon.urlImg = downloadURL;
           sponsorClass.saving = false;
           sponsorClass.af.database.list('sponsors').push(spon);
           sponsorClass.redirectToPatrocinadores();

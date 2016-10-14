@@ -5,7 +5,7 @@ export class Sponsor {
     public title: string;
     public image: string;
     public type: string;
-    public src: string;
+    public urlImg: string;
 
     constructor(){}
 

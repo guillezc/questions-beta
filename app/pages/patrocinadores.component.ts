@@ -42,11 +42,11 @@ export class SponsorsComponent implements OnInit{
 	getSponsors(){
 		this.sponsors = this.af.database.list('sponsors');
 		this.sponsors.subscribe(data => {
-			data.forEach((spon: Sponsor) => {
+			/*data.forEach((spon: Sponsor) => {
 				spon.src = spon.image;
 				var storageRef = this.storage.ref().child('sponsors/'+spon.image);
 				storageRef.getDownloadURL().then((url: any) => spon.image = url);
-			});
+			});*/
 			this.sponsorsList = data;
 		});
 	}
@@ -62,7 +62,7 @@ export class SponsorsComponent implements OnInit{
 	}
 
 	deleteSponsor(sponsor: Sponsor){
-		this.storage.ref().child('sponsors/'+sponsor.src).delete();
+		this.storage.ref().child('sponsors/'+sponsor.image).delete();
 		this.af.database.object('/sponsors/'+sponsor.$key).remove();
 	}
 }

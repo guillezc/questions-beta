@@ -22,6 +22,7 @@ export class SponsorEditComponent implements OnInit{
   sub: any;
   sponsorID: any;
   sponsorImg: any;
+  sponsorUrlImg: any;
 
   constructor(
     private router         : Router,
@@ -43,9 +44,9 @@ export class SponsorEditComponent implements OnInit{
       this.sponsor = this.af.database.object('/sponsors/'+this.sponsorID);
       this.sponsor.subscribe((data: Sponsor) => {
         this.sponsorImg = data.image;
+        this.sponsorUrlImg = data.urlImg;
         data.image = "";
-        var storageRef = this.storageRef.child('sponsors/'+this.sponsorImg);
-        storageRef.getDownloadURL().then((url: any) => data.src = url);
+
         this.sponsorObj = data;
       });
     });
@@ -71,6 +72,8 @@ export class SponsorEditComponent implements OnInit{
         }, function(error: any) {
 
         }, function() {
+          var downloadURL = uploadTask.snapshot.downloadURL;
+          spon.urlImg = downloadURL;
           sponsorClass.saving = false;
           sponsorClass.sponsor.update(spon);
           sponsorClass.redirectToPatrocinadores();
@@ -78,6 +81,7 @@ export class SponsorEditComponent implements OnInit{
       }
     }else{
       spon.image = sponsorClass.sponsorImg;
+      spon.urlImg = sponsorClass.sponsorUrlImg;
       sponsorClass.saving = false;
       sponsorClass.sponsor.update(spon);
       sponsorClass.redirectToPatrocinadores();
