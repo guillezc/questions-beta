@@ -342,6 +342,63 @@ input#new-chat-title{
     margin: 0 0 5px;
     padding-top: 5px;
 }
+#accordion-materials .list-group .list-group-item .btn{
+    padding: 0;
+    height: 24px;
+    width: 24px;
+    background: none;
+    margin-top: 3px;
+    line-height: 34px;
+    float: none !important;
+    border: none;
+    color: red;
+}
+#accordion-materials.accordion .panel .panel-title .accordion-toggle.collapsed{
+    display: inline-block;
+    padding: 2px 10px;
+    color: #000;
+}
+#accordion-materials.accordion .panel .panel-title .accordion-toggle{
+    display: inline-block;
+    padding: 2px 10px;
+    color: #32c5d2;
+}
+#accordion-materials.accordion .panel .panel-title .accordion-toggle small{
+    padding-left: 20px;
+    font-size: 12px;
+    color: #999;
+    font-weight: 600;
+}
+#accordion-materials .panel-default>.panel-heading{
+    background: none;
+    border: 1px solid #f2f2f2;
+}
+#accordion-materials.panel-group .panel{
+    border: none;
+    margin-top: 5px;
+}
+#accordion-materials .list-group .list-group-item-info{
+    padding: 0;
+    background: none;
+    border: none;
+}
+#accordion-materials .list-group .list-group-item-info.list-group-pdf{
+    border: 1px solid #f2f2f2;
+    margin-top: 5px;
+}
+#accordion-materials .list-group .list-group-item-info.list-group-pdf > a.pdf-link{
+    padding: 2px 10px;
+    display: inline-block;
+    font-size: 16px;
+    line-height: 36px;
+    color: #000;
+}
+#accordion-materials .panel-body{
+    padding: 0 15px;
+}
+#accordion-materials .list-group{
+    margin-bottom: 5px;
+}
 
 @media(min-width: 769px){
     .chart-container .chart canvas{

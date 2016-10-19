@@ -14,27 +14,15 @@
         <div class="portlet light portlet-fit portlet-datatable bordered">
             <div class="portlet-body">
                 <div class="panel-group accordion" id="accordion-materials">
-
-                    <div class="panel panel-default" *ngFor="let summary of summaryList; let i = index">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-materials" 
-                                    href="#collapse_{{i}}" aria-expanded="false">
-                                    <strong>{{ summary.name }}</strong> - {{summary.total}} documento(s) dentro
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse_{{i}}" class="panel-collapse collapse" aria-expanded="false">
-                            <div class="panel-body">
-                                <ul class="list-group">
-                                    <li class="list-group-item list-group-item-info" *ngFor="let material of summary.childs">
-                                        <a href="{{material.url}}" target="_blank"><i class="fa fa-file-pdf-o"></i> {{material.name}}</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="clearfix">
+                        <button id="add-summary" (click)="addSummary()" class="btn sbold green pull-left">
+                            Agregar <i class="fa fa-plus"></i>
+                        </button>
                     </div>
-
+                    <br />
+                    <div *ngIf="materials | async">
+                        <tree-assets [assets]="summaryList"></tree-assets>
+                    </div>
                 </div>               
             </div>
         </div>

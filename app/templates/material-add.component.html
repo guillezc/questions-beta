@@ -1,0 +1,50 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a [routerLink]="['/materiales']">materiales</a>
+            <i class="fa fa-circle"></i>
+            <span>Nuevo</span>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title"> {{ asset.name  }} </h3>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-body">
+				<form method="post" (ngSubmit)="onSubmit(assetData.value)" #assetData="ngForm" class="form-sessions">
+					<div class="form-body">
+						<div class="form-group form-md-line-input">
+							<label for="nameSpanish">Nombre <span class="required" aria-required="true">*</span></label>
+							<input type="text" name="nameSpanish" required class="form-control" [ngModel]="asset.nameSpanish">
+							<span class="help-block">Ingrese el nombre para la carpeta</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="nameEnglish"></label>
+							<input type="text" name="nameEnglish" class="form-control" [ngModel]="asset.nameEnglish">
+							<span class="help-block">Enter the name for the folder</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="pdf">Archivo PDF <span class="required" aria-required="true">*</span></label>
+							<input type="file" name="pdf" class="form-control" id="pdf-material" [ngModel]="material.name">
+							<span class="help-block">Seleccione el archivo pdf</span>
+						</div>
+					</div>
+					<div class="form-actions">
+						<div class="row">
+				            <div class="col-md-12 text-right">
+				            	<img src="app/assets/global/img/input-spinner.gif" alt="loading" [hidden]="!saving" />
+				            	<a [routerLink]="['/materiales']" class="btn default"><i class="fa fa-arrow-left"></i> Regresar</a>
+				                <button type="submit" class="btn green mt-ladda-btn ladda-button">
+				                	<span class="ladda-label"><i class="fa fa-save"></i> Guardar</span>
+				                	<span class="ladda-spinner"></span>
+			                	</button>	                
+				            </div>
+				        </div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

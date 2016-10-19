@@ -42,6 +42,7 @@ import { SponsorAddComponent } from './pages/patrocinador-nuevo.component';
 import { SponsorEditComponent } from './pages/patrocinador-editar.component';
 
 import { MaterialsComponent } from './pages/materiales.component';
+import { MaterialAddComponent } from './pages/material-nuevo.component';
 
 const appRoutes: Routes = [
   {
@@ -168,6 +169,10 @@ const appRoutes: Routes = [
   {
     path: 'materiales',
     component: MaterialsComponent
+  },
+  {
+    path: 'material/nuevo',
+    component: MaterialAddComponent
   }
 ];
 

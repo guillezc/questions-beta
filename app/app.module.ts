@@ -27,10 +27,11 @@ import { SELECT_DIRECTIVES } from 'ng2-select/ng2-select';
 import { TagInputModule } 	 from 'ng2-tag-input';
 import { ChartsModule } 		 from 'ng2-charts/ng2-charts';
 
-import { AppComponent }      from './app.component';
-import { HeaderComponent }   from './header.component';
-import { SidebarComponent }  from './sidebar.component';
-import { PieChartComponent } from './parts/pieChart.component';
+import { AppComponent }        from './app.component';
+import { HeaderComponent }     from './header.component';
+import { SidebarComponent }    from './sidebar.component';
+import { PieChartComponent }   from './parts/pieChart.component';
+import { TreeAssetsComponent } from './parts/treeAssets.component';
 
 import { SessionsComponent } 							from './pages/sesiones.component';
 import { SessionAddComponent } 						from './pages/sesion-nueva.component';
@@ -62,6 +63,7 @@ import { SponsorsComponent }              from './pages/patrocinadores.component
 import { SponsorAddComponent }            from './pages/patrocinador-nuevo.component';
 import { SponsorEditComponent }           from './pages/patrocinador-editar.component';
 import { MaterialsComponent }             from './pages/materiales.component';
+import { MaterialAddComponent }           from './pages/material-nuevo.component';
 
 enableProdMode();
 
@@ -80,6 +82,7 @@ enableProdMode();
   	HeaderComponent, 
   	SidebarComponent,
   	PieChartComponent,
+    TreeAssetsComponent,
   	ObjToArrPipe,
   	ObjKeyToArrPipe,
   	NKDatetime,
@@ -113,20 +116,21 @@ enableProdMode();
     SponsorsComponent,
     SponsorAddComponent,
     SponsorEditComponent,
-    MaterialsComponent
+    MaterialsComponent,
+    MaterialAddComponent
 	],
 	providers: [
     appRoutingProviders,
     FIREBASE_PROVIDERS,
     defaultFirebase({
-	    apiKey: "AIzaSyCTfrqErjXXuOPAPWK4AOJBLu3tg2-dJx8",
+	    /*apiKey: "AIzaSyCTfrqErjXXuOPAPWK4AOJBLu3tg2-dJx8",
 	    authDomain: "events-7d50b.firebaseapp.com",
 	    databaseURL: "https://events-7d50b.firebaseio.com",
-	    storageBucket: "events-7d50b.appspot.com"
-	    /*apiKey: "AIzaSyB5ZUgBJabSy-F18lNUiyqmb0xy72oFCx4",
+	    storageBucket: "events-7d50b.appspot.com"*/
+	    apiKey: "AIzaSyB5ZUgBJabSy-F18lNUiyqmb0xy72oFCx4",
 	    authDomain: "questions-16537.firebaseapp.com",
 	    databaseURL: "https://questions-16537.firebaseio.com",
-	    storageBucket: "questions-16537.appspot.com"*/
+	    storageBucket: "questions-16537.appspot.com"
 	  }),
 	  firebaseAuthConfig({
 	    provider: AuthProviders.Anonymous,
