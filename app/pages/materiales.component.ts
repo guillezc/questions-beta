@@ -14,8 +14,12 @@ import { Title } from '@angular/platform-browser';
 
 export class MaterialsComponent implements OnInit, OnDestroy{
 	materials: FirebaseListObservable<any[]>;
+	assets: FirebaseListObservable<any[]>;
 	childrens: FirebaseObjectObservable<any[]>;
+	allAssets: any[] = [];
+	allAttach: any[] = [];
 	summaryList: Node[] = [];
+	assetList: Node[] = [];
 	storage: any;
 	subAssets: any;
 	subAttach: any;
@@ -33,7 +37,8 @@ export class MaterialsComponent implements OnInit, OnDestroy{
 	}
 
 	ngOnInit() {  
-		this.getMaterials();
+		//this.getMaterials();
+		this.getAllAssets();
 		this.setTitle("Materiales - México Cumbre de Negocios");
 	}
 
@@ -41,7 +46,97 @@ export class MaterialsComponent implements OnInit, OnDestroy{
 		this.summaryList = [];
 		this.subAssets.unsubscribe();
 		this.subAttach.unsubscribe();
-		this.subAttachR.unsubscribe();
+		//this.subAttachR.unsubscribe();
+	}
+
+	getAllAssets(){
+		this.materials = this.af.database.list('assets');
+		this.subAssets = this.materials.subscribe(data => {
+
+		});
+		this.assets = this.af.database.list('assetstest');
+		this.assets.subscribe(assetsData => {
+			this.allAssets = this.buildTreeAssets(assetsData, false);
+			//this.generateData();
+			console.log(this.allAssets);
+		});
+	}
+
+	buildTreeAssets(assets: any, parentID: any){
+		let arrayTmp: Node[] = [];
+		assets.forEach((asset: any) => {
+			if(asset.parentId == parentID){
+
+				var childs: Node[] = [];
+				var node: Node = new Node();
+				node.id = asset.$key;
+				node.name = asset.nameSpanish;
+				node.total = 0;
+				node.children = childs;
+
+				var children = this.buildTreeAssets(assets, asset.$key);
+				if(children){
+					node.children = children;
+				}
+
+				arrayTmp.push(node);
+				//console.log(arrayTmp);
+				/*var childs: Node[] = [];
+				var materials: Material[] = [];
+				var node: Node = new Node();
+
+				node.id = asset.$key;
+				node.name = asset.nameSpanish;
+				node.total = 0;
+				node.children = childs;
+
+				this.assetList[node.id] = node;*/
+			}
+		});
+		return arrayTmp;
+	}
+
+	generateData(){
+		var counter = 0;
+		this.allAssets.forEach((asset: any) => {
+			var children: Node[] = [];
+			var materials: Material[] = [];
+			var parentNode: Node = new Node();
+
+			parentNode.id = asset.$key;
+			parentNode.name = asset.nameSpanish;
+			parentNode.total = 0;
+			parentNode.children = children;
+
+			this.subAttach = this.af.database.object('assetsAttachment/'+asset.$key).subscribe(attach => {
+					
+				var attachsArr = this.setAttachments(attach);
+				attachsArr.forEach(mat => {
+					var mater: Material = new Material();
+					mater.id = mat.key;
+					mater.name = mat.name;
+					mater.url = mat.url;
+
+					materials.push(mater);
+				});
+
+				parentNode.material = materials;
+				parentNode.total = materials.length;
+
+				this.summaryList[counter] = parentNode;
+				
+				if(asset.children.length>0){
+					this.generateDataRecursive(asset.children, counter);
+				}
+				
+				counter++;
+			});
+
+		});
+	}
+
+	generateDataRecursive(assets: any, counter: any){
+
 	}
 
 	getMaterials(){

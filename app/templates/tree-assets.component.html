@@ -6,6 +6,9 @@
                 href="#collapse-{{i}}-{{asset.id}}" aria-expanded="false">
                 <i class="fa fa-folder"></i> <strong>{{ asset.name }}</strong>  <small>{{asset.total}} documento(s) dentro</small>
             </a>
+            
+            <a class="action-links" [routerLink]="['/material/nuevo/'+asset.id+'/archivo']"><i class="fa fa-file-pdf-o"></i></a>
+            <a class="action-links" [routerLink]="['/material/nuevo/'+asset.id+'/carpeta']"><i class="fa fa-folder-o"></i></a>
         </h4>
     </div>
     <div id="collapse-{{i}}-{{asset.id}}" class="panel-collapse collapse" aria-expanded="false">

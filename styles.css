@@ -399,6 +399,11 @@ input#new-chat-title{
 #accordion-materials .list-group{
     margin-bottom: 5px;
 }
+#accordion-materials .action-links{
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+}
 
 @media(min-width: 769px){
     .chart-container .chart canvas{

@@ -173,6 +173,10 @@ const appRoutes: Routes = [
   {
     path: 'material/nuevo',
     component: MaterialAddComponent
+  },
+  {
+    path: 'material/nuevo/:id/:type',
+    component: MaterialAddComponent
   }
 ];
 

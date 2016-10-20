@@ -9,14 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var TreeAssetsComponent = (function () {
-    function TreeAssetsComponent() {
+    function TreeAssetsComponent(router) {
+        this.router = router;
         this.assets = [];
     }
     TreeAssetsComponent.prototype.ngOnInit = function () {
     };
     TreeAssetsComponent.prototype.ngOnDestroy = function () {
         this.assets = [];
+    };
+    TreeAssetsComponent.prototype.addMaterial = function (assetID) {
+        var link = ['/material/nuevo', { id: assetID, type: 'archivo' }];
+        this.router.navigate(link);
+    };
+    TreeAssetsComponent.prototype.addSubFolder = function (assetID) {
+        var link = ['/material/nuevo', { id: assetID, type: 'carpeta' }];
+        this.router.navigate(link);
     };
     return TreeAssetsComponent;
 }());
@@ -29,7 +39,7 @@ TreeAssetsComponent = __decorate([
         selector: 'tree-assets',
         templateUrl: 'app/templates/tree-assets.component.html'
     }),
-    __metadata("design:paramtypes", [])
+    __metadata("design:paramtypes", [router_1.Router])
 ], TreeAssetsComponent);
 exports.TreeAssetsComponent = TreeAssetsComponent;
 //# sourceMappingURL=treeAssets.component.js.map

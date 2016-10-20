@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Node }  from '../classes/node';
 import { Material }  from '../classes/material';
@@ -15,14 +15,20 @@ import * as firebase from "firebase";
 })
 
 export class MaterialAddComponent implements OnInit{
-	materialObs: FirebaseObjectObservable<any[]>;
+	assetObs: FirebaseObjectObservable<any>;
+	materialObs: FirebaseObjectObservable<any>;
 	asset: Node = new Node();
 	material: Material = new Material();
 	storageRef: any;
-  	saving = false;
+	saving = false;
+	isFile = false;
+	sub: any;
+	assetID: any;
+	assetType: any;
 
 	constructor(
 		private router       : Router,
+		private route 		 : ActivatedRoute,
 		public af            : AngularFire,
 		public titleService  : Title) {
 
@@ -35,41 +41,72 @@ export class MaterialAddComponent implements OnInit{
 
 	ngOnInit() {  
 		this.setTitle("Material Nuevo - México Cumbre de Negocios");
+		this.sub = this.route.params.subscribe(params => {
+	      this.assetID = params['id'];
+	      this.assetType = params['type'];
+
+	      if(this.assetID != undefined && this.assetType != undefined){
+	      	if(this.assetType == 'archivo'){
+	      		this.assetObs = this.af.database.object('assets/'+this.assetID);
+	      		this.assetObs.subscribe(assetData => {
+	      			this.isFile = true;
+	      			this.asset.nameSpanish = assetData.nameSpanish;
+	      			this.asset.nameEnglish = assetData.nameEnglish;
+	      		});
+	      	}
+	      }
+	      
+	    });
 	}
 
 	onSubmit(asset: any){
 		this.saving = true;
 		var pdfElement: any = document.getElementById("pdf-material");
-	    var selectFile = pdfElement.files[0];
-	    var fileType = /^application\/pdf/;
-	    var materialClass = this;
-	    var newAttach = {name: "", url: ""};
-	    var newAsset = {nameSpanish: asset.nameSpanish, nameEnglish: asset.nameEnglish, childs: {}}
+    var selectFile = pdfElement.files[0];
+    var fileType = /^application\/pdf/;
+    var materialClass = this;
+    var newAttach = {name: "", url: ""};
+    var newAsset = {nameSpanish: asset.nameSpanish, nameEnglish: asset.nameEnglish, childs: {}}
+    var newAssetID = '';
 
-	    var newAssetID = materialClass.af.database.list('assets').push(newAsset).key;
+    //var newAssetID = this.assetID != undefined ? this.assetID : materialClass.af.database.list('assets').push(newAsset).key;
 
-	    if(selectFile != undefined){
-	      if (!fileType.test(selectFile.type)) {
-	        alert('Tipo de archivo no válido');
-	      }else{
-	        var uploadTask = this.storageRef.child('materials/' + selectFile.name).put(selectFile);
-	        newAttach.name = selectFile.name;
+    if(this.assetID != undefined){
+    	if(this.assetType == 'archivo'){
+    		newAssetID = this.assetID;
+    	}else{
+    		newAssetID = materialClass.af.database.list('assets/'+this.assetID+'/childs').push(newAsset).key;
+    	}
+    }else{
+    	newAssetID = materialClass.af.database.list('assets').push(newAsset).key;
+    }
 
-	        uploadTask.on('state_changed', function(snapshot: any){
+    if(selectFile != undefined){
+      if (!fileType.test(selectFile.type)) {
+        alert('Tipo de archivo no válido');
+      }else{
+        var uploadTask = this.storageRef.child('materials/' + selectFile.name).put(selectFile);
+        newAttach.name = selectFile.name;
 
-	        }, function(error: any) {
+        uploadTask.on('state_changed', function(snapshot: any){
 
-	        }, function() {
-	          var downloadURL = uploadTask.snapshot.downloadURL;
-	          newAttach.url = downloadURL;
-	          materialClass.saving = false;
-	          materialClass.af.database.list('assetsAttachment/'+newAssetID).push(newAttach);
-	          materialClass.redirectToMateriales();
-	        });
-	      }
-	    }else{
-	      alert('Seleccione un archivo pdf');
-	    }
+        }, function(error: any) {
+
+        }, function() {
+          var downloadURL = uploadTask.snapshot.downloadURL;
+          newAttach.url = downloadURL;
+          materialClass.saving = false;
+          materialClass.af.database.list('assetsAttachment/'+newAssetID).push(newAttach);
+          materialClass.redirectToMateriales();
+        });
+      }
+    }else{
+    	materialClass.redirectToMateriales();
+    }
+	}
+
+	generateParent(asset: any){
+
 	}
 
 	redirectToMateriales(){
