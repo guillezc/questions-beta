@@ -6,9 +6,11 @@
                 href="#collapse-{{i}}-{{asset.id}}" aria-expanded="false">
                 <i class="fa fa-folder"></i> <strong>{{ asset.name }}</strong>  <small>{{asset.total}} documento(s) dentro</small>
             </a>
-            
-            <a class="action-links" [routerLink]="['/material/nuevo/'+asset.id+'/archivo']"><i class="fa fa-file-pdf-o"></i></a>
-            <a class="action-links" [routerLink]="['/material/nuevo/'+asset.id+'/carpeta']"><i class="fa fa-folder-o"></i></a>
+            <div class="action-links-container pull-right">
+                <a class="action-links" (click)="deleteFolder(asset)" title="Borrar carpeta"><i class="fa fa-trash"></i></a>
+                <a class="action-links" [routerLink]="['/material/nuevo/'+asset.id+'/archivo']" title="Agregar PDF"><i class="fa fa-file-pdf-o"></i></a>
+                <a class="action-links" [routerLink]="['/material/nuevo/'+asset.id+'/carpeta']" title="Agregar carpeta"><i class="fa fa-folder-o"></i></a>
+            </div>
         </h4>
     </div>
     <div id="collapse-{{i}}-{{asset.id}}" class="panel-collapse collapse" aria-expanded="false">
@@ -19,7 +21,7 @@
                 </li>
                 <li class="list-group-item list-group-item-info list-group-pdf clearfix" *ngFor="let material of asset.material">
                     <a href="{{material.url}}" target="_blank" class="pdf-link"><i class="fa fa-file-pdf-o"></i> {{material.name}}</a>
-                    <a href="javascript:;" (click)="deleteMaterial(material)" class="btn btn-circle btn-icon-only btn-default pull-right"><i class="fa fa-trash"></i></a>
+                    <a href="javascript:;" (click)="deleteMaterial(material)" title="Borrar PDF" class="action-links"><i class="fa fa-trash"></i></a>
                 </li>
             </ul>
         </div>

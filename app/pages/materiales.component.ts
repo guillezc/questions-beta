@@ -63,7 +63,7 @@ export class MaterialsComponent implements OnInit, OnDestroy{
 				var materials: Material[] = [];
 				var node: Node = new Node();
 				node.id = asset.$key;
-				node.name = asset.nameSpanish;
+				node.name = asset.name.spanish;
 				node.children = childs;
 				node.material = this.getAttachments(node.id);
 				node.total = node.material.length;

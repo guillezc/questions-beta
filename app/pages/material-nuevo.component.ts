@@ -50,8 +50,8 @@ export class MaterialAddComponent implements OnInit{
 	      		this.assetObs = this.af.database.object('assets/'+this.assetID);
 	      		this.assetObs.subscribe(assetData => {
 	      			this.isFile = true;
-	      			this.asset.nameSpanish = assetData.nameSpanish;
-	      			this.asset.nameEnglish = assetData.nameEnglish;
+	      			this.asset.nameSpanish = assetData.name.spanish;
+	      			this.asset.nameEnglish = assetData.name.english;
 	      		});
 	      	}
 	      }
@@ -66,7 +66,7 @@ export class MaterialAddComponent implements OnInit{
     var fileType = /^application\/pdf/;
     var materialClass = this;
     var newAttach = {name: "", url: ""};
-    var newAsset = {nameSpanish: asset.nameSpanish, nameEnglish: asset.nameEnglish, childs: {}, parentId: false}
+    var newAsset = {name: {english: asset.nameEnglish, spanish: asset.nameSpanish}, childs: {}, parentId: false}
     var newAssetID = '';
 
     //var newAssetID = this.assetID != undefined ? this.assetID : materialClass.af.database.list('assets').push(newAsset).key;

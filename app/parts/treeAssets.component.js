@@ -9,13 +9,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var angularfire2_1 = require("angularfire2");
 var router_1 = require("@angular/router");
+var firebase = require("firebase");
 var TreeAssetsComponent = (function () {
-    function TreeAssetsComponent(router) {
+    function TreeAssetsComponent(router, af) {
         this.router = router;
+        this.af = af;
         this.assets = [];
     }
     TreeAssetsComponent.prototype.ngOnInit = function () {
+        this.storageRef = firebase.storage().ref();
+        this.storage = firebase.storage();
     };
     TreeAssetsComponent.prototype.ngOnDestroy = function () {
         this.assets = [];
@@ -28,6 +33,33 @@ var TreeAssetsComponent = (function () {
         var link = ['/material/nuevo', { id: assetID, type: 'carpeta' }];
         this.router.navigate(link);
     };
+    TreeAssetsComponent.prototype.deleteFolder = function (asset) {
+        console.log(asset);
+        if (window.confirm("¿Desea la carpeta: '" + asset.name + "'?\n Se borraran todas las subcarpetas y archivos dentro de éste.")) {
+            this.deleteAssets(asset);
+        }
+    };
+    TreeAssetsComponent.prototype.deleteAssets = function (asset) {
+        var _this = this;
+        this.af.database.object('assets/' + asset.id).remove();
+        if (asset.material.length > 0) {
+            asset.material.forEach(function (attach) {
+                _this.storage.ref().child('materials/' + attach.name).delete();
+                _this.af.database.object('assetsAttachment/' + attach.assetId + '/' + attach.id).remove();
+            });
+        }
+        if (asset.children.length > 0) {
+            asset.children.forEach(function (assetChild) {
+                _this.deleteAssets(assetChild);
+            });
+        }
+    };
+    TreeAssetsComponent.prototype.deleteMaterial = function (attach) {
+        if (window.confirm("¿Desea eliminar el archivo: '" + attach.name + "'?")) {
+            this.storage.ref().child('materials/' + attach.name).delete();
+            this.af.database.object('assetsAttachment/' + attach.assetId + '/' + attach.id).remove();
+        }
+    };
     return TreeAssetsComponent;
 }());
 __decorate([
@@ -39,7 +71,8 @@ TreeAssetsComponent = __decorate([
         selector: 'tree-assets',
         templateUrl: 'app/templates/tree-assets.component.html'
     }),
-    __metadata("design:paramtypes", [router_1.Router])
+    __metadata("design:paramtypes", [router_1.Router,
+        angularfire2_1.AngularFire])
 ], TreeAssetsComponent);
 exports.TreeAssetsComponent = TreeAssetsComponent;
 //# sourceMappingURL=treeAssets.component.js.map

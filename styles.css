@@ -399,10 +399,18 @@ input#new-chat-title{
 #accordion-materials .list-group{
     margin-bottom: 5px;
 }
+#accordion-materials.accordion .panel .panel-title .accordion-toggle.collapsed + .action-links-container > .action-links{
+    color: #000;
+}
+#accordion-materials.accordion .panel .panel-title .accordion-toggle + .action-links-container > .action-links{
+    color: #32c5d2;
+}
 #accordion-materials .action-links{
+    color: #000;
     float: right;
     margin-right: 10px;
     margin-top: 10px;
+    font-size: 16px;
 }
 
 @media(min-width: 769px){

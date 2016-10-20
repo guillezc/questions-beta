@@ -8,7 +8,7 @@ export class Node {
     public nameSpanish: string;
     public nameEnglish: string;
     public total: number;
-    public children: any;
+    public children: Node[];
     public material: Material[];
 
     constructor(){}

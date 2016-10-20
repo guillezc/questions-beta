@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Node }  from '../classes/node';
 import { Material }  from '../classes/material';
 
+import * as firebase from "firebase";
+
 @Component({
     selector: 'tree-assets',
     templateUrl: 'app/templates/tree-assets.component.html'
@@ -15,13 +17,18 @@ export class TreeAssetsComponent implements OnInit, OnDestroy {
 	@Input()
 	assets: Node[] = [];
 
+	storageRef: any;
+	storage: any;
 
-	constructor(private router : Router) {
+	constructor(
+		private router : Router,
+		public af      : AngularFire) {
 
 	}
 
 	ngOnInit() {
-    	//console.log(this.assets);
+    	this.storageRef = firebase.storage().ref();
+    	this.storage = firebase.storage();
 	}
 
 	ngOnDestroy() {
@@ -38,5 +45,32 @@ export class TreeAssetsComponent implements OnInit, OnDestroy {
     	this.router.navigate(link);
 	}
 
+	deleteFolder(asset: Node){
+		if ( window.confirm("¿Desea la carpeta: '"+asset.name+"'?\n Se borraran todas las subcarpetas y archivos dentro de éste.") ){
+			this.deleteAssets(asset);
+		}
+	}
+
+	deleteAssets(asset: Node){
+		this.af.database.object('assets/'+asset.id).remove();
+		if(asset.material.length>0){
+			asset.material.forEach(attach=>{
+				this.storage.ref().child('materials/'+attach.name).delete();
+				this.af.database.object('assetsAttachment/'+attach.assetId+'/'+attach.id).remove();
+			});
+		}
+		if(asset.children.length>0){
+			asset.children.forEach(assetChild=>{
+				this.deleteAssets(assetChild);
+			});
+		}
+	}
+
+	deleteMaterial(attach: Material){
+		if ( window.confirm("¿Desea eliminar el archivo: '"+attach.name+"'?") ) {
+  		this.storage.ref().child('materials/'+attach.name).delete();
+			this.af.database.object('assetsAttachment/'+attach.assetId+'/'+attach.id).remove();
+    }
+	}
 
 }
