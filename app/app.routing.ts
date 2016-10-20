@@ -44,6 +44,9 @@ import { SponsorEditComponent } from './pages/patrocinador-editar.component';
 import { MaterialsComponent } from './pages/materiales.component';
 import { MaterialAddComponent } from './pages/material-nuevo.component';
 
+import { LocationsComponent } from './pages/locaciones.component';
+import { LocationAddComponent } from './pages/locacion-nuevo.component';
+
 const appRoutes: Routes = [
   {
     path: '',
@@ -177,6 +180,14 @@ const appRoutes: Routes = [
   {
     path: 'material/nuevo/:id/:type',
     component: MaterialAddComponent
+  },
+  {
+    path: 'locaciones',
+    component: LocationsComponent
+  },
+  {
+    path: 'locacion/nuevo',
+    component: LocationAddComponent
   }
 ];
 

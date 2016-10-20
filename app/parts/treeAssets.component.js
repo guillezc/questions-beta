@@ -34,7 +34,6 @@ var TreeAssetsComponent = (function () {
         this.router.navigate(link);
     };
     TreeAssetsComponent.prototype.deleteFolder = function (asset) {
-        console.log(asset);
         if (window.confirm("¿Desea la carpeta: '" + asset.name + "'?\n Se borraran todas las subcarpetas y archivos dentro de éste.")) {
             this.deleteAssets(asset);
         }

@@ -1,0 +1,52 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a [routerLink]="['/eventos']">Inicio</a>
+            <i class="fa fa-circle"></i>
+            <a href="javascript:void(0);">Locaciones</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title"> Locaciones </h3>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-body">
+            	<div class="table-container posRel" *ngIf="locations | async">
+            		<div class="table-toolbar questions-toolbar">
+                    	<div class="row">
+	                        <div class="col-md-12">
+	                        	<button id="add-session" (click)="addLocation()" class="btn sbold green">
+	                        		Agregar <i class="fa fa-plus"></i>
+                            	</button>
+	                        </div>
+	                    </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" id="datatable_participants">
+                        <thead>
+                            <tr role="row" class="heading">
+                                <th width="30%"> Imagen </th>
+                                <th width="30%"> Nombre </th>
+                                <th width="20%"> Clave </th>
+                                <th width="20%"> Acciones </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let location of locationsList">
+                                <td><img [src]="location.urlImg" title="{{ location.title }}" height="30" /></td>
+                                <td>{{ location.name.spanish }}</td>
+                                <td>{{ location.codename }}</td>
+                                <td>
+                                	<input type="hidden" value="{{ location.$key }}" #sessionId>
+                                    <a href="javascript:;" (click)="editLocation(location)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-edit"></i></a>
+                                    <a href="javascript:;" (click)="deleteLocation(location)" class="btn btn-circle btn-icon-only btn-default"><i class="fa fa-trash"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
