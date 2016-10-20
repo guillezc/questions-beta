@@ -20,8 +20,8 @@
                         </button>
                     </div>
                     <br />
-                    <div *ngIf="materials | async">
-                        <tree-assets [assets]="summaryList"></tree-assets>
+                    <div *ngIf="assets | async">
+                        <tree-assets [assets]="allAssets"></tree-assets>
                     </div>
                 </div>               
             </div>

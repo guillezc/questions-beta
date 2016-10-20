@@ -1,9 +1,10 @@
 export class Material {
 
-    public $key: number;
-    public id: number;
+    public $key: string;
+    public id: string;
     public name: string;
     public url: string;
+    public assetId: string;
 
     constructor(){}
 

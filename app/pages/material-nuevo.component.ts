@@ -66,7 +66,7 @@ export class MaterialAddComponent implements OnInit{
     var fileType = /^application\/pdf/;
     var materialClass = this;
     var newAttach = {name: "", url: ""};
-    var newAsset = {nameSpanish: asset.nameSpanish, nameEnglish: asset.nameEnglish, childs: {}}
+    var newAsset = {nameSpanish: asset.nameSpanish, nameEnglish: asset.nameEnglish, childs: {}, parentId: false}
     var newAssetID = '';
 
     //var newAssetID = this.assetID != undefined ? this.assetID : materialClass.af.database.list('assets').push(newAsset).key;
@@ -75,7 +75,8 @@ export class MaterialAddComponent implements OnInit{
     	if(this.assetType == 'archivo'){
     		newAssetID = this.assetID;
     	}else{
-    		newAssetID = materialClass.af.database.list('assets/'+this.assetID+'/childs').push(newAsset).key;
+    		newAsset.parentId = this.assetID;
+    		newAssetID = materialClass.af.database.list('assets').push(newAsset).key;
     	}
     }else{
     	newAssetID = materialClass.af.database.list('assets').push(newAsset).key;
@@ -101,7 +102,11 @@ export class MaterialAddComponent implements OnInit{
         });
       }
     }else{
-    	materialClass.redirectToMateriales();
+    	if(this.assetType == 'archivo'){
+    		alert('Por favor ingrese el archivo PDF');
+    	}else{
+    		materialClass.redirectToMateriales();
+    	}
     }
 	}
 

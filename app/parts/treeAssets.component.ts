@@ -13,7 +13,7 @@ import { Material }  from '../classes/material';
 export class TreeAssetsComponent implements OnInit, OnDestroy {
 
 	@Input()
-  	assets: Node[] = [];
+	assets: Node[] = [];
 
 
 	constructor(private router : Router) {

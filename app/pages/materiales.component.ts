@@ -13,17 +13,13 @@ import { Title } from '@angular/platform-browser';
 })
 
 export class MaterialsComponent implements OnInit, OnDestroy{
-	materials: FirebaseListObservable<any[]>;
+	attachs: FirebaseListObservable<any[]>;
 	assets: FirebaseListObservable<any[]>;
-	childrens: FirebaseObjectObservable<any[]>;
 	allAssets: any[] = [];
 	allAttach: any[] = [];
-	summaryList: Node[] = [];
-	assetList: Node[] = [];
-	storage: any;
 	subAssets: any;
 	subAttach: any;
-	subAttachR: any;
+
 
 	constructor(
 		private router       : Router,
@@ -37,28 +33,24 @@ export class MaterialsComponent implements OnInit, OnDestroy{
 	}
 
 	ngOnInit() {  
-		//this.getMaterials();
 		this.getAllAssets();
 		this.setTitle("Materiales - México Cumbre de Negocios");
 	}
 
 	ngOnDestroy(){
-		this.summaryList = [];
+		this.allAttach = [];
 		this.subAssets.unsubscribe();
 		this.subAttach.unsubscribe();
-		//this.subAttachR.unsubscribe();
 	}
 
 	getAllAssets(){
-		this.materials = this.af.database.list('assets');
-		this.subAssets = this.materials.subscribe(data => {
-
-		});
-		this.assets = this.af.database.list('assetstest');
-		this.assets.subscribe(assetsData => {
-			this.allAssets = this.buildTreeAssets(assetsData, false);
-			//this.generateData();
-			console.log(this.allAssets);
+		this.attachs = this.af.database.list('assetsAttachment');
+		this.subAttach = this.attachs.subscribe(data => {
+			this.allAttach = this.convertAttachments(data);
+			this.assets = this.af.database.list('assets');
+			this.subAssets = this.assets.subscribe(assetsData => {
+				this.allAssets = this.buildTreeAssets(assetsData, false);
+			});
 		});
 	}
 
@@ -68,198 +60,60 @@ export class MaterialsComponent implements OnInit, OnDestroy{
 			if(asset.parentId == parentID){
 
 				var childs: Node[] = [];
+				var materials: Material[] = [];
 				var node: Node = new Node();
 				node.id = asset.$key;
 				node.name = asset.nameSpanish;
-				node.total = 0;
 				node.children = childs;
+				node.material = this.getAttachments(node.id);
+				node.total = node.material.length;
 
 				var children = this.buildTreeAssets(assets, asset.$key);
 				if(children){
 					node.children = children;
+					children.forEach(child=>{
+						node.total = node.total + child.total;
+					});
 				}
 
 				arrayTmp.push(node);
-				//console.log(arrayTmp);
-				/*var childs: Node[] = [];
-				var materials: Material[] = [];
-				var node: Node = new Node();
-
-				node.id = asset.$key;
-				node.name = asset.nameSpanish;
-				node.total = 0;
-				node.children = childs;
-
-				this.assetList[node.id] = node;*/
 			}
 		});
 		return arrayTmp;
 	}
 
-	generateData(){
-		var counter = 0;
-		this.allAssets.forEach((asset: any) => {
-			var children: Node[] = [];
-			var materials: Material[] = [];
-			var parentNode: Node = new Node();
+	getAttachments(assetID: any){
 
-			parentNode.id = asset.$key;
-			parentNode.name = asset.nameSpanish;
-			parentNode.total = 0;
-			parentNode.children = children;
+		let arrayTmp: Material[] = [];
+		this.allAttach.forEach(attach=>{
+			if(attach.assetkey == assetID){
+				var mater: Material = new Material();
+				mater.assetId = assetID;
+				mater.id = attach.key;
+				mater.name = attach.name;
+				mater.url = attach.url;
 
-			this.subAttach = this.af.database.object('assetsAttachment/'+asset.$key).subscribe(attach => {
-					
-				var attachsArr = this.setAttachments(attach);
-				attachsArr.forEach(mat => {
-					var mater: Material = new Material();
-					mater.id = mat.key;
-					mater.name = mat.name;
-					mater.url = mat.url;
-
-					materials.push(mater);
-				});
-
-				parentNode.material = materials;
-				parentNode.total = materials.length;
-
-				this.summaryList[counter] = parentNode;
-				
-				if(asset.children.length>0){
-					this.generateDataRecursive(asset.children, counter);
-				}
-				
-				counter++;
-			});
-
+				arrayTmp.push(mater);
+			}
 		});
+		return arrayTmp;
 	}
 
-	generateDataRecursive(assets: any, counter: any){
-
-	}
-
-	getMaterials(){
-		this.materials = this.af.database.list('assets');
-		this.subAssets = this.materials.subscribe(data => {
-
-			var counter = 0;
-			data.forEach(summ => {
-
-				var childs: Node[] = [];
-				var materials: Material[] = [];
-				var parentNode: Node = new Node();
-
-				parentNode.id = summ.$key;
-				parentNode.name = summ.nameSpanish;
-				parentNode.total = 0;
-				parentNode.children = childs;
-
-				this.subAttach = this.af.database.object('assetsAttachment/'+summ.$key).subscribe(attach => {
-					
-					var attachsArr = this.setAttachments(attach);
-					attachsArr.forEach(mat => {
-						var mater: Material = new Material();
-						mater.id = mat.key;
-						mater.name = mat.name;
-						mater.url = mat.url;
-
-						materials.push(mater);
-					});
-
-					parentNode.material = materials;
-					parentNode.total = materials.length;
-
-					this.summaryList[counter] = parentNode;
-					
-					if(summ.childs != undefined){
-						var childsArr = this.setChildsItems(summ.childs);
-						this.getChilds(childsArr, counter);
-					}
-					
-					counter++;
-				});
-
-			});
-
-		});
-	}
-
-	getChilds(assets: any, counter: any){
-		
-		var counter_child = 0;
-		assets.forEach((summ: any) => {
-			
-			var childs: Node[] = [];
-			var materials: Material[] = [];
-			var parentNode: Node = new Node();
-
-			parentNode.id = summ.key;
-			parentNode.name = summ.nameSpanish;
-			parentNode.total = 0;
-			parentNode.children = childs;
-
-			this.subAttachR = this.af.database.object('assetsAttachment/'+summ.key).subscribe(attach => {
-
-				var attachsArr = this.setAttachments(attach);
-
-				attachsArr.forEach(mat => {
-					var mater: Material = new Material();
-					mater.id = mat.key;
-					mater.name = mat.name;
-					mater.url = mat.url;
-
-					materials.push(mater);
-				});
-
-				parentNode.material = materials;
-				parentNode.total = materials.length;
-
-				this.summaryList[counter].children[counter_child] = parentNode;
-				this.summaryList[counter].total = this.summaryList[counter].total + materials.length;
-				
-				if(summ.childs != undefined){
-					var childsArr = this.setChildsItems(summ.childs);
-					this.getChilds(childsArr, counter_child);
-				}
-
-				counter_child++;
-			});
-			
-		});
-
-
-	}
-
-	setChildsItems(object: any){
-
-    let newArr: any[] = [];
-    for (var key in object) {
-    	var id: any = key;
-    	object[key].key = key;
-      newArr.push(object[key]);
-    }
-
-    return newArr;
-
-  }
-
-  setAttachments(object: any){
-  	
-    let newArr: any[] = [];
-
-    if(object.$value === undefined){
-    	delete object['$key'];
-	    delete object['$exists'];
-	    delete object['empty'];
-	    for (var key in object) {
-	    	object[key].key = key;
-	      newArr.push(object[key]);
+	convertAttachments(attachs: any[]){
+		let newArr: any[] = [];
+		attachs.forEach(attachObj=>{
+			var assetID = attachObj['$key'];
+			delete attachObj['$key'];
+	    delete attachObj['$exists'];
+	    delete attachObj['empty'];
+	    for (var key in attachObj) {
+	    	attachObj[key].assetkey = assetID;
+	    	attachObj[key].key = key;
+	      newArr.push(attachObj[key]);
 	    }
-    }
-    
-    return newArr;
-  }
+		});
+		return newArr;
+	}
 
 	addSummary(){
 		let link = ['/material/nuevo'];
