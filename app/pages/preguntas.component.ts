@@ -136,7 +136,7 @@ export class QuestionsComponent implements OnInit {
             q.userName = speakerData.name;
           });
           this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {
-            q.sessionName = sessionData.title;
+            q.sessionName = sessionData.title.spanish;
           });
         });
         this.questionsList = data;
@@ -144,6 +144,7 @@ export class QuestionsComponent implements OnInit {
       });
     }else{
       this.getQuestions();
+      this.filter = null;
     }
     
   }

@@ -30,7 +30,7 @@
                     </div>
                     <div class="caption">
                         <i class="fa fa-question-circle"></i> Todas las preguntas<br />
-                        <small *ngIf="(filter | async) && (filter | async)?.title">{{ (filter | async)?.title }} | {{ (filter | async)?.startTime | date:"H:mm" }} | {{ (filter | async)?.day }}</small>
+                        <small *ngIf="(filter | async) && (filter | async)?.title.spanish">{{ (filter | async)?.title.spanish }} | {{ (filter | async)?.startTime | date:"H:mm" }} | {{ (filter | async)?.day }}</small>
                     </div>
                 </div>
                 <div class="table-container posRel">
