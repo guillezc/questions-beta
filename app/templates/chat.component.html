@@ -56,9 +56,25 @@
               						   	(removed)="removeMember($event)"
 							               	placeholder="Seleccione uno o varios">
 							    </ng-select>
+							    <br/> 
 							    <br/>
+
+							    <div class="form-md-checkboxes">
+										<div class="md-checkbox-inline">
+                      <div class="md-checkbox">
+                          <input type="checkbox" name="sendAll" id="sendAll" #sendAll class="md-check">
+                          <label for="sendAll">
+	                          <span></span>
+	                          <span class="check"></span>
+	                          <span class="box"></span>
+	                          Enviar mensaje a todos
+	                        </label>
+                      </div>
+										</div>
+									</div>
+
 							    <div class="text-right">
-										<button class="btn btn-default" (click)="addChat(newChatTitle)"><i class="fa fa-save"></i> Crear chat</button>
+										<button class="btn btn-default" (click)="addChat(newChatTitle, sendAll)"><i class="fa fa-save"></i> Crear chat</button>
 									</div>
 								</div>
 							</div>

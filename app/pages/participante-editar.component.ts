@@ -43,6 +43,9 @@ export class ParticipantEditComponent implements OnInit{
   }
 
   onSubmit(speak: any) { 
+    if(speak.bio == ""){
+      speak.bio = "NA"
+    }
     this.speaker.update(speak);
     this.updateOnSessions(speak);
   }

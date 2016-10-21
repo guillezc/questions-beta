@@ -418,8 +418,8 @@ input#new-chat-title{
 
 @media(min-width: 769px){
     .chart-container .chart canvas{
-        width: 80% !important;
-        max-width: 768px;
+        width: 90% !important;
+        max-width: 1024px;
     }
     .page-proyecteds .chart-container .chart canvas{
         width: 100% !important;

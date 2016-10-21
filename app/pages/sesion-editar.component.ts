@@ -148,9 +148,11 @@ export class SessionEditComponent implements OnInit, OnDestroy {
   }
 
   getSessionLocation(locationId: any){
-    this.af.database.object('/locations/'+locationId).subscribe(data => {
-      this.locationSelect = this.setLocationItem(data);
-    });
+    if(locationId){
+      this.af.database.object('/locations/'+locationId).subscribe(data => {
+        this.locationSelect = this.setLocationItem(data);
+      });
+    }
   }
 
   getSessionManagers(){

@@ -34,6 +34,7 @@ export class ChatComponent implements OnInit{
 	existChat: boolean = false;
 	isNewChat: boolean = false;
 	isLoaded: boolean = false;
+	sendToAll: boolean = false;
 
 	constructor(
 		private router       : Router,
@@ -74,18 +75,6 @@ export class ChatComponent implements OnInit{
 	      
       }
     });
-
-	    /*this.messages.subscribe(data => {
-	      data.forEach((q: Message) => {
-	        this.af.database.object('/people/'+q.name).subscribe(speakerData => {
-	          q.name = speakerData.name;
-	          q.picUrl = 'url(' + speakerData.pic + ')'
-	        });
-	      });
-	      console.log(data);
-	      this.messageList = data;
-	      ChatJS.init();
-	    });*/
 	}
 
 	getPeople(){
@@ -108,7 +97,7 @@ export class ChatComponent implements OnInit{
   	this.existChat = false;
   }
 
-  addChat(tChat:any){
+  addChat(tChat:any, all: any){
 
 		let tstamp: Date = new Date();
 		let creator: any = this.userID;
@@ -119,11 +108,16 @@ export class ChatComponent implements OnInit{
 			timestamp: tstamp.getTime()
 		}).key;
 
-  	for (var key in this.peopleSelect) {
-  		this.af.database.object('people/'+key+'/chats/'+this.newChatID).update({active: true});
-    }
+		if(all.checked){
+			this.peopleItems.forEach(person=>{
+				this.af.database.object('people/'+person.id+'/chats/'+this.newChatID).update({active: true});
+			});
+		}else{
+			for (var key in this.peopleSelect) {
+	  		this.af.database.object('people/'+key+'/chats/'+this.newChatID).update({active: true});
+	    }
+		}
 
-    //this.chatID = this.newChatID;
     this.messagesList = [];
     this.isNewChat = false;
 		this.existChat = true;

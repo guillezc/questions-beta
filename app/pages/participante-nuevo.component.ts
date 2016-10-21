@@ -38,10 +38,14 @@ export class ParticipantAddComponent implements OnInit{
     this.speakerObj.pic = "";
   }
 
-  onSubmit(sess: any) { 
+  onSubmit(spk: any) { 
+
+    if(spk.bio == ""){
+      spk.bio = "NA"
+    }
 
     this.speakers = this.af.database.list('people');
-    this.speakers.push(sess);
+    this.speakers.push(spk);
     
     this.redirectToParticipants();
   }
