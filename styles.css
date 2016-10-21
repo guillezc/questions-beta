@@ -192,6 +192,9 @@
 .form-sessions .form-control{
     color: #959595 !important;
 }
+.form-sessions .ui-select-bootstrap .ui-select-toggle > .caret{
+    display: none;
+}
 table.dataTable{
     float: left;
     width: 100%;

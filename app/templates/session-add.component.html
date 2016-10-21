@@ -38,17 +38,6 @@
 							<span class="help-block">Enter the session description</span>
 						</div>
 
-						<div class="form-group form-md-line-input">
-							<label for="location_spanish">Locación <span class="required" aria-required="true">*</span></label>
-							<input type="text" name="location_spanish" class="form-control" [ngModel]="addObj.location.spanish">
-							<span class="help-block">Ingrese la locación para la sesión</span>
-						</div>
-						<div class="form-group form-md-line-input">
-							<label for="location_english"></label>
-							<input type="text" name="location_english" class="form-control" [ngModel]="addObj.location.english">
-							<span class="help-block">Ingrese la locación para la sesión</span>
-						</div>
-
 						<div class="form-group form-md-line-input form-md-checkboxes">
 							<div class="md-checkbox-inline">
                                 <div class="md-checkbox">
@@ -75,6 +64,22 @@
 								</div>
 							</div>			
 						</div>
+
+						<div class="form-group form-md-line-input" *ngIf="locations | async">
+							<div class="row">
+								<div class="col-md-12">
+									<label for="locations"><strong>Locación</strong></label>
+									<ng-select [allowClear]="false" [items]="locationItems"
+											   [initData]="[]"
+								               [multiple]="false"
+											   (selected)="addLocation($event)"
+		              						   (removed)="removeLocation($event)"
+								               placeholder="Seleccione la locación">
+								    </ng-select>
+								</div>
+							</div>
+						</div>
+
 						<div class="form-group form-md-line-input" *ngIf="people | async">
 							<div class="row">
 								<div class="col-md-12">

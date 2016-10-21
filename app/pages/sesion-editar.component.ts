@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgForm } from '@angular/forms';
 
 import { Session }  from '../classes/session';
 import { Speaker }  from '../classes/speaker';
 import { Tag }      from '../classes/tag';
+import { Location }      from '../classes/location';
+
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
@@ -16,10 +18,13 @@ import  'app/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.
   templateUrl: 'app/templates/session-edit.component.html'
 })
 
-export class SessionEditComponent implements OnInit{
+export class SessionEditComponent implements OnInit, OnDestroy {
   sessionObj: Session = new Session();
   session: FirebaseObjectObservable<any>;
-  people: FirebaseListObservable<any>;
+  people: FirebaseListObservable<any[]>;
+  locations: FirebaseListObservable<any[]>;
+  locationItems: Array<any> = [];
+  locationSelect: Array<any> = [];
   events: any[];
   peopleItems: Array<any> = [];
   managerSelect: Array<any> = [];
@@ -32,6 +37,7 @@ export class SessionEditComponent implements OnInit{
   submitted = false;
   sub: any;
   sessionID: any;
+  subsSession: any;
 
   timepickerStartOpts: any = {
     minuteStep: 1
@@ -69,9 +75,21 @@ export class SessionEditComponent implements OnInit{
     this.setTitle("Editar sesión - México Cumbre de Negocios");
     this.sub = this.route.params.subscribe(params => {
       this.sessionID = params['id'];
+      this.getLocations();
       this.getPeople();
       this.getTags();
       this.getSession();
+    });
+  }
+
+  ngOnDestroy(){
+    this.subsSession.unsubscribe();
+  }
+
+  getLocations(){
+    this.locations = this.af.database.list('locations');
+    this.locations.subscribe(data => {
+      this.locationItems = this.setLocationsItems(data);
     });
   }
 
@@ -96,14 +114,11 @@ export class SessionEditComponent implements OnInit{
 
     sess.title = {spanish: sess.title_spanish, english: sess.title_english};
     sess.description = {spanish: sess.description_spanish, english: sess.description_english};
-    sess.location = {spanish: sess.location_spanish, english: sess.location_english};
 
     delete sess['title_spanish'];
     delete sess['title_english'];
     delete sess['description_spanish'];
     delete sess['description_english'];
-    delete sess['location_spanish'];
-    delete sess['location_english'];
 
     this.session.update(sess);
 
@@ -113,7 +128,8 @@ export class SessionEditComponent implements OnInit{
 
   getSession(){
     this.session = this.af.database.object('/sessions/'+this.sessionID);
-    this.session.subscribe(data => {
+    this.subsSession = this.session.subscribe(data => {
+      this.getSessionLocation(data.locationId);
       this.getSessionManagers();
       this.getSessionOrators();
       this.getSessionTags();
@@ -128,9 +144,12 @@ export class SessionEditComponent implements OnInit{
       this.sessionObj.description = [];
       this.sessionObj.description['spanish'] = data.description.spanish;
       this.sessionObj.description['english'] = data.description.english;
-      this.sessionObj.location = [];
-      this.sessionObj.location['spanish'] = data.location.spanish;
-      this.sessionObj.location['english'] = data.location.english;
+    });
+  }
+
+  getSessionLocation(locationId: any){
+    this.af.database.object('/locations/'+locationId).subscribe(data => {
+      this.locationSelect = this.setLocationItem(data);
     });
   }
 
@@ -150,6 +169,31 @@ export class SessionEditComponent implements OnInit{
     this.af.database.list('/sessions/'+this.sessionID+'/tags').subscribe(data => {
       this.tagsSelect = this.setTagsItems(data);
     });
+  }
+
+  setLocationsItems(locations: Location[]){
+
+    let items: Array<any> = [];
+    if(locations.length>0){
+      locations.forEach((loc: Location) => {
+        items.push( {
+          id  : loc.$key,
+          text: loc.name.spanish+'/'+loc.name.english
+        });
+      });
+    }
+
+    return items;
+  }
+
+  setLocationItem(location: any){
+
+    let items: Array<any> = [];
+    items.push( {
+      id  : location.$key,
+      text: location.name.spanish+'/'+location.name.english
+    });
+    return items;
   }
 
   setSpeakersItems(speakers: Speaker[]){
@@ -183,6 +227,14 @@ export class SessionEditComponent implements OnInit{
   }
 
   setEvtSessionItems(sessions: any){
+
+  }
+
+  addLocation(value:any):void {
+    this.af.database.object('sessions/'+this.sessionID).update({locationId: value.id});
+  }
+
+  removeLocation(value:any):void {
 
   }
 

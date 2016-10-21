@@ -5,6 +5,8 @@ import { NgForm } from '@angular/forms';
 import { Session }  from '../classes/session';
 import { Speaker }  from '../classes/speaker';
 import { Tag }      from '../classes/tag';
+import { Location }      from '../classes/location';
+
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
@@ -20,6 +22,9 @@ export class SessionAddComponent implements OnInit {
   addObj: Session = new Session();
   session: FirebaseListObservable<any>;
   people: FirebaseListObservable<any>;
+  locations: FirebaseListObservable<any[]>;
+  locationItems: Array<any> = [];
+  locationSelect: any;
   peopleItems: Array<any> = [];
   managerSelect: Array<any> = [];
   oratorSelect: Array<any> = [];
@@ -67,8 +72,16 @@ export class SessionAddComponent implements OnInit {
   ngOnInit() {
      this.setTitle("Agregar sesión - México Cumbre de Negocios");
      this.initSession();
+     this.getLocations();
      this.getPeople();
      this.getTags();
+  }
+
+  getLocations(){
+    this.locations = this.af.database.list('locations');
+    this.locations.subscribe(data => {
+      this.locationItems = this.setLocationsItems(data);
+    });
   }
 
   getPeople(){
@@ -97,9 +110,6 @@ export class SessionAddComponent implements OnInit {
     this.addObj.description = [];
     this.addObj.description['spanish'] = "";
     this.addObj.description['english'] = "";
-    this.addObj.location = [];
-    this.addObj.location['spanish'] = "";
-    this.addObj.location['english'] = "";
   }
 
   onSubmit(sess: any) { 
@@ -112,7 +122,7 @@ export class SessionAddComponent implements OnInit {
 
     sess.title = {spanish: sess.title_spanish, english: sess.title_english};
     sess.description = {spanish: sess.description_spanish, english: sess.description_english};
-    sess.location = {spanish: sess.location_spanish, english: sess.location_english};
+    sess.locationId = this.locationSelect;
 
     delete sess['title_spanish'];
     delete sess['title_english'];
@@ -158,6 +168,14 @@ export class SessionAddComponent implements OnInit {
     });
   }
 
+  addLocation(value:any):void {
+    this.locationSelect = value.id;
+  }
+
+  removeLocation(value:any):void {
+    delete this.oratorSelect[value.id];
+  }
+
   addSpeaker(value:any):void {
     this.af.database.object('/people/'+value.id).subscribe(data => {
       var spkID = data['$key'];
@@ -195,6 +213,21 @@ export class SessionAddComponent implements OnInit {
 
   removeTag(value:any):void {
     delete this.tagsSelect[value.id];
+  }
+
+  setLocationsItems(locations: Location[]){
+
+    let items: Array<any> = [];
+    if(locations.length>0){
+      locations.forEach((loc: Location) => {
+        items.push( {
+          id  : loc.$key,
+          text: loc.name.spanish+'/'+loc.name.english
+        });
+      });
+    }
+
+    return items;
   }
 
   setSpeakersItems(speakers: Speaker[]){

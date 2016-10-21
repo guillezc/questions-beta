@@ -46,6 +46,7 @@ import { MaterialAddComponent } from './pages/material-nuevo.component';
 
 import { LocationsComponent } from './pages/locaciones.component';
 import { LocationAddComponent } from './pages/locacion-nuevo.component';
+import { LocationEditComponent } from './pages/locacion-editar.component';
 
 const appRoutes: Routes = [
   {
@@ -188,6 +189,10 @@ const appRoutes: Routes = [
   {
     path: 'locacion/nuevo',
     component: LocationAddComponent
+  },
+  {
+    path: 'locacion/editar/:id',
+    component: LocationEditComponent
   }
 ];
 

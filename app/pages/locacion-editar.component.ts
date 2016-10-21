@@ -11,13 +11,18 @@ import * as firebase from "firebase";
 
 @Component({
   selector: 'q-locations-add',
-  templateUrl: 'app/templates/locations-add.component.html'
+  templateUrl: 'app/templates/locations-edit.component.html'
 })
 
-export class LocationAddComponent implements OnInit{
+export class LocationEditComponent implements OnInit{
   locationObj: Location = new Location();
+  location: FirebaseObjectObservable<any>;
   storageRef: any;
   saving = false;
+  sub: any;
+  locationID: any;
+  locationImg: any;
+  locationUrlImg: any;
 
   constructor(
     private router         : Router,
@@ -32,12 +37,19 @@ export class LocationAddComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.setTitle("Agregar locación - México Cumbre de Negocios");
+    this.setTitle("Editar locación - México Cumbre de Negocios");
     this.storageRef = firebase.storage().ref();
-    this.locationObj.urlImg = "";
-    this.locationObj.name = {spanish: "", english: ""};
-    this.locationObj.image = "";
-    this.locationObj.codename = "";
+    this.sub = this.route.params.subscribe(params => {
+      this.locationID = params['id'];
+      this.location = this.af.database.object('/locations/'+this.locationID);
+      this.location.subscribe((data: Location) => {
+        this.locationImg = data.image;
+        this.locationUrlImg = data.urlImg;
+        data.image = "";
+
+        this.locationObj = data;
+      });
+    });
   }
 
   onSubmit(loc: any) { 
@@ -47,7 +59,7 @@ export class LocationAddComponent implements OnInit{
     var imageType = /^image\//;
     var locationClass = this;
 
-    var newLocation = {
+    var editLocation = {
       codename: loc.codename,
       image: "",
       name: {
@@ -61,8 +73,9 @@ export class LocationAddComponent implements OnInit{
       if (!imageType.test(selectFile.type)) {
         alert('Tipo de archivo no válido');
       }else{
-        var uploadTask = this.storageRef.child('locations/' + selectFile.name).put(selectFile);
-        newLocation.image = selectFile.name;
+        locationClass.storageRef.child('locations/' + locationClass.locationImg).delete();
+        var uploadTask = locationClass.storageRef.child('locations/' + selectFile.name).put(selectFile);
+        editLocation.image = selectFile.name;
 
         uploadTask.on('state_changed', function(snapshot: any){
 
@@ -70,14 +83,18 @@ export class LocationAddComponent implements OnInit{
 
         }, function() {
           var downloadURL = uploadTask.snapshot.downloadURL;
-          newLocation.urlImg = downloadURL;
+          editLocation.urlImg = downloadURL;
           locationClass.saving = false;
-          locationClass.af.database.list('locations').push(newLocation);
+          locationClass.location.update(editLocation);
           locationClass.redirectToLocations();
         });
       }
     }else{
-      alert('Seleccione un archivo de imagen para el patrocinador');
+      editLocation.image = locationClass.locationImg;
+      editLocation.urlImg = locationClass.locationUrlImg;
+      locationClass.saving = false;
+      locationClass.location.update(editLocation);
+      locationClass.redirectToLocations();
     }
   }
 

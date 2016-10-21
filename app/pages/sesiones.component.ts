@@ -62,6 +62,13 @@ export class SessionsComponent implements OnInit {
         this.survey.subscribe(srv => {
           sess.hasSurvey = (srv.length > 0) ? true : false; 
         });
+        if(sess.locationId){
+          this.af.database.object('locations/'+sess.locationId).subscribe(loc=>{
+            sess.location = loc.name.spanish;
+          });
+        }else{
+          sess.location = "";
+        }
       });
       this.sessionList = data;
       SessionJS.init();
