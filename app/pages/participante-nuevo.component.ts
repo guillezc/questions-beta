@@ -15,6 +15,7 @@ import { Title } from '@angular/platform-browser';
 export class ParticipantAddComponent implements OnInit{
   speakerObj: Speaker = new Speaker();
   speakers: FirebaseListObservable<any>;
+  speakerInfo: FirebaseObjectObservable<any>;
   firebase: AngularFire; 
 
   constructor(
@@ -40,12 +41,22 @@ export class ParticipantAddComponent implements OnInit{
 
   onSubmit(spk: any) { 
 
-    if(spk.bio == ""){
-      spk.bio = "NA"
-    }
+    var bio = (spk.bio == "") ? "NA" : spk.bio;
+    delete spk['bio'];
 
     this.speakers = this.af.database.list('people');
-    this.speakers.push(spk);
+    var newID = this.speakers.push(spk).key;
+    this.af.database.object('peopleInfo/'+newID).update({
+      id: newID,
+      address: "",
+      englishBio: "",
+      spanishBio: bio,
+      englishProfile: "",
+      spanishProfile: "",
+      phoneNumber: "",
+      status: "active",
+      webSite: ""
+    });
     
     this.redirectToParticipants();
   }

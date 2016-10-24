@@ -25,7 +25,7 @@
 						</div>-->
 						<div class="form-group form-md-line-input">
 							<label for="pic">Foto <span class="required" aria-required="true">*</span></label>
-							<img [hidden]="speakerObj.pic" [src]="speakerObj.pic" class="img-responsive img-thumbnail">
+							<img [hidden]="!speakerObj.pic" [src]="speakerObj.pic" class="img-responsive img-thumbnail">
 							<input type="url" name="pic" class="form-control" [(ngModel)]="speakerObj.pic">
 							<span class="help-block">Ingrese la url de la imagen</span>
 						</div>

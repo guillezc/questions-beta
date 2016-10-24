@@ -15,6 +15,7 @@ import { Title } from '@angular/platform-browser';
 export class ParticipantEditComponent implements OnInit{
   speakerObj: Speaker = new Speaker();
   speaker: FirebaseObjectObservable<any>;
+  speakerInfo: FirebaseObjectObservable<any>;
   sub: any;
   speakerID: any;
 
@@ -31,13 +32,17 @@ export class ParticipantEditComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.setTitle("Agregar participante - México Cumbre de Negocios");
+    this.setTitle("Editar participante - México Cumbre de Negocios");
 
     this.sub = this.route.params.subscribe(params => {
       this.speakerID = params['id'];
       this.speaker = this.af.database.object('/people/'+this.speakerID);
       this.speaker.subscribe(data => {
-        this.speakerObj = data;
+        this.speakerInfo = this.af.database.object('peopleInfo/'+data.$key);
+        this.speakerInfo.subscribe(info=>{
+          data.bio = (info.spanishBio == undefined) ? "NA" : info.spanishBio;
+          this.speakerObj = data;
+        });
       });
     });
   }
@@ -46,6 +51,8 @@ export class ParticipantEditComponent implements OnInit{
     if(speak.bio == ""){
       speak.bio = "NA"
     }
+    this.speakerInfo.update({spanishBio: speak.bio});
+    delete speak['bio'];
     this.speaker.update(speak);
     this.updateOnSessions(speak);
   }
