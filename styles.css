@@ -303,12 +303,14 @@ table.dataTable{
     margin-right: 0;
     float: left;
 }
-#questions-date-filter.day-filter{
+#questions-date-filter.day-filter,
+#votes-date-filter.day-filter{
     position: static;
     display: inline-block;
     margin-right: 10px;
 }
-#questions-date-filter.day-filter label{
+#questions-date-filter.day-filter label,
+#votes-date-filter.day-filter label{
     float: none;
     margin: 0;
 }

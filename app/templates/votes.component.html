@@ -20,15 +20,29 @@
                                 <button id="add-vote" (click)="addSurvey()" class="btn sbold green"> Agregar
                                     <i class="fa fa-plus"></i>
                                 </button>
+                                <button id="add-vote" (click)="filterVotes({type: typeVote.value, date: dateVote, session: sessionVote.value})" class="btn sbold green"> Filtrar
+                                    <i class="fa fa-filter"></i>
+                                </button>
                             </div>
                             <br />
                             <br />
-                            <div class="vote-filters">
+                            <div class="vote-filters" style="display: inline-block;">
                                 <label for="votetype">Tipo</label>
-                                <select name="votetype" class="" #typeVote (change)="filterByType(typeVote.value)">
+                                <select name="votetype" class="" #typeVote>
                                     <option value="...">Todas</option>
                                     <option value="v">Votación</option>
                                     <option value="e">Encuesta</option>
+                                </select>
+                            </div>
+                            <div class="day-filter" id="votes-date-filter">
+                                <label>Día</label>
+                                <datetime [datepicker]="datepickerOpts" #dateVote [timepicker]="false" [ngModel]='dayFilter' name="dayFilter" style="display: inline-block;"></datetime>
+                            </div>
+                            <div class="session-filter" id="votes-session-filter">
+                                <label for="sessionVote">Sesión</label>
+                                <select name="sessionVote" #sessionVote>
+                                    <option value="all">Todos</option>
+                                    <option *ngFor="let session of sessionList" value="{{session.$key}}">{{session.title.spanish}}</option>
                                 </select>
                             </div>
             			</div>

@@ -16,8 +16,17 @@ import  'app/js/votes.js';
 
 export class VotesComponent implements OnInit {
   votes: FirebaseListObservable<any[]>;
+  sessions: FirebaseListObservable<any[]>;
   surveyList: Survey[] = [];
+  sessionList: any[] = [];
   isLoaded: Boolean = false;
+  dayFilter: Date = new Date();
+
+  datepickerOpts: any = {
+    autoclose: true,
+    todayBtn: 'linked',
+    todayHighlight: true
+  };
 
   constructor(
     private router         : Router,
@@ -49,6 +58,10 @@ export class VotesComponent implements OnInit {
   ngOnInit() {
     this.setTitle("Votaciones - México Cumbre de Negocios");
   	this.getSurveys();
+    this.sessions = this.af.database.list('sessions');
+    this.sessions.subscribe(data=>{
+      this.sessionList = data;
+    });
   }
 
   goToResults(srv: Survey) {
@@ -97,6 +110,10 @@ export class VotesComponent implements OnInit {
         this.isLoaded = true;
       });
     }
+  }
+
+  filterVotes(filters: any){
+    console.log(filters);
   }
 
 }
