@@ -18,7 +18,7 @@
                         <div class="col-md-12">
                             <label style="margin-right: 0;">
                                 Sesión
-                                <select class="form-control input-md input-medium input-inline" #questionSession>
+                                <select class="form-control input-md input-medium input-inline" #questionSession [ngModel]='sessionFilter' (change)="filterQuestions(questionSession, true)">
                                     <option value="all">Todas</option>
                                     <option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title.spanish }}</option>
                                 </select>
@@ -28,7 +28,7 @@
                                 <datetime [datepicker]="datepickerOpts" [timepicker]="false" [ngModel]='dayFilter' 
                                 (ngModelChange)="handleDateFromChange($event)" name="dayFilter" style="display: inline-block;"></datetime>
                             </div>
-                            <button id="filter-questions" (click)="filterQuestions(questionSession)" class="btn sbold green"> Filtrar
+                            <button id="filter-questions" (click)="filterQuestions(questionSession, false)" class="btn sbold green"> Filtrar
                                 <i class="fa fa-filter"></i>
                             </button>
                             <button id="all-questions" (click)="allQuestions()" class="btn sbold green"> Todas

@@ -26,6 +26,7 @@ export class QuestionsComponent implements OnInit {
   questionsList: Question[] = [];
   firebase: AngularFire;
   isLoaded: Boolean = false;
+  sessionFilter = 'all';
   dayFilter: Date = new Date();
 
   datepickerOpts: any = {
@@ -131,22 +132,38 @@ export class QuestionsComponent implements OnInit {
 
   handleDateFromChange(evt: Date){
     this.dayFilter = evt;
+
+    this.questions = this.af.database.list('questions');
+    this.questions.subscribe(data=>{
+      let qArray: Question[] = [];
+      data.forEach((q: Question) => {
+        this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {
+          var startDate = new Date(sessionData.startTime);
+          var msDateA = Date.UTC(this.dayFilter.getFullYear(), this.dayFilter.getMonth()+1, this.dayFilter.getDate());
+          var msDateB = Date.UTC(startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate());
+          if(msDateA == msDateB){
+            q.sessionName = sessionData.title.spanish;
+            this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
+              q.userName = speakerData.name;
+              qArray.push(q);
+            });
+          }
+        });
+      });
+      this.questionsList = qArray;
+      this.filter = null;
+    });
   }
 
   allQuestions(){
     this.filter = null;
+    this.sessionFilter = 'all';
     this.dayFilter = new Date();
     this.getQuestions();
   }
 
-  filterQuestions(session: any){
+  filterQuestions(session: any, onlySession: boolean){
     if(session.value != 'all'){
-
-      let eDay: any = this.dayFilter .getUTCDate();
-      let eMon: any = this.dayFilter .getMonth() + 1;
-      let eYea: any = this.dayFilter .getFullYear();
-      let sDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 00:00:00');
-      let eDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 23:59:59');
 
       this.questions = this.af.database.list('questions', {
         query: {
@@ -154,24 +171,36 @@ export class QuestionsComponent implements OnInit {
           equalTo: session.value
         }
       });
+
       this.questions.subscribe(data => {
         let qArray: Question[] = [];
         data.forEach((q: Question) => {
-          this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {
-            console.log(this.dayFilter + " <------> " + this.dayFilter.getTime());
-            console.log(sessionData.startTime);
-            console.log(sessionData.endTime);
-            console.log("--------------");
-            if(this.dayFilter.getTime() >= sessionData.startTime && this.dayFilter.getTime() <= sessionData.endTime){
-              console.log("Question filtered!");
+          this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {    
+
+            if(onlySession){
+              q.sessionName = sessionData.title.spanish;
+              this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
+                q.userName = speakerData.name;
+                qArray.push(q);
+              });
+            }else{
+              var startDate = new Date(sessionData.startTime);
+              var msDateA = Date.UTC(this.dayFilter.getFullYear(), this.dayFilter.getMonth()+1, this.dayFilter.getDate());
+              var msDateB = Date.UTC(startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate());
+
+              if(msDateA == msDateB){
+                q.sessionName = sessionData.title.spanish;
+                this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
+                  q.userName = speakerData.name;
+                  qArray.push(q);
+                });
+              }
             }
-            q.sessionName = sessionData.title.spanish;
-            this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
-              q.userName = speakerData.name;
-            });
+            
           });
         });
-        this.questionsList = data;
+
+        this.questionsList = qArray;
         this.filter = this.af.database.object('/sessions/'+session.value);
       });
     }else{
