@@ -300,8 +300,20 @@ table.dataTable{
     line-height: 11px;
 }
 .day-filter label{
-    margin-right: 5px;
+    margin-right: 0;
     float: left;
+}
+#questions-date-filter.day-filter{
+    position: static;
+    display: inline-block;
+    margin-right: 10px;
+}
+#questions-date-filter.day-filter label{
+    float: none;
+    margin: 0;
+}
+#questions-date-filter.day-filter .date input{
+    height: 34px;
 }
 .fec-ini{
     color: #32c5d2 !important;

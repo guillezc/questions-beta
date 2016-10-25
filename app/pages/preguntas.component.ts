@@ -26,6 +26,13 @@ export class QuestionsComponent implements OnInit {
   questionsList: Question[] = [];
   firebase: AngularFire;
   isLoaded: Boolean = false;
+  dayFilter: Date = new Date();
+
+  datepickerOpts: any = {
+    autoclose: true,
+    todayBtn: 'linked',
+    todayHighlight: true
+  };
 
   constructor(
     private router         : Router,
@@ -122,8 +129,25 @@ export class QuestionsComponent implements OnInit {
     this.router.navigate(link);
   }
 
+  handleDateFromChange(evt: Date){
+    this.dayFilter = evt;
+  }
+
+  allQuestions(){
+    this.filter = null;
+    this.dayFilter = new Date();
+    this.getQuestions();
+  }
+
   filterQuestions(session: any){
     if(session.value != 'all'){
+
+      let eDay: any = this.dayFilter .getUTCDate();
+      let eMon: any = this.dayFilter .getMonth() + 1;
+      let eYea: any = this.dayFilter .getFullYear();
+      let sDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 00:00:00');
+      let eDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 23:59:59');
+
       this.questions = this.af.database.list('questions', {
         query: {
           orderByChild: 'sessionId',
@@ -131,12 +155,20 @@ export class QuestionsComponent implements OnInit {
         }
       });
       this.questions.subscribe(data => {
+        let qArray: Question[] = [];
         data.forEach((q: Question) => {
-          this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
-            q.userName = speakerData.name;
-          });
           this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {
+            console.log(this.dayFilter + " <------> " + this.dayFilter.getTime());
+            console.log(sessionData.startTime);
+            console.log(sessionData.endTime);
+            console.log("--------------");
+            if(this.dayFilter.getTime() >= sessionData.startTime && this.dayFilter.getTime() <= sessionData.endTime){
+              console.log("Question filtered!");
+            }
             q.sessionName = sessionData.title.spanish;
+            this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
+              q.userName = speakerData.name;
+            });
           });
         });
         this.questionsList = data;
