@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit{
     this.userService.login(data.username, data.password).subscribe(userData=>{
     	if(userData.length != 0){
     		if(userData[0].password == data.password){
+          console.log("login");
     			this.userService.authenticate(userData[0].username);
     			LoginVar.clean();
     		}else{

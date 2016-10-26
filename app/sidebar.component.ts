@@ -26,6 +26,7 @@ export class SidebarComponent {
 	}
 
 	logout(){
+		console.log("logout");
 		this.userService.logout();
 	}
 

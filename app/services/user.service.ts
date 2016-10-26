@@ -30,7 +30,9 @@ export class UserService {
   	this.loggedIn = true;
   	//let link = ['/eventos'];
   	//this.router.navigate(link);
-  	window.location.href = '/eventos';
+  	window.setTimeout(function(){
+      window.location.href = '/#/eventos';
+    },500);
   }
 
   logout() {
@@ -38,7 +40,9 @@ export class UserService {
     this.loggedIn = false;
     //let link = ['/login'];
   	//this.router.navigate(link);
-  	window.location.href = '/login';
+    window.setTimeout(function(){
+      window.location.href = '/#/login';
+    },500);
   }
 
   getUsername(){
