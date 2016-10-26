@@ -45,13 +45,11 @@ export class UserService {
   }
 
   goToLogin(){
-    let link = ['/login'];
-    this.router.navigate(link);
+    window.location.href = '/#/login';
   }
 
   goToEvents(){
-    let link = ['/eventos'];
-    this.router.navigate(link);
+    window.location.href = '/#/eventos';
   }
 
   checkCredentials(){
