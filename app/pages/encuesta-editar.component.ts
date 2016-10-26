@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { UserService } from '../services/user.service';
 
 import { Session }  from '../classes/session';
 import { Survey }  from '../classes/survey';
 
 @Component({
   selector: 'q-survey-edit',
-  templateUrl: 'app/templates/survey-edit.component.html'
+  templateUrl: 'app/templates/survey-edit.component.html',
+  providers: [UserService]
 })
 
 export class SurveyEditComponent implements OnInit {
@@ -21,6 +23,7 @@ export class SurveyEditComponent implements OnInit {
   sub: any;
 
   constructor(
+    private userService : UserService,
     private router         : Router,
     private route          : ActivatedRoute,
     public  af        : AngularFire,
@@ -36,6 +39,7 @@ export class SurveyEditComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.checkCredentials();
     this.setTitle("Nueva Votación - México Cumbre de Negocios");
     this.getSessions();
     this.sub = this.route.params.subscribe(params => {

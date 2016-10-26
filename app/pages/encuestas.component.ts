@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { UserService } from '../services/user.service';
 
 import { Session }  from '../classes/session';
 import { Survey }  from '../classes/survey';
@@ -11,7 +12,8 @@ import  'app/js/votes.js';
 
 @Component({
   selector: 'q-votes',
-  templateUrl: 'app/templates/surveys.component.html'
+  templateUrl: 'app/templates/surveys.component.html',
+  providers: [UserService]
 })
 
 export class SurveysComponent implements OnInit, OnDestroy {
@@ -29,6 +31,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
   };
 
   constructor(
+    private userService : UserService,
     private router         : Router,
     public  af        : AngularFire,
     private titleService   : Title) {
@@ -54,6 +57,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.userService.checkCredentials();
     this.setTitle("Votaciones - México Cumbre de Negocios");
   	this.getSurveys();
     this.sessions = this.af.database.list('sessions');

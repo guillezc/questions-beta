@@ -17,14 +17,20 @@
     padding-left: 17px;
 }
 .page-body.page-proyecteds .page-header,
-.page-body.page-proyecteds .page-sidebar-wrapper{
+.page-body.page-proyecteds .page-sidebar-wrapper,
+.page-body.page-login .page-sidebar-wrapper{
     display: none !important;
 }
 .page-body.page-proyecteds .page-container,
-.page-body.page-proyecteds .page-content{
+.page-body.page-login .page-container,
+.page-body.page-proyecteds .page-content,
+.page-body.page-login .page-content{
     margin: 0 !important;
     padding: 0;
     height: 100% !important;
+}
+.page-body.page-login .sidebar-toggler{
+    display: none;
 }
 .carousel.slide#carousel-proyecteds,
 .carousel.slide#carousel-proyecteds .carousel-inner,
@@ -441,6 +447,32 @@ input#new-chat-title{
     margin-right: 10px;
     margin-top: 10px;
     font-size: 16px;
+}
+.login-container{
+    padding-top: 100px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+.login-container > form{
+    margin: 0;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    padding: 15px;
+    box-shadow: 0px 3px 5px #ddd;
+}
+.login-container .msg-error{
+    color: red;
+    text-align: left;
+    display: inline-block;
+    margin: 0;
+    padding-top: 6px;
+}
+.user-logged{
+    float: left;
+    color: #fff;
+    margin: 12px 0;
 }
 
 @media(min-width: 769px){

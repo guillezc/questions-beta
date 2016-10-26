@@ -22,6 +22,8 @@ import {FIREBASE_PROVIDERS,
         AuthProviders, 
         firebaseAuthConfig} from 'angularfire2';
 
+import {LocalStorageService, LocalStorageSubscriber} from 'angular2-localstorage/LocalStorageEmitter';
+
 import { NKDatetime } 			 from 'ng2-datetime/ng2-datetime';
 import { SELECT_DIRECTIVES } from 'ng2-select/ng2-select';
 import { TagInputModule } 	 from 'ng2-tag-input';
@@ -70,6 +72,7 @@ import { MaterialAddComponent }           from './pages/material-nuevo.component
 import { LocationsComponent }             from './pages/locaciones.component';
 import { LocationAddComponent }           from './pages/locacion-nuevo.component';
 import { LocationEditComponent }         from './pages/locacion-editar.component';
+import { LoginComponent }                from './pages/login.component';
 
 enableProdMode();
 
@@ -129,26 +132,28 @@ enableProdMode();
     MaterialAddComponent,
     LocationsComponent,
     LocationAddComponent,
-    LocationEditComponent
+    LocationEditComponent,
+    LoginComponent
 	],
 	providers: [
     appRoutingProviders,
     FIREBASE_PROVIDERS,
     defaultFirebase({
-	    apiKey: "AIzaSyCTfrqErjXXuOPAPWK4AOJBLu3tg2-dJx8",
+	    /*apiKey: "AIzaSyCTfrqErjXXuOPAPWK4AOJBLu3tg2-dJx8",
 	    authDomain: "events-7d50b.firebaseapp.com",
 	    databaseURL: "https://events-7d50b.firebaseio.com",
-	    storageBucket: "events-7d50b.appspot.com"
-	    /*apiKey: "AIzaSyB5ZUgBJabSy-F18lNUiyqmb0xy72oFCx4",
+	    storageBucket: "events-7d50b.appspot.com"*/
+	    apiKey: "AIzaSyB5ZUgBJabSy-F18lNUiyqmb0xy72oFCx4",
 	    authDomain: "questions-16537.firebaseapp.com",
 	    databaseURL: "https://questions-16537.firebaseio.com",
-	    storageBucket: "questions-16537.appspot.com"*/
+	    storageBucket: "questions-16537.appspot.com"
 	  }),
 	  firebaseAuthConfig({
 	    provider: AuthProviders.Anonymous,
 	    method: AuthMethods.Anonymous
 	  }),
-	  Title
+	  Title,
+    LocalStorageService
   ],
   bootstrap: [ AppComponent ]
 })

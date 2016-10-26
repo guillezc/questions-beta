@@ -51,11 +51,17 @@ import { LocationsComponent } from './pages/locaciones.component';
 import { LocationAddComponent } from './pages/locacion-nuevo.component';
 import { LocationEditComponent } from './pages/locacion-editar.component';
 
+import { LoginComponent } from './pages/login.component';
+
 const appRoutes: Routes = [
   {
     path: '',
     redirectTo: '/eventos',
     pathMatch: 'full'
+  },
+  {
+    path: 'login',
+    component: LoginComponent
   },
   {
     path: 'eventos',

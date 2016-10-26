@@ -21,7 +21,8 @@
       '@angular/forms': 'npm:@angular/forms/bundles/forms.umd.js',
 
       'firebase':                   'npm:/firebase',
-      'angularfire2': 'npm:/angularfire2',
+      'angularfire2':               'npm:/angularfire2',
+      'angular2-localstorage':      'npm:/angular2-localstorage/dist',
       'ng2-datetime':               'npm:/ng2-datetime',
       'ng2-select':                 'npm:/ng2-select',
       'ng2-tag-input':              'npm:/ng2-tag-input',
@@ -51,6 +52,9 @@
       angularfire2: {
         main: 'angularfire2.js',
         defaultExtension: 'js'
+      },
+      'angular2-localstorage': {
+        defaultExtension: "js"
       },
       'ng2-datetime': { 
         main: 'ng2-datetime.js', 

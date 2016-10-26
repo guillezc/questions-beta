@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { UserService } from '../services/user.service';
 
 import { Session }  from '../classes/session';
 import { Survey }  from '../classes/survey';
 
 @Component({
   selector: 'q-survey-add',
-  templateUrl: 'app/templates/survey-add.component.html'
+  templateUrl: 'app/templates/survey-add.component.html',
+  providers: [UserService]
 })
 
 export class SurveyAddComponent implements OnInit {
@@ -19,6 +21,7 @@ export class SurveyAddComponent implements OnInit {
   options: any[] = [];
 
   constructor(
+    private userService : UserService,
     private router         : Router,
     public  af        : AngularFire,
     private titleService   : Title) {
@@ -29,6 +32,7 @@ export class SurveyAddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userService.checkCredentials();
     this.setTitle("Nueva Encuesta - México Cumbre de Negocios");
     this.initSurvey();
     this.votes = this.af.database.list('votes');

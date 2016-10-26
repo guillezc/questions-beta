@@ -6,10 +6,12 @@ import { Event }  from '../classes/event';
 
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
+import { UserService } from '../services/user.service';
 
 @Component({
 	selector: 'q-events',
-	templateUrl: 'app/templates/events.component.html'
+	templateUrl: 'app/templates/events.component.html',
+	providers: [UserService]
 })
 
 export class EventsComponent implements OnInit{
@@ -17,6 +19,7 @@ export class EventsComponent implements OnInit{
 	eventList: Event[] = [];
 
 	constructor(
+		private userService : UserService,
 		private router       : Router,
 		public af            : AngularFire,
 		public titleService  : Title) {
@@ -28,6 +31,7 @@ export class EventsComponent implements OnInit{
 	}
 
 	ngOnInit() {  
+		this.userService.checkCredentials();
 		this.getEvents();
 		this.setTitle("Eventos - México Cumbre de Negocios");
 	}

@@ -4,11 +4,14 @@ import { Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
+import { UserService } from '../services/user.service';
+
 import { Tag }  from '../classes/tag';
 
 @Component({
 	selector: 'q-tags',
-	templateUrl: 'app/templates/tags.component.html'
+	templateUrl: 'app/templates/tags.component.html',
+	providers: [UserService]
 })
 
 export class TagsComponent implements OnInit{
@@ -20,6 +23,7 @@ export class TagsComponent implements OnInit{
 	obj: Tag = new Tag();
 
 	constructor(
+		private userService : UserService,
 		private router       : Router,
 		public af            : AngularFire,
 		public titleService  : Title) {
@@ -31,6 +35,7 @@ export class TagsComponent implements OnInit{
 	}
 
 	ngOnInit() {  
+		this.userService.checkCredentials();
 		this.getTags();
 		this.setTitle("Temas - México Cumbre de Negocios");
 		this.initTag();

@@ -8,13 +8,15 @@ import { Message }  from '../classes/message';
 
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
+import { UserService } from '../services/user.service';
 
 declare var ChatJS: any;
 import  'app/js/chat.js';
 
 @Component({
 	selector: 'q-participants',
-	templateUrl: 'app/templates/chat.component.html'
+	templateUrl: 'app/templates/chat.component.html',
+	providers: [UserService]
 })
 
 export class ChatComponent implements OnInit{
@@ -37,6 +39,7 @@ export class ChatComponent implements OnInit{
 	sendToAll: boolean = false;
 
 	constructor(
+		private userService : UserService,
 		private router       : Router,
 		public af            : AngularFire,
 		private render		 :Renderer,
@@ -49,6 +52,7 @@ export class ChatComponent implements OnInit{
 	}
 
 	ngOnInit() {  
+		this.userService.checkCredentials();
 		this.setTitle("Chat - México Cumbre de Negocios");
 		this.getChats();
 		this.getPeople();
