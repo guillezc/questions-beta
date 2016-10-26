@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit{
 	}
 
 	onSubmit(data: any) {   
+    
+
     this.userService.login(data.username, data.password).subscribe(userData=>{
     	if(userData.length != 0){
     		if(userData[0].password == data.password){

@@ -27,12 +27,16 @@ export class UserService {
   authenticate(username: any){
   	localStorage.setItem('auth_token', username);
     this.loggedIn = true;
+    document.getElementById("welcome-msg").innerHTML = "Bienvenido(a) "+username;
+    document.getElementById("logout-item").style.display = "block";
     this.goToEvents();
   }
 
   logout() {
     localStorage.removeItem('auth_token');
     this.loggedIn = false;
+    document.getElementById("welcome-msg").innerHTML = "";
+    document.getElementById("logout-item").style.display = "none";
     this.goToLogin();
   }
 

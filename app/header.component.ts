@@ -12,7 +12,7 @@ declare var Layout: any;
 })
 
 export class HeaderComponent {
-	username:string = "";
+	welcome:string = "";
 	settings = VARS.SETTINGS;
 
 	constructor(private userService : UserService){
@@ -21,9 +21,13 @@ export class HeaderComponent {
 
 	ngOnInit() {
 		if(this.userService.isLoggedIn()){
-			this.username = this.userService.getUsername();
+			this.welcome = "Bienvenido(a) "+this.userService.getUsername();
 		}
 		Layout.initHeader();
+	}
+
+	setWelcomeMsg(msg: string){
+		this.welcome = msg;
 	}
 
 }
