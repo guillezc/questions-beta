@@ -18,17 +18,19 @@
                         <div class="col-md-12">
                             <label style="margin-right: 0;">
                                 Sesión
-                                <select class="form-control input-md input-medium input-inline" #questionSession [ngModel]='sessionFilter' (change)="filterQuestions(questionSession, true)">
-                                    <option value="all">Todas</option>
+                                <select class="form-control input-md input-medium input-inline" #questionSession>
                                     <option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title.spanish }}</option>
                                 </select>
                             </label>
                             <div class="day-filter" id="questions-date-filter">
                                 <label>Día</label>
-                                <datetime [datepicker]="datepickerOpts" [timepicker]="false" [ngModel]='dayFilter' 
+                                <datetime [datepicker]="datepickerOpts" [timepicker]="false" [ngModel]='dayFilter' #dayFilter
                                 (ngModelChange)="handleDateFromChange($event)" name="dayFilter" style="display: inline-block;"></datetime>
+                                <button id="remove-date" (click)="initDate(dayFilter)" class="btn sbold default"> Limpiar
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </div>
-                            <button id="filter-questions" (click)="filterQuestions(questionSession, false)" class="btn sbold green"> Filtrar
+                            <button id="filter-questions" (click)="filterQuestions(questionSession)" class="btn sbold green"> Filtrar
                                 <i class="fa fa-filter"></i>
                             </button>
                             <button id="all-questions" (click)="allQuestions()" class="btn sbold green"> Todas

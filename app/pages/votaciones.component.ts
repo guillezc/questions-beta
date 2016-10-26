@@ -28,7 +28,6 @@ export class VotesComponent implements OnInit, OnDestroy {
     autoclose: true,
     todayBtn: 'linked',
     todayHighlight: true,
-    hasClearButton: false,
     placeholder: 'Selecciona fecha'
   };
 

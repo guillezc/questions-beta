@@ -6,6 +6,7 @@ import { Session }  from '../classes/session';
 import { Question }  from '../classes/question';
 
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { NKDatetime } from "ng2-datetime/ng2-datetime";
 
 declare var QuestionsVar: any;
 import  'app/js/questions.js';
@@ -32,7 +33,8 @@ export class QuestionsComponent implements OnInit {
   datepickerOpts: any = {
     autoclose: true,
     todayBtn: 'linked',
-    todayHighlight: true
+    todayHighlight: true,
+    placeholder: 'Selecciona fecha'
   };
 
   constructor(
@@ -130,29 +132,26 @@ export class QuestionsComponent implements OnInit {
     this.router.navigate(link);
   }
 
+  initDate(datepicker: NKDatetime){
+    datepicker.onClearClick();
+  }
+
   handleDateFromChange(evt: Date){
     this.dayFilter = evt;
-
-    this.questions = this.af.database.list('questions');
-    this.questions.subscribe(data=>{
-      let qArray: Question[] = [];
-      data.forEach((q: Question) => {
-        this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {
-          var startDate = new Date(sessionData.startTime);
-          var msDateA = Date.UTC(this.dayFilter.getFullYear(), this.dayFilter.getMonth()+1, this.dayFilter.getDate());
-          var msDateB = Date.UTC(startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate());
-          if(msDateA == msDateB){
-            q.sessionName = sessionData.title.spanish;
-            this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
-              q.userName = speakerData.name;
-              qArray.push(q);
-            });
-          }
-        });
+    if(evt != null){
+      let eDay: any = this.dayFilter.getUTCDate();
+      let eMon: any = this.dayFilter.getMonth() + 1;
+      let eYea: any = this.dayFilter.getFullYear();
+      let sDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 00:00:00');
+      let eDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 23:59:59');
+      this.sessions = this.af.database.list('sessions', {
+        query: {
+          orderByChild: 'startTime',
+          startAt: sDate.getTime(),
+          endAt: eDate.getTime()
+        }
       });
-      this.questionsList = qArray;
-      this.filter = null;
-    });
+    }
   }
 
   allQuestions(){
@@ -162,8 +161,8 @@ export class QuestionsComponent implements OnInit {
     this.getQuestions();
   }
 
-  filterQuestions(session: any, onlySession: boolean){
-    if(session.value != 'all'){
+  filterQuestions(session: any){
+    if(session.value != ""){
 
       this.questions = this.af.database.list('questions', {
         query: {
@@ -176,27 +175,11 @@ export class QuestionsComponent implements OnInit {
         let qArray: Question[] = [];
         data.forEach((q: Question) => {
           this.af.database.object('/sessions/'+q.sessionId).subscribe(sessionData => {    
-
-            if(onlySession){
-              q.sessionName = sessionData.title.spanish;
-              this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
-                q.userName = speakerData.name;
-                qArray.push(q);
-              });
-            }else{
-              var startDate = new Date(sessionData.startTime);
-              var msDateA = Date.UTC(this.dayFilter.getFullYear(), this.dayFilter.getMonth()+1, this.dayFilter.getDate());
-              var msDateB = Date.UTC(startDate.getFullYear(), startDate.getMonth()+1, startDate.getDate());
-
-              if(msDateA == msDateB){
-                q.sessionName = sessionData.title.spanish;
-                this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
-                  q.userName = speakerData.name;
-                  qArray.push(q);
-                });
-              }
-            }
-            
+            q.sessionName = sessionData.title.spanish;
+            this.af.database.object('/people/'+q.userId).subscribe(speakerData => {
+              q.userName = speakerData.name;
+              qArray.push(q);
+            });
           });
         });
 
@@ -204,7 +187,7 @@ export class QuestionsComponent implements OnInit {
         this.filter = this.af.database.object('/sessions/'+session.value);
       });
     }else{
-      this.getQuestions();
+      this.questionsList = [];
       this.filter = null;
     }
     
