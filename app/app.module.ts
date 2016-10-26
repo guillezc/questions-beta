@@ -45,6 +45,9 @@ import { VotesComponent } 								from './pages/votaciones.component';
 import { VoteEditComponent } 							from './pages/votacion-editar.component';
 import { VoteAddComponent } 							from './pages/votacion-nueva.component';
 import { VotesSessionComponent } 					from './pages/votaciones-sesion.component';
+import { SurveysComponent }               from './pages/encuestas.component';
+import { SurveyAddComponent }             from './pages/encuesta-nueva.component';
+import { SurveyEditComponent }            from './pages/encuesta-editar.component';
 import { ResultsComponent } 							from './pages/resultados.component';
 import { ResultsProyectedComponent } 			from './pages/resultados-proyectar.component';
 import { ResultSesionProyectedComponent } from './pages/resultados-sesion-proyectar.component';
@@ -102,6 +105,9 @@ enableProdMode();
   	VoteEditComponent,
   	VoteAddComponent,
   	VotesSessionComponent,
+    SurveysComponent,
+    SurveyAddComponent,
+    SurveyEditComponent,
   	ResultsComponent,
   	ResultsProyectedComponent,
   	ResultSesionProyectedComponent,

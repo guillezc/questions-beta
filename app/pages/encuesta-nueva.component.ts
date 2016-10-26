@@ -7,11 +7,11 @@ import { Session }  from '../classes/session';
 import { Survey }  from '../classes/survey';
 
 @Component({
-  selector: 'q-vote-add',
-  templateUrl: 'app/templates/vote-add.component.html'
+  selector: 'q-survey-add',
+  templateUrl: 'app/templates/survey-add.component.html'
 })
 
-export class VoteAddComponent implements OnInit {
+export class SurveyAddComponent implements OnInit {
   addObj: Survey = new Survey();
   sessions: FirebaseListObservable<any>;
   votes: FirebaseListObservable<any>;
@@ -28,19 +28,14 @@ export class VoteAddComponent implements OnInit {
     this.titleService.setTitle( newTitle );
   }
 
-  getSessions(){
-  	this.sessions = this.af.database.list('sessions');  
-  }
-
   ngOnInit() {
-    this.setTitle("Nueva Votación - México Cumbre de Negocios");
+    this.setTitle("Nueva Encuesta - México Cumbre de Negocios");
     this.initSurvey();
-    this.getSessions();
     this.votes = this.af.database.list('votes');
   }
 
   initSurvey(){
-    this.addObj.sessionId = "...";
+    this.addObj.sessionId = "";
     this.addObj.session = [];
     this.addObj.question = [];
     this.addObj.question['spanish'] = "";
@@ -65,16 +60,13 @@ export class VoteAddComponent implements OnInit {
     const vote_type = srv.votetype;
 
     srv.question = {spanish: srv.question_spanish, english: srv.question_english}
-    srv.type = 'v';
+    srv.type = 'e';
     delete srv["question_spanish"];
     delete srv["question_english"];
     delete srv["optionToAddSpanish"];
     delete srv["optionToAddEnglish"];
 
-    if(srv.sessionId == "..."){
-      alert('Seleccione una sesión');
-      return;
-    }
+    srv.sessionId = "";
 
     const surveyID = this.af.database.list('surveys').push(srv).key;
     this.options.forEach((opt: any) => {
@@ -88,7 +80,7 @@ export class VoteAddComponent implements OnInit {
       }
       this.af.database.list('/surveys/'+surveyID+"/options").push(optemp);
     });
-    this.redirectToSessions();
+    this.redirectToSurveys();
 
   }
 
@@ -126,8 +118,8 @@ export class VoteAddComponent implements OnInit {
     this.options[key]["name"]["english"] = nameEN;
   }
 
-  redirectToSessions(){
-    let link = ['/votaciones'];
+  redirectToSurveys(){
+    let link = ['/encuestas'];
     this.router.navigate(link);
   }
 

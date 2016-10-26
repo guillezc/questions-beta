@@ -217,6 +217,12 @@ table.dataTable{
     width: 270px !important;
     display: inline-block;
 }
+#votes-toolbar label{
+    width: 48px;
+}
+#votes-toolbar #add-vote{
+    margin-right: 5px;
+}
 .page-title.results-title{
     line-height: 30px;
 }
@@ -313,6 +319,10 @@ table.dataTable{
 #votes-date-filter.day-filter label{
     float: none;
     margin: 0;
+}
+#votes-date-filter.day-filter #remove-date{
+    font-size: 12px;
+    padding: 1px 6px 0px 6px;
 }
 #questions-date-filter.day-filter .date input{
     height: 34px;

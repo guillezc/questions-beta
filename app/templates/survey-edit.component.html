@@ -1,26 +1,19 @@
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
-            <a [routerLink]="['/votaciones']">Votaciones/</a>
+            <a [routerLink]="['/encuestas']">Encuestas</a>
             <i class="fa fa-circle"></i>
             <span>Editar</span>
         </li>
     </ul>
 </div>
-<h3 class="page-title" *ngFor="let sess of surveyObj.session">Votaciones para<br> <small><strong>{{ sess.title  }}</strong></small> </h3>
+<h3 class="page-title">Encuesta<br> <small><strong>{{ surveyObj.question.spanish  }}</strong></small> </h3>
 <div class="row">
     <div class="col-md-12">
         <!-- Begin: life time stats -->
         <div class="portlet light portlet-fit portlet-datatable bordered">
             <div class="portlet-body">
-				<form method="post" (ngSubmit)="onSubmit(voteData.value)" #voteData="ngForm" class="form-sessions">
-					<div class="form-group form-md-line-input">
-						<label for="sessionId">Sesión <span class="required" aria-required="true">*</span></label>
-						<select name="sessionId" class="form-control" [ngModel]="surveyObj.sessionId">
-							<option value="..." selected="selected">- Seleccione una sesión -</option>
-							<option *ngFor="let session of sessions | async" value="{{ session.$key }}">{{ session.title.spanish }}</option>
-						</select>
-					</div>
+				<form method="post" (ngSubmit)="onSubmit(surveyData.value)" #surveyData="ngForm" class="form-sessions">
 					<div class="form-group form-md-line-input" *ngIf="survey | async">
 						<label for="question_spanish">Pregunta <span class="required" aria-required="true">*</span></label>
 						<input type="text" name="question_spanish" class="form-control" [ngModel]="surveyObj.question.spanish">
@@ -33,11 +26,6 @@
 					</div>
 					<div class="form-group form-md-line-input">
 						<label for="tags">Opciones <span class="required" aria-required="true">*</span></label>
-						<!--<tag-input [ngModel]="surveyObj.options"
-									separatorKeys="[32]"
-									name="options"
-									placeholder="Agregar opción"
-									secondaryPlaceholder="Agregar opción"></tag-input> -->
 						<ul class="surveys-options-list new-opt clearfix">
 							<li>
 								<div>
@@ -70,7 +58,7 @@
 					<div class="form-actions">
 						<div class="row">
 				            <div class="col-md-12 text-right">
-				                <a [routerLink]="['/votaciones']" class="btn default"><i class="fa fa-arrow-left"></i> Regresar</a>
+				                <a [routerLink]="['/encuestas']" class="btn default"><i class="fa fa-arrow-left"></i> Regresar</a>
 				                <button type="submit" class="btn green"><i class="fa fa-save"></i> Guardar</button>
 				            </div>
 				        </div>

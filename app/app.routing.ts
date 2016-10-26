@@ -15,6 +15,9 @@ import { ProyectedComponent } from './pages/proyectar.component';
 import { VotesComponent } from './pages/votaciones.component';
 import { VoteEditComponent } from './pages/votacion-editar.component';
 import { VoteAddComponent } from './pages/votacion-nueva.component';
+import { SurveysComponent } from './pages/encuestas.component';
+import { SurveyAddComponent } from './pages/encuesta-nueva.component';
+import { SurveyEditComponent } from './pages/encuesta-editar.component';
 
 import { ResultsComponent } from './pages/resultados.component';
 import { ResultsProyectedComponent } from './pages/resultados-proyectar.component';
@@ -113,6 +116,18 @@ const appRoutes: Routes = [
   {
     path: 'votaciones/sesion/:id',
     component: VotesSessionComponent
+  },
+  {
+    path: 'encuestas',
+    component: SurveysComponent
+  },
+  {
+    path: 'encuesta/nueva',
+    component: SurveyAddComponent
+  },
+  {
+    path: 'encuesta/editar/:id',
+    component: SurveyEditComponent
   },
   {
     path: 'resultados/:id',

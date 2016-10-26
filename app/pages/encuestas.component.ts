@@ -6,30 +6,26 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 import { Session }  from '../classes/session';
 import { Survey }  from '../classes/survey';
 
-import { NKDatetime } from "ng2-datetime/ng2-datetime";
-
 declare var VoteJS: any;
 import  'app/js/votes.js';
 
 @Component({
   selector: 'q-votes',
-  templateUrl: 'app/templates/votes.component.html'
+  templateUrl: 'app/templates/surveys.component.html'
 })
 
-export class VotesComponent implements OnInit, OnDestroy {
+export class SurveysComponent implements OnInit, OnDestroy {
   votes: FirebaseListObservable<any[]>;
   sessions: FirebaseListObservable<any[]>;
   surveyList: Survey[] = [];
   sessionList: any[] = [];
   isLoaded: Boolean = false;
-  dayFilter: Date;
+  dayFilter: Date = new Date();
 
   datepickerOpts: any = {
     autoclose: true,
     todayBtn: 'linked',
-    todayHighlight: true,
-    hasClearButton: false,
-    placeholder: 'Selecciona fecha'
+    todayHighlight: true
   };
 
   constructor(
@@ -47,17 +43,10 @@ export class VotesComponent implements OnInit, OnDestroy {
   	this.votes = this.af.database.list('surveys', {
       query: {
         orderByChild: 'type',
-        equalTo: 'v'
+        equalTo: 'e'
       }
     });  
     this.votes.subscribe(data => {
-      data.forEach((s: Survey) => {
-        this.af.database.object('/sessions/'+s.sessionId).subscribe(sessionData => {
-          var arr: any[] = [];
-          arr[0] = sessionData;
-          s.session = arr;
-        });
-      });
       this.surveyList = data;
       VoteJS.init();
       this.isLoaded = true;
@@ -83,12 +72,12 @@ export class VotesComponent implements OnInit, OnDestroy {
   }
 
   addSurvey(){
-    let link = ['/votacion/nueva'];
+    let link = ['/encuesta/nueva'];
     this.router.navigate(link);
   }
 
   editSurvey(srv: Survey) {
-  	let link = ['/votacion/editar', srv.$key];
+  	let link = ['/encuesta/editar', srv.$key];
     this.router.navigate(link);
   }
 
@@ -96,46 +85,5 @@ export class VotesComponent implements OnInit, OnDestroy {
     this.af.database.list('/surveys').remove(s.$key);
     VoteJS.init();
   }
-
-  initDate(element: any){
-    var temp: NKDatetime = new NKDatetime(element);
-    temp.onClearClick();
-  }
-
-  handleDateChange(evt: Date){
-    //this.dayFilter = evt;
-  }
-
-  filterByType(srvType: any){
-    this.isLoaded = false;
-    VoteJS.destroyTable();
-
-    if(srvType=="..."){
-      this.getSurveys();
-    }else{
-      this.votes = this.af.database.list('surveys', {
-        query: {
-          orderByChild: 'type',
-          equalTo: srvType
-        }
-      });  
-      this.votes.subscribe(data => {
-        data.forEach((s: Survey) => {
-          this.af.database.object('/sessions/'+s.sessionId).subscribe(sessionData => {
-            var arr: any[] = [];
-            arr[0] = sessionData;
-            s.session = arr;
-          });
-        });
-        this.surveyList = data;
-        VoteJS.init();
-        this.isLoaded = true;
-      });
-    }
-  }
-
-  filterVotes(filters: any){
-    console.log(filters);
-  }
-
+  
 }

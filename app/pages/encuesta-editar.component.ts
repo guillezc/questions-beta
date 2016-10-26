@@ -7,11 +7,11 @@ import { Session }  from '../classes/session';
 import { Survey }  from '../classes/survey';
 
 @Component({
-  selector: 'q-vote-edit',
-  templateUrl: 'app/templates/vote-edit.component.html'
+  selector: 'q-survey-edit',
+  templateUrl: 'app/templates/survey-edit.component.html'
 })
 
-export class VoteEditComponent implements OnInit {
+export class SurveyEditComponent implements OnInit {
   surveyObj: Survey = new Survey();
   sessions: FirebaseListObservable<any>;
   votes: FirebaseListObservable<any>;
@@ -36,7 +36,7 @@ export class VoteEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.setTitle("Editar Votación - México Cumbre de Negocios");
+    this.setTitle("Nueva Votación - México Cumbre de Negocios");
     this.getSessions();
     this.sub = this.route.params.subscribe(params => {
       this.surveyID = params['id'];
@@ -48,7 +48,7 @@ export class VoteEditComponent implements OnInit {
   getSurvey(){
     this.survey = this.af.database.object('/surveys/'+this.surveyID);
     this.survey.subscribe(data => {
-      this.surveyObj.sessionId = data.sessionId;
+      this.surveyObj.sessionId = "";
       this.surveyObj.question = [];
       this.surveyObj.question['spanish'] = data.question.spanish;
       this.surveyObj.question['english'] = data.question.english;
@@ -72,19 +72,14 @@ export class VoteEditComponent implements OnInit {
     const vote_type = srv.votetype;
 
     srv.question = {spanish: srv.question_spanish, english: srv.question_english}
-    srv.type = 'v';
+    srv.type = 'e';
     delete srv["question_spanish"];
     delete srv["question_english"];
     delete srv["optionToAddSpanish"];
     delete srv["optionToAddEnglish"];
 
-    if(srv.sessionId == "..."){
-      alert('Seleccione una sesión');
-      return;
-    }
-
     this.af.database.object('/surveys/'+this.surveyID).update(srv);
-    this.redirectToSessions();
+    this.redirectToSurveys();
   }
 
   addOption(){
@@ -117,8 +112,8 @@ export class VoteEditComponent implements OnInit {
     });
   }
 
-  redirectToSessions(){
-    let link = ['/votaciones'];
+  redirectToSurveys(){
+    let link = ['/encuestas'];
     this.router.navigate(link);
   }
 

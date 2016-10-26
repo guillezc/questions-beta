@@ -13,7 +13,7 @@
         <!-- Begin: life time stats -->
         <div class="portlet light portlet-fit portlet-datatable bordered">
             <div class="portlet-body">
-            	<div class="table-toolbar">
+            	<div class="table-toolbar" id="votes-toolbar">
             		<div class="row">
             			<div class="col-md-12">
             				<div class="btn-group">
@@ -26,18 +26,15 @@
                             </div>
                             <br />
                             <br />
-                            <div class="vote-filters" style="display: inline-block;">
-                                <label for="votetype">Tipo</label>
-                                <select name="votetype" class="" #typeVote>
-                                    <option value="...">Todas</option>
-                                    <option value="v">Votación</option>
-                                    <option value="e">Encuesta</option>
-                                </select>
-                            </div>
                             <div class="day-filter" id="votes-date-filter">
                                 <label>Día</label>
-                                <datetime [datepicker]="datepickerOpts" #dateVote [timepicker]="false" [ngModel]='dayFilter' name="dayFilter" style="display: inline-block;"></datetime>
+                                <datetime [datepicker]="datepickerOpts" #dateVote [timepicker]="false" [hasClearButton]="true" [(ngModel)]='dayFilter' (ngModelChange)="handleDateChange($event)" name="dayFilter" style="display: inline-block;"></datetime>
+                                <button id="remove-date" (click)="initDate(dateVote)" class="btn sbold default"> Limpiar
+                                    <i class="fa fa-trash"></i>
+                                </button>
                             </div>
+                            <br />
+                            <br />
                             <div class="session-filter" id="votes-session-filter">
                                 <label for="sessionVote">Sesión</label>
                                 <select name="sessionVote" #sessionVote>
