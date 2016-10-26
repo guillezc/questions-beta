@@ -5,15 +5,14 @@ import { AngularFire, FirebaseListObservable } from 'angularfire2';
 
 @Injectable()
 export class UserService {
-	@LocalStorage()
-	public authToken:any = null;
 
 	private loggedIn:boolean = false;
 
 	constructor(
 		private router: Router,
 		public  af    : AngularFire) {
-    //this.loggedIn = !!this.authToken;
+    
+      this.loggedIn = !!localStorage.getItem('auth_token');
   }
 
   login(username: any, password: any){
@@ -26,42 +25,38 @@ export class UserService {
   }
 
   authenticate(username: any){
-  	this.authToken = username;
-  	this.loggedIn = true;
-  	//let link = ['/eventos'];
-  	//this.router.navigate(link);
-  	window.setTimeout(function(){
-      window.location.href = '/#/eventos';
-    },500);
+  	localStorage.setItem('auth_token', username);
+    this.loggedIn = true;
+    this.goToEvents();
   }
 
   logout() {
-    this.authToken = null;
+    localStorage.removeItem('auth_token');
     this.loggedIn = false;
-    //let link = ['/login'];
-  	//this.router.navigate(link);
-    window.setTimeout(function(){
-      window.location.href = '/#/login';
-    },500);
-  }
-
-  getUsername(){
-  	return this.authToken;
+    this.goToLogin();
   }
 
   isLoggedIn() {
-    if(this.authToken == null){
-    	this.loggedIn = false;
-    }else{
-			this.loggedIn = true;
-    }
     return this.loggedIn;
   }
 
+  getUsername(){
+    return localStorage.getItem('auth_token');
+  }
+
+  goToLogin(){
+    let link = ['/login'];
+    this.router.navigate(link);
+  }
+
+  goToEvents(){
+    let link = ['/eventos'];
+    this.router.navigate(link);
+  }
+
   checkCredentials(){
-  	if(this.authToken == null){
-  		let link = ['/login'];
-  		this.router.navigate(link);
+  	if(!this.isLoggedIn()){
+  		this.goToLogin();
   	}
   }
 }

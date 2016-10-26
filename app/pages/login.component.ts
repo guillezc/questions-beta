@@ -30,12 +30,11 @@ export class LoginComponent implements OnInit{
 		LoginVar.init();
 	}
 
-	onSubmit(data: any) {
+	onSubmit(data: any) {   
     this.userService.login(data.username, data.password).subscribe(userData=>{
     	if(userData.length != 0){
     		if(userData[0].password == data.password){
-          console.log("login");
-    			this.userService.authenticate(userData[0].username);
+    			this.userService.authenticate(data.username);
     			LoginVar.clean();
     		}else{
     			this.msgError = "La contraseña es incorrecta."
