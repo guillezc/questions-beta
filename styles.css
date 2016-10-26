@@ -327,6 +327,9 @@ table.dataTable{
 #questions-date-filter.day-filter .date input{
     height: 34px;
 }
+#votes-date-filter datetime button{
+    display: none;
+}
 .fec-ini{
     color: #32c5d2 !important;
 }

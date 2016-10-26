@@ -43,6 +43,12 @@ export class VotesComponent implements OnInit, OnDestroy {
     this.titleService.setTitle( newTitle );
   }
 
+  ngOnInit() {
+    this.setTitle("Votaciones - México Cumbre de Negocios");
+    this.getSurveys();
+    this.getSessions();
+  }
+
   getSurveys(){
   	this.votes = this.af.database.list('surveys', {
       query: {
@@ -64,9 +70,7 @@ export class VotesComponent implements OnInit, OnDestroy {
     });	
   }
 
-  ngOnInit() {
-    this.setTitle("Votaciones - México Cumbre de Negocios");
-  	this.getSurveys();
+  getSessions(){
     this.sessions = this.af.database.list('sessions');
     this.sessions.subscribe(data=>{
       this.sessionList = data;
@@ -97,26 +101,44 @@ export class VotesComponent implements OnInit, OnDestroy {
     VoteJS.init();
   }
 
-  initDate(element: any){
-    var temp: NKDatetime = new NKDatetime(element);
-    temp.onClearClick();
+  initDate(datepicker: NKDatetime){
+    datepicker.onClearClick();
   }
 
   handleDateChange(evt: Date){
-    //this.dayFilter = evt;
+    this.dayFilter = evt;
+
+    if(evt != null){
+      let eDay: any = this.dayFilter.getUTCDate();
+      let eMon: any = this.dayFilter.getMonth() + 1;
+      let eYea: any = this.dayFilter.getFullYear();
+      let sDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 00:00:00');
+      let eDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 23:59:59');
+
+      this.sessions = this.af.database.list('sessions', {
+        query: {
+          orderByChild: 'startTime',
+          startAt: sDate.getTime(),
+          endAt: eDate.getTime()
+        }
+      });
+      this.sessions.subscribe(data=>{
+        this.sessionList = data;
+      });
+    }else{
+      this.getSessions();
+    }
+    
   }
 
-  filterByType(srvType: any){
+  filterByArgs(sessionId: any){
     this.isLoaded = false;
     VoteJS.destroyTable();
-
-    if(srvType=="..."){
-      this.getSurveys();
-    }else{
+    if(sessionId.value!=""){
       this.votes = this.af.database.list('surveys', {
         query: {
-          orderByChild: 'type',
-          equalTo: srvType
+          orderByChild: 'sessionId',
+          equalTo: sessionId.value
         }
       });  
       this.votes.subscribe(data => {
@@ -131,11 +153,11 @@ export class VotesComponent implements OnInit, OnDestroy {
         VoteJS.init();
         this.isLoaded = true;
       });
+    }else{
+      this.surveyList = [];
+      VoteJS.init();
+      this.isLoaded = true;
     }
-  }
-
-  filterVotes(filters: any){
-    console.log(filters);
   }
 
 }

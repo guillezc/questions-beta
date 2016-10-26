@@ -20,7 +20,7 @@
                                 <button id="add-vote" (click)="addSurvey()" class="btn sbold green"> Agregar
                                     <i class="fa fa-plus"></i>
                                 </button>
-                                <button id="add-vote" (click)="filterVotes({type: typeVote.value, date: dateVote, session: sessionVote.value})" class="btn sbold green"> Filtrar
+                                <button id="add-vote" (click)="filterByArgs(sessionVote)" class="btn sbold green"> Filtrar
                                     <i class="fa fa-filter"></i>
                                 </button>
                             </div>
@@ -38,7 +38,6 @@
                             <div class="session-filter" id="votes-session-filter">
                                 <label for="sessionVote">Sesión</label>
                                 <select name="sessionVote" #sessionVote>
-                                    <option value="all">Todos</option>
                                     <option *ngFor="let session of sessionList" value="{{session.$key}}">{{session.title.spanish}}</option>
                                 </select>
                             </div>
