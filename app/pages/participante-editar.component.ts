@@ -37,24 +37,54 @@ export class ParticipantEditComponent implements OnInit{
     this.sub = this.route.params.subscribe(params => {
       this.speakerID = params['id'];
       this.speaker = this.af.database.object('/people/'+this.speakerID);
-      this.speaker.subscribe(data => {
+      this.speaker.subscribe((data: Speaker) => {
         this.speakerInfo = this.af.database.object('peopleInfo/'+data.$key);
-        this.speakerInfo.subscribe(info=>{
-          data.bio = (info.spanishBio == undefined) ? "NA" : info.spanishBio;
-          this.speakerObj = data;
+        this.speakerInfo.subscribe((info: Speaker)=>{
+
+          this.speakerObj.name = data.name;
+          this.speakerObj.title = data.title;
+          this.speakerObj.pic = data.pic;
+          this.speakerObj.company = data.company;
+          this.speakerObj.isCommittee = data.isCommittee;
+          this.speakerObj.isSpeaker = data.isSpeaker;
+
+          this.speakerObj.address = info.address;
+          this.speakerObj.englishBio = (info.englishBio == undefined) ? "NA" : info.englishBio;
+          this.speakerObj.spanishBio = (info.spanishBio == undefined) ? "NA" : info.spanishBio;
+          this.speakerObj.englishProfile = (info.englishProfile == undefined) ? "NA" : info.englishProfile;
+          this.speakerObj.spanishProfile = (info.spanishProfile == undefined) ? "NA" : info.spanishProfile;
+          this.speakerObj.phoneNumber = info.phoneNumber;
+          this.speakerObj.status = info.status;
+          this.speakerObj.webSite = info.webSite;
         });
       });
     });
   }
 
-  onSubmit(speak: any) { 
-    if(speak.bio == ""){
-      speak.bio = "NA"
+  onSubmit(spk: any) { 
+
+    var speakerObj = {
+      company: spk.company,
+      name: spk.name,
+      pic: spk.pic,
+      title: spk.title,
+      isCommittee: spk.isCommittee,
+      isSpeaker: spk.isSpeaker
     }
-    this.speakerInfo.update({spanishBio: speak.bio});
-    delete speak['bio'];
-    this.speaker.update(speak);
-    this.updateOnSessions(speak);
+
+    this.speaker.update(speakerObj);
+    this.speakerInfo.update({
+      address: spk.address,
+      englishBio: (spk.englishBio == "") ? "NA" : spk.englishBio,
+      spanishBio: (spk.spanishBio == "") ? "NA" : spk.spanishBio,
+      englishProfile: (spk.englishProfile == "") ? "NA" : spk.englishProfile,
+      spanishProfile: (spk.spanishProfile == "") ? "NA" : spk.spanishProfile,
+      phoneNumber: spk.phoneNumber,
+      status: spk.status,
+      webSite: spk.webSite
+    });
+
+    this.updateOnSessions(speakerObj);
   }
 
   updateOnSessions(speak: any){

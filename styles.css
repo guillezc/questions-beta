@@ -195,6 +195,9 @@
     font-weight: 600;
     width: 100%;
 }
+.form-sessions .form-md-radios > label{
+    color: #333;
+}
 .form-sessions .form-control{
     color: #959595 !important;
 }

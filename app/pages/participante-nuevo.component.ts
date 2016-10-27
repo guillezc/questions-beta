@@ -35,27 +35,42 @@ export class ParticipantAddComponent implements OnInit{
 
     this.speakerObj.name = "";
     this.speakerObj.title = "";
-    this.speakerObj.bio = "";
     this.speakerObj.pic = "";
+    this.speakerObj.company = "";
+    this.speakerObj.isCommittee = false;
+    this.speakerObj.isSpeaker = false;
+
+    this.speakerObj.address = "";
+    this.speakerObj.englishBio = "";
+    this.speakerObj.spanishBio = "";
+    this.speakerObj.englishProfile = "";
+    this.speakerObj.spanishProfile = "";
+    this.speakerObj.phoneNumber = "";
+    this.speakerObj.status = "Inactive"
+    this.speakerObj.webSite = "";
   }
 
-  onSubmit(spk: any) { 
-
-    var bio = (spk.bio == "") ? "NA" : spk.bio;
-    delete spk['bio'];
+  onSubmit(spk: Speaker) {
 
     this.speakers = this.af.database.list('people');
-    var newID = this.speakers.push(spk).key;
+    var newID = this.speakers.push({
+      company: spk.company,
+      name: spk.name,
+      pic: spk.pic,
+      title: spk.title,
+      isCommittee: spk.isCommittee,
+      isSpeaker: spk.isSpeaker
+    }).key;
     this.af.database.object('peopleInfo/'+newID).update({
       id: newID,
-      address: "",
-      englishBio: "",
-      spanishBio: bio,
-      englishProfile: "",
-      spanishProfile: "",
-      phoneNumber: "",
-      status: "active",
-      webSite: ""
+      address: spk.address,
+      englishBio: (spk.englishBio == "") ? "NA" : spk.englishBio,
+      spanishBio: (spk.spanishBio == "") ? "NA" : spk.spanishBio,
+      englishProfile: (spk.englishProfile == "") ? "NA" : spk.englishProfile,
+      spanishProfile: (spk.spanishProfile == "") ? "NA" : spk.spanishProfile,
+      phoneNumber: spk.phoneNumber,
+      status: spk.status,
+      webSite: spk.webSite
     });
     
     this.redirectToParticipants();

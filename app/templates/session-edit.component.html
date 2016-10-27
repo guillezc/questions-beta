@@ -41,6 +41,18 @@
 						<div class="form-group form-md-line-input form-md-checkboxes">
 							<div class="md-checkbox-inline">
                                 <div class="md-checkbox">
+                                    <input name="canAsk" type="checkbox" [(ngModel)]="sessionObj.canAsk" id="canAsk" class="md-check">
+                                    <label for="canAsk">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Activar preguntas </label>
+                                </div>
+							</div>
+						</div>
+
+						<div class="form-group form-md-line-input form-md-checkboxes">
+							<div class="md-checkbox-inline">
+                                <div class="md-checkbox">
                                     <input name="allDay" type="checkbox" [(ngModel)]="sessionObj.allDay" id="allDay" class="md-check">
                                     <label for="allDay">
                                     <span></span>

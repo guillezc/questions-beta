@@ -32,10 +32,84 @@
 							<span class="help-block">Ingrese el título para el participante</span>
 						</div>
 						<div class="form-group form-md-line-input">
-							<label for="bio">Bio <span class="required" aria-required="true">*</span></label>
-							<textarea name="bio" class="form-control" [ngModel]="speakerObj.bio"></textarea>
-							<span class="help-block">Ingrese la bio para la sesión</span>
+							<label for="company">Empresa <span class="required" aria-required="true">*</span></label>
+							<input type="text" name="company" class="form-control" [ngModel]="speakerObj.company">
+							<span class="help-block">Ingrese el nombre de la empresa</span>
+						</div>	
+						<div class="form-group form-md-line-input form-md-checkboxes">
+							<div class="md-checkbox-inline">
+                                <div class="md-checkbox">
+                                    <input name="isCommittee" type="checkbox" [(ngModel)]="speakerObj.isCommittee" id="isCommittee" class="md-check">
+                                    <label for="isCommittee">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Es Comité </label>
+                                </div>
+                                <div class="md-checkbox">
+                                    <input name="isSpeaker" type="checkbox" [(ngModel)]="speakerObj.isSpeaker" id="isSpeaker" class="md-check">
+                                    <label for="isSpeaker">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Es Orador </label>
+                                </div>
+							</div>
 						</div>
+
+						<div class="form-group form-md-line-input form-md-radios">
+							<label>Estatus</label>
+							<div class="md-radio-inline">
+                                <div class="md-radio">
+                                    <input name="status" type="radio" [(ngModel)]="speakerObj.status" value="Active" id="statusActive" class="md-radiobtn">
+                                    <label for="statusActive">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Activo </label>
+                                </div>
+                                <div class="md-radio">
+                                    <input name="status" type="radio" [(ngModel)]="speakerObj.status" value="Inactive" id="statusInactive" class="md-radiobtn">
+                                    <label for="statusInactive">
+                                    <span></span>
+                                    <span class="check"></span>
+                                    <span class="box"></span> Inactivo </label>
+                                </div>
+							</div>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="address">Dirección <span class="required" aria-required="true">*</span></label>
+							<input type="text" name="address" class="form-control" [ngModel]="speakerObj.address">
+							<span class="help-block">Ingrese la dirección del participate</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="phoneNumber">Teléfono <span class="required" aria-required="true">*</span></label>
+							<input type="text" name="phoneNumber" class="form-control" [ngModel]="speakerObj.phoneNumber">
+							<span class="help-block">Ingrese el teléfono del participate</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="webSite">Página web <span class="required" aria-required="true">*</span></label>
+							<input type="text" name="webSite" class="form-control" [ngModel]="speakerObj.webSite">
+							<span class="help-block">Ingrese la página web del participante</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="spanishBio">Bio <span class="required" aria-required="true">*</span></label>
+							<textarea name="spanishBio" class="form-control" [ngModel]="speakerObj.spanishBio"></textarea>
+							<span class="help-block">Ingrese la bio para el participante</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="englishBio"></label>
+							<textarea name="englishBio" class="form-control" [ngModel]="speakerObj.englishBio"></textarea>
+							<span class="help-block">Enter the bio speaker</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="spanishProfile">Perfil <span class="required" aria-required="true">*</span></label>
+							<textarea name="spanishProfile" class="form-control" [ngModel]="speakerObj.spanishProfile"></textarea>
+							<span class="help-block">Ingrese el perfil del participante</span>
+						</div>
+						<div class="form-group form-md-line-input">
+							<label for="englishProfile"></label>
+							<textarea name="englishProfile" class="form-control" [ngModel]="speakerObj.englishProfile"></textarea>
+							<span class="help-block">Enter the profile speaker</span>
+						</div>
+
 					</div>
 					<div class="form-actions">
 						<div class="row">

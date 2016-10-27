@@ -104,6 +104,7 @@ export class SessionAddComponent implements OnInit {
     this.addObj.allDay = false;
     this.addObj.hasDetails = false;
     this.addObj.onMySchedule = false;
+    this.addObj.canAsk = false;
     this.addObj.title = [];
     this.addObj.title['spanish'] = "";
     this.addObj.title['english'] = "";

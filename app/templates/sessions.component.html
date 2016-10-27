@@ -24,7 +24,7 @@
                                     Todas las sesiones <i class="fa fa-search"></i>
                                 </button>
                                 <div class="day-filter" *ngIf="sessions | async">
-                                    <label>Día <span class="required" aria-required="true">*</span></label>
+                                    <label>Día</label>
                                     <datetime [datepicker]="datepickerOpts" [timepicker]="false" [ngModel]='dayFilter' 
                                     (ngModelChange)="handleDateFromChange($event)" name="dayFilter" style="float: left;"></datetime>
                                 </div>

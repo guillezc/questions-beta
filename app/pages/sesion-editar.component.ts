@@ -138,6 +138,7 @@ export class SessionEditComponent implements OnInit, OnDestroy {
       this.sessionObj.startTime = new Date(data.startTime);
       this.sessionObj.endTime = new Date(data.endTime);
       this.sessionObj.allDay = data.allDay;
+      this.sessionObj.canAsk = data.canAsk;
       this.sessionObj.title = [];
       this.sessionObj.title['spanish'] = data.title.spanish;
       this.sessionObj.title['english'] = data.title.english;

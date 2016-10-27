@@ -7,6 +7,9 @@ var ParticipantJS = function(){
 				}
 				else {
 				    table = $('#datatable_participants').DataTable( {
+				    	deferRender: true,
+				    	processing: true,
+				    	lengthMenu: [ 25, 50, 75, 100, 125 ],
 				        pagingType: 'simple_numbers',
 					    language: {
 					    	lengthMenu: "Mostrar _MENU_ sesiones",

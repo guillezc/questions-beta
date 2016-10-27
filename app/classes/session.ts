@@ -15,6 +15,7 @@ export class Session {
     public startTime: Date;
     public tags: any[];
     public title: any;
+    public canAsk: boolean;
 
     constructor(){}
 
