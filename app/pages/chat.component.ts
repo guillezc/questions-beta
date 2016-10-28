@@ -129,6 +129,10 @@ export class ChatComponent implements OnInit{
 
   }
 
+  toggleSelect(all: any){
+		this.sendToAll = all.checked;
+  }
+
   onSubmit(chat:any){
   	this.newMessage = "";
   	let tstamp: Date = new Date();

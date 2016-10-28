@@ -49,20 +49,10 @@
 									<input type="text" id="new-chat-title" name="new-chat-title" #newChatTitle>
 									<br/>
 									<br/>
-									<ng-select 	[allowClear]="true" [items]="peopleItems"
-										   				[initData]="peopleSelect"
-							               	[multiple]="true"
-										   				(selected)="addMember($event)"
-              						   	(removed)="removeMember($event)"
-							               	placeholder="Seleccione uno o varios">
-							    </ng-select>
-							    <br/> 
-							    <br/>
-
-							    <div class="form-md-checkboxes">
+									<div class="form-md-checkboxes">
 										<div class="md-checkbox-inline">
                       <div class="md-checkbox">
-                          <input type="checkbox" name="sendAll" id="sendAll" #sendAll class="md-check">
+                          <input type="checkbox" (change)="toggleSelect(sendAll)" name="sendAll" id="sendAll" #sendAll class="md-check">
                           <label for="sendAll">
 	                          <span></span>
 	                          <span class="check"></span>
@@ -72,7 +62,19 @@
                       </div>
 										</div>
 									</div>
-
+									<br/> 
+							    <br/>
+									<div id="select-to" [hidden]="sendToAll">
+										<ng-select 	[allowClear]="true" [items]="peopleItems"
+										   				[initData]="peopleSelect"
+							               	[multiple]="true"
+										   				(selected)="addMember($event)"
+              						   	(removed)="removeMember($event)"
+							               	placeholder="Seleccione uno o varios">
+							    	</ng-select>
+									</div>
+									<br/> 
+							    <br/>
 							    <div class="text-right">
 										<button class="btn btn-default" (click)="addChat(newChatTitle, sendAll)"><i class="fa fa-save"></i> Crear chat</button>
 									</div>
