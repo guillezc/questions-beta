@@ -29,6 +29,7 @@ export class ChatComponent implements OnInit{
 	messagesList: any[] = [];
 	peopleItems: Array<any> = [];
   peopleSelect: Array<any> = [];
+  allPeopleSelect: Array<any> = [];
 	userID = '-KPCMKA-InT8eGDHEDEF';
 	newMessage: any = "";
 	newChatID: any;
@@ -86,6 +87,7 @@ export class ChatComponent implements OnInit{
 		this.people.subscribe(people => {
       this.peopleList = people;
       this.peopleItems = this.setSpeakersItems(people);
+      this.generateAllSelecteds();
     });
 	}
 
@@ -103,23 +105,25 @@ export class ChatComponent implements OnInit{
 
   addChat(tChat:any, all: any){
 
+  	let typeChat: string = "global";
 		let tstamp: Date = new Date();
 		let creator: any = this.userID;
-  	this.peopleSelect[creator] = this.userID;
+  	this.peopleSelect[creator] = true;
+
+  	if(!all.checked){
+  		typeChat = (this.getLengthPeople() > 1) ? "group" : "personal";
+  	}
 
 		this.newChatID = this.af.database.list('chats').push({
 			title: tChat.value,
-			timestamp: tstamp.getTime()
+			timestamp: tstamp.getTime(),
+			type: typeChat
 		}).key;
 
 		if(all.checked){
-			this.peopleItems.forEach(person=>{
-				this.af.database.object('people/'+person.id+'/chats/'+this.newChatID).update({active: true});
-			});
+			this.af.database.object('chatMembers/'+this.newChatID).update({active: true});
 		}else{
-			for (var key in this.peopleSelect) {
-	  		this.af.database.object('people/'+key+'/chats/'+this.newChatID).update({active: true});
-	    }
+	  	this.af.database.object('chatMembers/'+this.newChatID).update({active: true});
 		}
 
     this.messagesList = [];
@@ -169,8 +173,16 @@ export class ChatComponent implements OnInit{
     });
   }
 
+  getLengthPeople(){
+  	var count = 0;
+  	for (var key in this.peopleSelect) {
+  		count++;
+    }
+    return count;
+  }
+
   addMember(value:any):void {
-    this.peopleSelect[value.id] = value.id;
+    this.peopleSelect[value.id] = true;
   }
 
   removeMember(value:any):void {
@@ -190,6 +202,12 @@ export class ChatComponent implements OnInit{
     }
 
     return items;
+  }
+
+  generateAllSelecteds(){
+  	this.peopleItems.forEach(item=>{
+  		this.allPeopleSelect[item.id] = true;
+  	});
   }
 
 }
