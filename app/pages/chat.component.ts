@@ -60,7 +60,7 @@ export class ChatComponent implements OnInit{
 	}
 
 	getChats(){
-		this.chats = this.af.database.list('people/'+this.userID+'/chats');
+		/*this.chats = this.af.database.list('people/'+this.userID+'/chats');
 		this.chats.subscribe(data => {
       if(data.length > 0){
       	this.chatList = [];
@@ -79,6 +79,25 @@ export class ChatComponent implements OnInit{
 	      });
 	      
       }
+    });*/
+    this.chats = this.af.database.list('chatMembers');
+    this.chats.subscribe(members=>{
+      this.chatList = [];
+      let count: any = 0;
+      members.forEach(memberChat=>{
+        if(this.isAdminChat(memberChat)){
+          this.af.database.object('/chats/'+memberChat.$key).subscribe(chData => {
+            this.chatList.push({
+              key: chData.$key,
+              title: chData.title,
+              lastMessage: chData.lastMessage
+            });
+            if(count==members.length)
+              this.isLoaded = true;
+          });
+        }
+        count++;
+      });
     });
 	}
 
@@ -108,23 +127,34 @@ export class ChatComponent implements OnInit{
   	let typeChat: string = "global";
 		let tstamp: Date = new Date();
 		let creator: any = this.userID;
-  	this.peopleSelect[creator] = true;
+    let chatMembers:any = {};
+    let members:any = {};
 
-  	if(!all.checked){
-  		typeChat = (this.getLengthPeople() > 1) ? "group" : "personal";
-  	}
+    this.peopleSelect[creator] = true;
 
-		this.newChatID = this.af.database.list('chats').push({
-			title: tChat.value,
-			timestamp: tstamp.getTime(),
-			type: typeChat
-		}).key;
+    if(!all.checked){
+      typeChat = (this.getLengthPeople() > 2) ? "group" : "personal";
+    }
 
-		if(all.checked){
-			this.af.database.object('chatMembers/'+this.newChatID).update({active: true});
-		}else{
-	  	this.af.database.object('chatMembers/'+this.newChatID).update({active: true});
-		}
+    this.newChatID = this.af.database.list('chats').push({
+      title: tChat.value,
+      timestamp: tstamp.getTime(),
+      type: typeChat
+    }).key;
+    
+  	if(all.checked){
+      for(var key in this.allPeopleSelect){
+        chatMembers[key] = true;
+      }
+      members[this.newChatID] = chatMembers;
+  		this.af.database.object('chatMembers').update(members);
+  	}else{
+      for(var key in this.peopleSelect){
+        chatMembers[key] = true;
+      };
+      members[this.newChatID] = chatMembers;
+      this.af.database.object('chatMembers').update(members);
+    }
 
     this.messagesList = [];
     this.isNewChat = false;
@@ -202,6 +232,14 @@ export class ChatComponent implements OnInit{
     }
 
     return items;
+  }
+
+  isAdminChat(memberChat: any){
+    for(var key in memberChat){
+      if(key == this.userID)
+        return true;
+    }
+    return false;
   }
 
   generateAllSelecteds(){
