@@ -242,7 +242,7 @@ export class SessionEditComponent implements OnInit, OnDestroy {
 
   addLocation(value:any):void {
     this.af.database.object('locations/'+value.id).subscribe(loc=>{
-      this.af.database.object('sessions/'+this.sessionID).update({locationId: value.id, locationName: {english: loc.name.english, spanish: loc.name.spanish}});
+      this.af.database.object('sessions/'+this.sessionID).update({locationId: value.id, locationPic: loc.urlImg, locationName: {english: loc.name.english, spanish: loc.name.spanish}});
     });
   }
 

@@ -110,7 +110,7 @@ export class LocationEditComponent implements OnInit{
 
     this.allSessions.forEach((sess: any) => {
       if(sess.locationId == this.locationID){
-        this.af.database.object('/sessions/'+sess.$key).update({locationName: {english: editLocation.name.english, spanish: editLocation.name.spanish}});
+        this.af.database.object('/sessions/'+sess.$key).update({locationPic: editLocation.urlImg, locationName: {english: editLocation.name.english, spanish: editLocation.name.spanish}});
       }
     });
     this.redirectToLocations();

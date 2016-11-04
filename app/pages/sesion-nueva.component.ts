@@ -119,6 +119,7 @@ export class SessionAddComponent implements OnInit {
       sess.locationId = this.locationSelect;
       this.af.database.object('locations/'+this.locationSelect).subscribe(loc=>{
         sess.locationName = {english: loc.name.english, spanish: loc.name.spanish};
+        sess.locationPic = loc.urlImg;
       });
     }
 
