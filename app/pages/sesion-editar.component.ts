@@ -129,6 +129,7 @@ export class SessionEditComponent implements OnInit, OnDestroy {
   getSession(){
     this.session = this.af.database.object('/sessions/'+this.sessionID);
     this.subsSession = this.session.subscribe(data => {
+
       this.getSessionLocation(data.locationId);
       this.getSessionManagers();
       this.getSessionOrators();
@@ -139,12 +140,8 @@ export class SessionEditComponent implements OnInit, OnDestroy {
       this.sessionObj.endTime = new Date(data.endTime);
       this.sessionObj.allDay = data.allDay;
       this.sessionObj.canAsk = data.canAsk;
-      this.sessionObj.title = [];
-      this.sessionObj.title['spanish'] = data.title.spanish;
-      this.sessionObj.title['english'] = data.title.english;
-      this.sessionObj.description = [];
-      this.sessionObj.description['spanish'] = data.description.spanish;
-      this.sessionObj.description['english'] = data.description.english;
+      this.sessionObj.title = {english: data.title.english, spanish: data.title.spanish};
+      this.sessionObj.description = {english: data.description.english, spanish: data.description.spanish};
     });
   }
 
@@ -234,7 +231,9 @@ export class SessionEditComponent implements OnInit, OnDestroy {
   }
 
   addLocation(value:any):void {
-    this.af.database.object('sessions/'+this.sessionID).update({locationId: value.id});
+    this.af.database.object('locations/'+value.id).subscribe(loc=>{
+      this.af.database.object('sessions/'+this.sessionID).update({locationId: value.id, locationName: {english: loc.name.english, spanish: loc.name.spanish}});
+    });
   }
 
   removeLocation(value:any):void {

@@ -15,6 +15,7 @@ import * as firebase from "firebase";
 })
 
 export class LocationEditComponent implements OnInit{
+  allSessions: any[] = [];
   locationObj: Location = new Location();
   location: FirebaseObjectObservable<any>;
   storageRef: any;
@@ -40,6 +41,7 @@ export class LocationEditComponent implements OnInit{
     this.setTitle("Editar locación - México Cumbre de Negocios");
     this.storageRef = firebase.storage().ref();
     this.sub = this.route.params.subscribe(params => {
+      this.getSessions();
       this.locationID = params['id'];
       this.location = this.af.database.object('/locations/'+this.locationID);
       this.location.subscribe((data: Location) => {
@@ -49,6 +51,12 @@ export class LocationEditComponent implements OnInit{
 
         this.locationObj = data;
       });
+    });
+  }
+
+  getSessions(){
+    this.af.database.list('sessions').subscribe(dataSess => {
+      this.allSessions = dataSess;
     });
   }
 
@@ -86,7 +94,7 @@ export class LocationEditComponent implements OnInit{
           editLocation.urlImg = downloadURL;
           locationClass.saving = false;
           locationClass.location.update(editLocation);
-          locationClass.redirectToLocations();
+          locationClass.updateToSessions(editLocation);
         });
       }
     }else{
@@ -94,8 +102,19 @@ export class LocationEditComponent implements OnInit{
       editLocation.urlImg = locationClass.locationUrlImg;
       locationClass.saving = false;
       locationClass.location.update(editLocation);
-      locationClass.redirectToLocations();
+      locationClass.updateToSessions(editLocation);
     }
+  }
+
+  updateToSessions(editLocation: any){
+
+    this.allSessions.forEach((sess: any) => {
+      if(sess.locationId == this.locationID){
+        this.af.database.object('/sessions/'+sess.$key).update({locationName: {english: editLocation.name.english, spanish: editLocation.name.spanish}});
+      }
+    });
+    this.redirectToLocations();
+
   }
 
   redirectToLocations(){

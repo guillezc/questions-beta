@@ -24,7 +24,7 @@ export class SessionAddComponent implements OnInit {
   people: FirebaseListObservable<any>;
   locations: FirebaseListObservable<any[]>;
   locationItems: Array<any> = [];
-  locationSelect: any;
+  locationSelect: any = "";
   peopleItems: Array<any> = [];
   managerSelect: Array<any> = [];
   oratorSelect: Array<any> = [];
@@ -115,6 +115,13 @@ export class SessionAddComponent implements OnInit {
 
   onSubmit(sess: any) { 
 
+    if(this.locationSelect != ""){
+      sess.locationId = this.locationSelect;
+      this.af.database.object('locations/'+this.locationSelect).subscribe(loc=>{
+        sess.locationName = {english: loc.name.english, spanish: loc.name.spanish};
+      });
+    }
+
     sess.startTime = sess.startTime.getTime();
     sess.endTime = sess.endTime.getTime();
 
@@ -123,7 +130,6 @@ export class SessionAddComponent implements OnInit {
 
     sess.title = {spanish: sess.title_spanish, english: sess.title_english};
     sess.description = {spanish: sess.description_spanish, english: sess.description_english};
-    sess.locationId = this.locationSelect;
 
     delete sess['title_spanish'];
     delete sess['title_english'];
@@ -174,7 +180,7 @@ export class SessionAddComponent implements OnInit {
   }
 
   removeLocation(value:any):void {
-    delete this.oratorSelect[value.id];
+    this.locationSelect = "";
   }
 
   addSpeaker(value:any):void {

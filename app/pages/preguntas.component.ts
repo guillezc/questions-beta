@@ -139,7 +139,7 @@ export class QuestionsComponent implements OnInit {
   handleDateFromChange(evt: Date){
     this.dayFilter = evt;
     if(evt != null){
-      let eDay: any = this.dayFilter.getUTCDate();
+      let eDay: any = this.dayFilter.getDate();
       let eMon: any = this.dayFilter.getMonth() + 1;
       let eYea: any = this.dayFilter.getFullYear();
       let sDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 00:00:00');

@@ -114,11 +114,11 @@ export class SessionsComponent implements OnInit {
     this.isLoaded = false;
     SessionJS.destroyTable();
 
-    let eDay: any = evt.getUTCDate();
+    let eDay: any = evt.getDate();
     let eMon: any = evt.getMonth() + 1;
     let eYea: any = evt.getFullYear();
     let sDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 00:00:00');
-    let eDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 23:59:59');
+    let eDate: Date = new Date(eYea+'-'+eMon+'-'+eDay+' 23:59:59'); 
 
     this.sessions = this.af.database.list('sessions', {
       query: {

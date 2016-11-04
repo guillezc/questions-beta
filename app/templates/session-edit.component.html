@@ -7,14 +7,14 @@
         </li>
     </ul>
 </div>
-<h3 class="page-title"> {{ sessionObj.title  }} </h3>
+<h3 class="page-title" *ngIf="session | async"> {{ sessionObj.title.spanish  }} </h3>
 <div class="row">
     <div class="col-md-12">
         <!-- Begin: life time stats -->
         <div class="portlet light portlet-fit portlet-datatable bordered">
             <div class="portlet-body">
 				<form [hidden]="submitted" method="post" (ngSubmit)="onSubmit(sessionData.value)" #sessionData="ngForm" class="form-sessions">
-					<div class="form-body">
+					<div class="form-body" *ngIf="session | async">
 
 						<div class="form-group form-md-line-input">
 							<label for="title_spanish">Título <span class="required" aria-required="true">*</span></label>
