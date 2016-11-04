@@ -44,10 +44,12 @@ export class SessionEditComponent implements OnInit, OnDestroy {
   subsSession: any;
 
   timepickerStartOpts: any = {
+    showMeridian: false,
     minuteStep: 1
   };
 
   timepickerEndOpts: any = {
+    showMeridian: false,
     minuteStep: 1
   };
 
@@ -116,6 +118,10 @@ export class SessionEditComponent implements OnInit, OnDestroy {
     sess.startTime = this.startDateValue.getTime();
     sess.endTime = this.endDateValue.getTime();
 
+    console.log("===== on submit =======");
+    console.log(this.startDateValue);
+    console.log(this.endDateValue);
+
     sess.title = {spanish: sess.title_spanish, english: sess.title_english};
     sess.description = {spanish: sess.description_spanish, english: sess.description_english};
 
@@ -142,10 +148,14 @@ export class SessionEditComponent implements OnInit, OnDestroy {
       this.sessionObj.tags = data.tags ? data.tags : [];
 
       this.sessionObj.startTime = new Date(data.startTime);
-      this.startDateValue = this.sessionObj.startTime;
+      this.startDateValue = new Date(data.startTime);
 
       this.sessionObj.endTime = new Date(data.endTime);
-      this.endDateValue = this.sessionObj.endTime;
+      this.endDateValue = new Date(data.endTime);
+
+      console.log("===== get session ====");
+      console.log(this.startDateValue);
+      console.log(this.endDateValue);
 
       this.sessionObj.allDay = data.allDay;
       this.sessionObj.canAsk = data.canAsk;
@@ -293,19 +303,25 @@ export class SessionEditComponent implements OnInit, OnDestroy {
   }
 
   handleDateStartChange(evt: Date){
+    console.log("===== start change ====");
+    console.log(this.isFirstStartTime);
     if(this.isFirstStartTime){
       this.isFirstStartTime = false;
     }else{
       this.startDateValue = evt;
     }
+    console.log(this.startDateValue);
   }
 
   handleDateEndChange(evt: Date){
+    console.log("===== end change ====");
+    console.log(this.isFirstEndTime);
     if(this.isFirstEndTime){
       this.isFirstEndTime = false;
     }else{
       this.endDateValue = evt;
     }
+    console.log(this.endDateValue);
   }
 
 }
