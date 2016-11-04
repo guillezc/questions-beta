@@ -35,6 +35,10 @@ export class SessionEditComponent implements OnInit, OnDestroy {
   tagsSelect: Array<any> = [];
   firebase: AngularFire;
   submitted = false;
+  isFirstEndTime: boolean = true;
+  endDateValue: Date;
+  isFirstStartTime: boolean = true;
+  startDateValue: Date;
   sub: any;
   sessionID: any;
   subsSession: any;
@@ -109,8 +113,8 @@ export class SessionEditComponent implements OnInit, OnDestroy {
 
   onSubmit(sess: any) { 
     this.submitted = false;
-    sess.startTime = sess.startTime.getTime();
-    sess.endTime = sess.endTime.getTime();
+    sess.startTime = this.startDateValue.getTime();
+    sess.endTime = this.endDateValue.getTime();
 
     sess.title = {spanish: sess.title_spanish, english: sess.title_english};
     sess.description = {spanish: sess.description_spanish, english: sess.description_english};
@@ -136,12 +140,18 @@ export class SessionEditComponent implements OnInit, OnDestroy {
       this.getSessionTags();
 
       this.sessionObj.tags = data.tags ? data.tags : [];
+
       this.sessionObj.startTime = new Date(data.startTime);
+      this.startDateValue = this.sessionObj.startTime;
+
       this.sessionObj.endTime = new Date(data.endTime);
+      this.endDateValue = this.sessionObj.endTime;
+
       this.sessionObj.allDay = data.allDay;
       this.sessionObj.canAsk = data.canAsk;
       this.sessionObj.title = {english: data.title.english, spanish: data.title.spanish};
       this.sessionObj.description = {english: data.description.english, spanish: data.description.spanish};
+
     });
   }
 
@@ -280,6 +290,22 @@ export class SessionEditComponent implements OnInit, OnDestroy {
 
   removeTag(value:any):void {
     this.af.database.list('sessions/'+this.sessionID+'/tags').remove(value.id);
+  }
+
+  handleDateStartChange(evt: Date){
+    if(this.isFirstStartTime){
+      this.isFirstStartTime = false;
+    }else{
+      this.startDateValue = evt;
+    }
+  }
+
+  handleDateEndChange(evt: Date){
+    if(this.isFirstEndTime){
+      this.isFirstEndTime = false;
+    }else{
+      this.endDateValue = evt;
+    }
   }
 
 }

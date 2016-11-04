@@ -61,16 +61,17 @@
                                 </div>
 							</div>
 						</div>
-						<div class="form-group form-md-line-input">
+
+						<div class="form-group form-md-line-input" *ngIf="session | async">
 							<div class="row">
 								<div class="col-md-6">
 									<label>Inicio <span class="required" aria-required="true">*</span></label>
-									<datetime [timepicker]="timepickerStartOpts" [datepicker]="datepickerStartOpts" [ngModel]='sessionObj.startTime' name="startTime"></datetime>
+									<datetime [timepicker]="timepickerStartOpts" [datepicker]="datepickerStartOpts" [ngModel]='sessionObj.startTime' (ngModelChange)="handleDateStartChange($event)" name="startTime"></datetime>
 									<span class="help-block">Ingrese la fecha y hora del inicio para la sesión</span>
 								</div>
 								<div class="col-md-6" [hidden]="sessionObj.allDay">
 									<label>Fin <span class="required" aria-required="true">*</span></label>
-									<datetime [timepicker]="timepickerEndOpts" [datepicker]="datepickerEndOpts" [ngModel]='sessionObj.endTime' name="endTime"></datetime>
+									<datetime [timepicker]="timepickerEndOpts" [datepicker]="datepickerEndOpts" [ngModel]='sessionObj.endTime' (ngModelChange)="handleDateEndChange($event)" name="endTime"></datetime>
 									<span class="help-block">Ingrese la fecha y hora del final para la sesión</span>
 								</div>
 							</div>			
