@@ -38,11 +38,15 @@ export class SessionAddComponent implements OnInit {
   isAllDays: Boolean = false;
 
   timepickerStartOpts: any = {
-    minuteStep: 1
+    minuteStep: 1,
+    showMeridian: false,
+    defaultTime: false
   };
 
   timepickerEndOpts: any = {
-    minuteStep: 1
+    minuteStep: 1,
+    showMeridian: false,
+    defaultTime: false
   };
 
   datepickerStartOpts: any = {
