@@ -53,6 +53,8 @@ export class SessionsComponent implements OnInit {
     this.sessions = this.af.database.list('sessions');
     this.sessions.subscribe(data => {
       data.forEach((sess: any) => {
+        sess.startTime = this.convertUTCTimeToLocalDate(sess.startTime);
+        sess.endTime = this.convertUTCTimeToLocalDate(sess.endTime);
         this.survey = this.af.database.list('/surveys', {
           query: {
             orderByChild: 'sessionId',
@@ -143,6 +145,13 @@ export class SessionsComponent implements OnInit {
       SessionJS.init();
       this.isLoaded = true;
     });
+  }
+
+  convertUTCTimeToLocalDate(_time: any){
+    var utcDate = new Date(_time);
+    var offset = utcDate.getTimezoneOffset();
+    var diffZone = _time-(offset*60*1000);
+    return new Date(diffZone);
   }
 
 }

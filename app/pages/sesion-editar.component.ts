@@ -117,8 +117,8 @@ export class SessionEditComponent implements OnInit, OnDestroy {
 
   onSubmit(sess: any) { 
     this.submitted = false;
-    sess.startTime = this.startDateValue.getTime();
-    sess.endTime = this.endDateValue.getTime();
+    sess.startTime = this.convertLocalDateToUTCTime(this.startDateValue);
+    sess.endTime = this.convertLocalDateToUTCTime(this.endDateValue);
 
     sess.title = {spanish: sess.title_spanish, english: sess.title_english};
     sess.description = {spanish: sess.description_spanish, english: sess.description_english};
@@ -145,11 +145,11 @@ export class SessionEditComponent implements OnInit, OnDestroy {
 
       this.sessionObj.tags = data.tags ? data.tags : [];
 
-      this.sessionObj.startTime = new Date(data.startTime);
-      this.startDateValue = new Date(data.startTime);
+      this.sessionObj.startTime = this.convertUTCTimeToLocalDate(data.startTime);
+      this.startDateValue = this.convertUTCTimeToLocalDate(data.startTime);
 
-      this.sessionObj.endTime = new Date(data.endTime);
-      this.endDateValue = new Date(data.endTime);
+      this.sessionObj.endTime = this.convertUTCTimeToLocalDate(data.endTime);
+      this.endDateValue = this.convertUTCTimeToLocalDate(data.endTime);
 
       this.sessionObj.allDay = data.allDay;
       this.sessionObj.canAsk = data.canAsk;
@@ -157,6 +157,24 @@ export class SessionEditComponent implements OnInit, OnDestroy {
       this.sessionObj.description = {english: data.description.english, spanish: data.description.spanish};
 
     });
+  }
+
+  convertUTCTimeToLocalDate(_time: any){
+    var utcDate = new Date(_time);
+    var offset = utcDate.getTimezoneOffset();
+    var diffZone = _time-(offset*60*1000);
+    return new Date(diffZone);
+  }
+
+  convertLocalDateToUTCTime(_date: Date){
+    var _yea = _date.getUTCFullYear();
+    var _mon = _date.getUTCMonth();
+    var _day = _date.getUTCDate();
+    var _hou = _date.getUTCHours();
+    var _min = _date.getUTCMinutes();
+    var _sec = _date.getUTCSeconds();
+
+    return new Date(_yea,_mon,_day,_hou,_min,_sec).getTime();
   }
 
   getSessionLocation(locationId: any){
