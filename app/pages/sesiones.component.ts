@@ -150,7 +150,7 @@ export class SessionsComponent implements OnInit {
   convertUTCTimeToLocalDate(_time: any){
     var utcDate = new Date(_time);
     var offset = utcDate.getTimezoneOffset();
-    var diffZone = _time-(offset*60*1000);
+    var diffZone = _time+(offset*60*1000);
     return new Date(diffZone);
   }
 

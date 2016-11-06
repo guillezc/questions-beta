@@ -117,8 +117,9 @@ export class SessionEditComponent implements OnInit, OnDestroy {
 
   onSubmit(sess: any) { 
     this.submitted = false;
-    sess.startTime = this.convertLocalDateToUTCTime(this.startDateValue);
-    sess.endTime = this.convertLocalDateToUTCTime(this.endDateValue);
+
+    sess.startTime = this.convertUTCTimeToLocalTime(this.startDateValue.getTime());
+    sess.endTime = this.convertUTCTimeToLocalTime(this.endDateValue.getTime());
 
     sess.title = {spanish: sess.title_spanish, english: sess.title_english};
     sess.description = {spanish: sess.description_spanish, english: sess.description_english};
@@ -128,10 +129,10 @@ export class SessionEditComponent implements OnInit, OnDestroy {
     delete sess['description_spanish'];
     delete sess['description_english'];
 
-    this.session.update(sess);
+    //this.session.update(sess);
 
-    let link = ['/sesiones'];
-    this.router.navigate(link);
+    //let link = ['/sesiones'];
+    //this.router.navigate(link);
   }
 
   getSession(){
@@ -144,7 +145,7 @@ export class SessionEditComponent implements OnInit, OnDestroy {
       this.getSessionTags();
 
       this.sessionObj.tags = data.tags ? data.tags : [];
-
+      console.log(data.startTime);
       this.sessionObj.startTime = this.convertUTCTimeToLocalDate(data.startTime);
       this.startDateValue = this.convertUTCTimeToLocalDate(data.startTime);
 
@@ -159,22 +160,17 @@ export class SessionEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  convertUTCTimeToLocalTime(_time: any){
+    var utcDate = new Date(_time);
+    var offset = utcDate.getTimezoneOffset();
+    return _time-(offset*60*1000);
+  }
+
   convertUTCTimeToLocalDate(_time: any){
     var utcDate = new Date(_time);
     var offset = utcDate.getTimezoneOffset();
-    var diffZone = _time-(offset*60*1000);
+    var diffZone = _time+(offset*60*1000);
     return new Date(diffZone);
-  }
-
-  convertLocalDateToUTCTime(_date: Date){
-    var _yea = _date.getUTCFullYear();
-    var _mon = _date.getUTCMonth();
-    var _day = _date.getUTCDate();
-    var _hou = _date.getUTCHours();
-    var _min = _date.getUTCMinutes();
-    var _sec = _date.getUTCSeconds();
-
-    return new Date(_yea,_mon,_day,_hou,_min,_sec).getTime();
   }
 
   getSessionLocation(locationId: any){

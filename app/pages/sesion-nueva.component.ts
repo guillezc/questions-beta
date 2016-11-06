@@ -127,8 +127,8 @@ export class SessionAddComponent implements OnInit {
       });
     }
 
-    sess.startTime = this.convertLocalDateToUTCTime(sess.startTime);
-    sess.endTime = this.convertLocalDateToUTCTime(sess.endTime);
+    sess.startTime = this.convertUTCTimeToLocalTime(sess.startTime);
+    sess.endTime = this.convertUTCTimeToLocalTime(sess.endTime);
 
     if(sess.allDay)
       sess.endTime = sess.startTime
@@ -174,15 +174,10 @@ export class SessionAddComponent implements OnInit {
     this.router.navigate(link);
   }
 
-  convertLocalDateToUTCTime(_date: Date){
-    var _yea = _date.getUTCFullYear();
-    var _mon = _date.getUTCMonth();
-    var _day = _date.getUTCDate();
-    var _hou = _date.getUTCHours();
-    var _min = _date.getUTCMinutes();
-    var _sec = _date.getUTCSeconds();
-
-    return new Date(_yea,_mon,_day,_hou,_min,_sec).getTime();
+  convertUTCTimeToLocalTime(_time: any){
+    var utcDate = new Date(_time);
+    var offset = utcDate.getTimezoneOffset();
+    return _time-(offset*60*1000);
   }
 
   getSession(idSession: any){
