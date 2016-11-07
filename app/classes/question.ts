@@ -8,6 +8,7 @@ export class Question {
     public question: string;
     public response: string;
     public selected: boolean;
+    public anonymous: boolean;
 
     constructor(){}
 
