@@ -131,6 +131,8 @@ export class SessionsComponent implements OnInit {
     });
     this.sessions.subscribe(data => {
       data.forEach((sess: any) => {
+        sess.startTime = this.convertUTCTimeToLocalDate(sess.startTime);
+        sess.endTime = this.convertUTCTimeToLocalDate(sess.endTime);
         this.survey = this.af.database.list('/surveys', {
           query: {
             orderByChild: 'sessionId',
