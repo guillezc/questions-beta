@@ -14,7 +14,8 @@ import  'app/assets/global/plugins/bootstrap-timepicker/js/bootstrap-timepicker.
 
 @Component({
   selector: 'q-sessions',
-  templateUrl: 'app/templates/sessions.component.html'
+  templateUrl: 'app/templates/sessions.component.html',
+  providers: [UserService]
 })
 
 export class SessionsComponent implements OnInit {
