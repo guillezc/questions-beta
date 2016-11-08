@@ -24,6 +24,10 @@ export class EventsComponent implements OnInit{
 		public af            : AngularFire,
 		public titleService  : Title) {
 
+		this.userService.checkCredentials();
+		this.getEvents();
+		this.setTitle("Eventos - México Cumbre de Negocios");
+
 	}
 
 	public setTitle(newTitle: string) {
@@ -31,9 +35,7 @@ export class EventsComponent implements OnInit{
 	}
 
 	ngOnInit() {  
-		this.userService.checkCredentials();
-		this.getEvents();
-		this.setTitle("Eventos - México Cumbre de Negocios");
+		
 	}
 
 	getEvents(){
