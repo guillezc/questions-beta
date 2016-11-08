@@ -5,6 +5,7 @@ import { Title } from '@angular/platform-browser';
 import { Session }  from '../classes/session';
 
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import { UserService } from '../services/user.service';
 
 declare var SessionJS: any;
 import  'app/js/sessions.js';
@@ -33,6 +34,7 @@ export class SessionsComponent implements OnInit {
   };
 
   constructor(
+    private userService : UserService,
     private router         : Router,
     public  af        : AngularFire,
     private titleService   : Title) {
@@ -44,9 +46,9 @@ export class SessionsComponent implements OnInit {
   }
 
   ngOnInit() {  
+    this.userService.checkCredentials();
   	this.getSessions();
     this.setTitle("Sesiones - México Cumbre de Negocios");
-    //this.af.database.list('sessions').
   }
 
   getSessions(){
