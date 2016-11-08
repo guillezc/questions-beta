@@ -30,10 +30,12 @@ export class ChatComponent implements OnInit{
 	peopleItems: Array<any> = [];
   peopleSelect: Array<any> = [];
   allPeopleSelect: Array<any> = [];
-	userID = '-KPCMKA-InT8eGDHEDEF';
-	newMessage: any = "";
+	adminID = '-KPCMKA-InT8eGDHEDEF';
+	newMessage: any = '';
 	newChatID: any;
 	chatID: any;
+  sendTo: any = {};
+  typeChat: any = '';
 	existChat: boolean = false;
 	isNewChat: boolean = false;
 	isLoaded: boolean = false;
@@ -60,31 +62,12 @@ export class ChatComponent implements OnInit{
 	}
 
 	getChats(){
-		/*this.chats = this.af.database.list('people/'+this.userID+'/chats');
-		this.chats.subscribe(data => {
-      if(data.length > 0){
-      	this.chatList = [];
-      	let count: any = 0;
-      	data.forEach((q: any) => {
-	        this.af.database.object('/chats/'+q.$key).subscribe(chData => {
-	          this.chatList.push({
-	          	key: chData.$key,
-	          	title: chData.title,
-	          	lastMessage: chData.lastMessage
-	          });
-	          count++;
-	          if(count==data.length)
-	          	this.isLoaded = true;
-	        });
-	      });
-	      
-      }
-    });*/
     this.chats = this.af.database.list('chatMembers');
     this.chats.subscribe(members=>{
       this.chatList = [];
       let count: any = 0;
       members.forEach(memberChat=>{
+        count++;
         if(this.isAdminChat(memberChat)){
           this.af.database.object('/chats/'+memberChat.$key).subscribe(chData => {
             this.chatList.push({
@@ -95,8 +78,10 @@ export class ChatComponent implements OnInit{
             if(count==members.length)
               this.isLoaded = true;
           });
+        }else{
+          if(count==members.length)
+            this.isLoaded = true;
         }
-        count++;
       });
     });
 	}
@@ -126,7 +111,7 @@ export class ChatComponent implements OnInit{
 
   	let typeChat: string = "global";
 		let tstamp: Date = new Date();
-		let creator: any = this.userID;
+		let creator: any = this.adminID;
     let chatMembers:any = {};
     let members:any = {};
 
@@ -171,13 +156,20 @@ export class ChatComponent implements OnInit{
   	this.newMessage = "";
   	let tstamp: Date = new Date();
   	this.af.database.list('messages/'+this.chatID).push({
-  		name: this.userID,
+  		name: this.adminID,
       message: chat.newMessage,
       timestamp: tstamp.getTime()
   	});
+    
+    if(this.isGlobalChat()){
+      this.sendNotiFication('/topics/global', 'México Cumbre de Negocios: '+chat.newMessage);
+    }else if(this.isPersonalChat() && this.sendTo.tokeniOS){
+      this.sendNotiFication(this.sendTo.tokeniOS, this.sendTo.userName+': '+chat.newMessage);
+    }
   }
 
   loadMessages(value:any){
+    this.loadChatData(value);
   	this.existChat = true;
   	this.chatID = value;
   	this.messages = this.af.database.list('messages/'+value);
@@ -201,6 +193,46 @@ export class ChatComponent implements OnInit{
       	ChatJS.init();
       }
     });
+  }
+
+  loadChatData(idChat: any){
+    this.af.database.object('chats/'+idChat).subscribe(chatObj=>{
+      this.typeChat = chatObj.type;
+      if(chatObj.type == 'personal'){
+        this.af.database.object('chatMembers/'+idChat).subscribe(members=>{
+          this.sendTo.userId = this.loadToMember(members);
+          this.af.database.object('people/'+this.sendTo.userId).subscribe(person=>{
+            this.sendTo.userName = person.name;
+            this.sendTo.tokeniOS = person.tokeniOS ? person.tokeniOS : false;
+          });
+        });
+      }
+    });
+  }
+
+  loadToMember(members: any){
+    delete members['$exists'];
+    delete members['$key'];
+    var _to = '';
+    for(var key in members){
+      if(key != this.adminID)
+        _to = key;
+    }
+    return _to;
+  }
+
+  isGlobalChat(){
+    if(this.typeChat == 'global'){
+      return true;
+    }
+    return false;
+  }
+
+  isPersonalChat(){
+    if(this.typeChat == 'personal'){
+      return true;
+    }
+    return false;
   }
 
   getLengthPeople(){
@@ -236,7 +268,7 @@ export class ChatComponent implements OnInit{
 
   isAdminChat(memberChat: any){
     for(var key in memberChat){
-      if(key == this.userID)
+      if(key == this.adminID)
         return true;
     }
     return false;
@@ -246,6 +278,37 @@ export class ChatComponent implements OnInit{
   	this.peopleItems.forEach(item=>{
   		this.allPeopleSelect[item.id] = true;
   	});
+  }
+
+   sendNotiFication(_to: any, _message: any){
+    let _headers: any = {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AIzaSyAYfDi0TtUAodRUDoYqhvDY3ScxJoR0ZbU'
+    };
+       
+    let _body: any = {
+      to: _to,
+      notification:{
+        sound: "default",
+        lights: true,
+        priority: "high", 
+        badge: 1,
+        large_icon: "ic_launcher",
+        body: _message
+      },
+      priority: 10
+    };
+
+    (<any>$).ajax({
+      url: 'https://fcm.googleapis.com/fcm/send',
+      type: "POST",
+      data: JSON.stringify(_body),
+      headers: _headers,
+      complete: function(data: any){
+        console.log(data);
+      }
+    });
   }
 
 }

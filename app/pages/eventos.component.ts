@@ -19,7 +19,7 @@ export class EventsComponent implements OnInit{
 	eventList: Event[] = [];
 
 	constructor(
-		private userService : UserService,
+		private userService  : UserService,
 		private router       : Router,
 		public af            : AngularFire,
 		public titleService  : Title) {
@@ -66,4 +66,5 @@ export class EventsComponent implements OnInit{
 	deleteEvent(event: Event){
 		this.af.database.object('/events/'+event.$key).remove();
 	}
+
 }

@@ -6,6 +6,7 @@ import { NgModule, enableProdMode }         				from '@angular/core';
 import { BrowserModule, Title }    									from '@angular/platform-browser';
 import { NgForm, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { platformBrowserDynamic } 									from '@angular/platform-browser-dynamic';
+import { HttpModule, JsonpModule }                  from '@angular/http';
 
 import { Routes, RouterModule } 								from '@angular/router';
 import { routing, routes, appRoutingProviders } from './app.routing';
@@ -84,6 +85,8 @@ enableProdMode();
   	ReactiveFormsModule,
   	TagInputModule,
   	ChartsModule,
+    HttpModule,
+    JsonpModule,
     RouterModule.forRoot(routes, { useHash: true })
   ],
   declarations: [ 
