@@ -27,7 +27,8 @@
             	<div class="chart-container" [hidden]="isEmpty" *ngIf="votes | async">
                     <q-chart 
                        [pieChartData]="chartData"
-                       [pieChartLabels]="chartLabels">
+                       [pieChartLabels]="chartLabels"
+                       [labelColor]="chartLabelColor">
                     </q-chart>
             	</div>
             	<h3 class="text-center" [hidden]="!isEmpty">No hay resultados para esta encuesta</h3>

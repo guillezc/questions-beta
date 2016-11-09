@@ -13,7 +13,8 @@
 		<div [hidden]="isEmpty" *ngIf="votes | async">
             <q-chart 
                [pieChartData]="chartData"
-               [pieChartLabels]="chartLabels">
+               [pieChartLabels]="chartLabels"
+               [labelColor]="chartLabelColor">
             </q-chart>
     	</div>
 	</div>

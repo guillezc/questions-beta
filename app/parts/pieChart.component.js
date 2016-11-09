@@ -20,6 +20,7 @@ var PieChartComponent = (function () {
             legend: {
                 labels: {
                     fontSize: 24,
+                    fontColor: this.labelColor,
                     usePointStyle: false
                 },
                 onClick: function (event, legendItem) {
@@ -56,6 +57,7 @@ var PieChartComponent = (function () {
         };
     }
     PieChartComponent.prototype.ngOnInit = function () {
+        this.pieOptions.legend.labels.fontColor = this.labelColor;
         Chart.pluginService.register({
             beforeRender: function (chart) {
                 if (chart.config.options.showAllTooltips) {
@@ -107,6 +109,10 @@ __decorate([
     core_1.Input(),
     __metadata("design:type", Array)
 ], PieChartComponent.prototype, "pieChartData", void 0);
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", String)
+], PieChartComponent.prototype, "labelColor", void 0);
 PieChartComponent = __decorate([
     core_1.Component({
         selector: 'q-chart',

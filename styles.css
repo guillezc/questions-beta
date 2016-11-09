@@ -38,6 +38,10 @@
     height: 100% !important;
     background: #000;
 }
+.carousel.slide#carousel-proyecteds .carousel-caption h2 > small{
+    color: #fff;
+    opacity: 1;
+}
 .carousel.slide#carousel-proyecteds .item{
     background: #000;
 }
@@ -265,6 +269,7 @@ table.dataTable{
 }
 .page-body.page-proyecteds .chart-container .page-title > small{
     color: #fff;
+    opacity: 0.95;
 }
 .page-body.page-proyecteds .chart-container #gchart_proyecteds > div > div{
     margin: 0 auto;
@@ -487,6 +492,21 @@ input#new-chat-title{
         width: 100% !important;
         max-width: 100%;
     }
+}
+@media(min-width: 1620px){
+    .page-proyecteds .chart-container .chart canvas{
+        width: 88% !important;
+        max-width: 100%;
+    }
+    .page-body.page-proyecteds .chart-container .page-title{
+    	font-size: 34px;
+    	line-height: 50px;
+    }
+    .page-body.page-proyecteds .chart-container .page-title > small {
+	    color: #fff;
+	    font-size: 18px;
+	    line-height: 24px;
+	}
 }
 @media(max-width: 768px){
     table tr > td > .btn{

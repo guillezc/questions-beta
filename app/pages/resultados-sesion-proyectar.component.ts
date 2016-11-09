@@ -32,6 +32,7 @@ export class ResultSesionProyectedComponent implements OnInit {
   intervalObs: any;
 
   chartData: any[] = [];
+  chartLabelColor: string = "#FFF";
 
   constructor(
     private router         : Router,

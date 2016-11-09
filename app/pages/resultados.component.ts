@@ -32,6 +32,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   chartLabels:string[] = [];
   chartData:number[] = [];
+  chartLabelColor: string = "#000";
 
 	constructor(
     private router         : Router,

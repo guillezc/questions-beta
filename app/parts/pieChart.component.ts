@@ -17,6 +17,9 @@ export class PieChartComponent implements OnInit {
   @Input()
   	pieChartData: number[];
 
+  @Input()
+    labelColor: string;
+
   	pieChartTitle: string = 'Votaciones';
   	pieChartType: string = 'pie';
   	pieLegend: boolean = true;
@@ -25,6 +28,7 @@ export class PieChartComponent implements OnInit {
       legend:{
         labels:{
           fontSize: 24,
+          fontColor: this.labelColor,
           usePointStyle: false
         },
         onClick: function(event: any, legendItem: any){
@@ -65,6 +69,7 @@ export class PieChartComponent implements OnInit {
 	}
 
 	ngOnInit() {
+    this.pieOptions.legend.labels.fontColor = this.labelColor;
 
     Chart.pluginService.register({
       beforeRender: function(chart: any) {
