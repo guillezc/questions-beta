@@ -122,7 +122,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
     var component: any = this;
     window.setTimeout(function(){
       component.proyectedReady = true;
-    }, 2000);
+    }, 5000);
   }
 
   getIndexesOf(object: any){

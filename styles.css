@@ -482,6 +482,12 @@ input#new-chat-title{
     color: #fff;
     margin: 12px 0;
 }
+.listicos-logo-container{
+    text-align: center;
+    padding: 10px 15px;
+    margin-top: 10px;
+    opacity: 0.85
+}
 
 @media(min-width: 769px){
     .chart-container .chart canvas{

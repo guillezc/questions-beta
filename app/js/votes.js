@@ -36,7 +36,10 @@ var VoteJS = function(){
 			}, 100)
 		},
 		destroyTable: function(){
-			$('#datatable_votes').dataTable().fnDestroy();
+			if ( $.fn.dataTable.isDataTable( '#datatable_votes' ) ) {
+			    $('#datatable_votes').dataTable().fnDestroy();
+			}
+			
 		}
 	}
 }();

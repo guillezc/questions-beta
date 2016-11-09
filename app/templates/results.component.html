@@ -17,7 +17,7 @@
     </small>
     <div class="pull-right">
         <img src="app/assets/global/img/input-spinner.gif" alt="loading" [hidden]="proyectedReady" />
-        <button id="go-to-rproyecteds" [disabled]="!proyectedReady" class="btn btn-sm sbold green"><i class="fa fa-tv"></i> Proyectar</button>
+        <button id="go-to-rproyecteds" [disabled]="!proyectedReady || isEmpty" class="btn btn-sm sbold green"><i class="fa fa-tv"></i> Proyectar</button>
     </div>
     <div class="clearfix"></div>
 </h3>

@@ -49,7 +49,12 @@ export class QuestionsComponent implements OnInit {
   }
 
   getQuestions(){
-  	this.questions = this.af.database.list('questions');
+  	this.questions = this.af.database.list('questions', {
+      query: {
+        orderByChild: 'selected',
+        equalTo: false
+      }
+    });
     this.questions.subscribe(data => {
       data.forEach((q: Question) => {
         this.af.database.object('/people/'+q.userId).subscribe(speakerData => {

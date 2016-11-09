@@ -148,6 +148,14 @@ export class ChatComponent implements OnInit{
 
   }
 
+  deleteChat(chatId: any){
+    if ( window.confirm("¿Desea eliminar el chat?\n Se eliminarán todos los mensajes.") ){
+      this.af.database.object('chats/'+chatId).remove();
+      this.af.database.object('chatMembers/'+chatId).remove();
+      this.af.database.object('messages/'+chatId).remove();
+    }
+  }
+
   toggleSelect(all: any){
 		this.sendToAll = all.checked;
   }
@@ -171,6 +179,7 @@ export class ChatComponent implements OnInit{
   loadMessages(value:any){
     this.loadChatData(value);
   	this.existChat = true;
+    this.isNewChat = false;
   	this.chatID = value;
   	this.messages = this.af.database.list('messages/'+value);
   	this.messages.subscribe(msjs => {

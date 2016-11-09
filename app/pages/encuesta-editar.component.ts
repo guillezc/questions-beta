@@ -40,7 +40,7 @@ export class SurveyEditComponent implements OnInit {
 
   ngOnInit() {
     this.userService.checkCredentials();
-    this.setTitle("Nueva Votación - México Cumbre de Negocios");
+    this.setTitle("Editar Encuesta - México Cumbre de Negocios");
     this.getSessions();
     this.sub = this.route.params.subscribe(params => {
       this.surveyID = params['id'];

@@ -49,6 +49,7 @@ export class VotesComponent implements OnInit, OnDestroy {
   }
 
   getSurveys(){
+    VoteJS.destroyTable();
   	this.votes = this.af.database.list('surveys', {
       query: {
         orderByChild: 'type',

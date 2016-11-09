@@ -58,7 +58,7 @@ export class SurveysComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.userService.checkCredentials();
-    this.setTitle("Votaciones - México Cumbre de Negocios");
+    this.setTitle("Encuestas - México Cumbre de Negocios");
   	this.getSurveys();
     this.sessions = this.af.database.list('sessions');
     this.sessions.subscribe(data=>{
