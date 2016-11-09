@@ -1,4 +1,4 @@
-<div id="carousel-proyecteds" class="carousel slide" data-ride="carousel">
+<div id="carousel-proyecteds" class="carousel slide" data-ride="carousel" *ngIf="proyecteds | async">
     <ol class="carousel-indicators">
         <li data-target="#carousel-proyecteds" *ngFor="let slide of slides; let i = index" [attr.data-slide-to]="i" [class.active]="i==0"></li>
       </ol>

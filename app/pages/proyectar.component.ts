@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Question }  from '../classes/question';
@@ -11,9 +11,10 @@ import  'app/js/proyecteds.js';
   templateUrl: 'app/templates/proyecteds.component.html'
 })
 
-export class ProyectedComponent implements OnInit{
+export class ProyectedComponent implements OnInit, OnDestroy{
   proyecteds: FirebaseListObservable<any>;
   slides: Question[] = [];
+  sub: any;
   firebase: AngularFire;
 
   constructor(
@@ -29,7 +30,8 @@ export class ProyectedComponent implements OnInit{
         equalTo: true
       }
     });
-    this.proyecteds.subscribe(data=>{
+    this.sub = this.proyecteds.subscribe(data=>{
+      this.slides = [];
       data.forEach((proyected: any)=>{
         this.af.database.object('people/'+proyected.userId).subscribe(user=>{
           let quest: Question = new Question();
@@ -49,6 +51,7 @@ export class ProyectedComponent implements OnInit{
   }
 
   ngOnDestroy(){
+    this.sub.unsubscribe();
   	ProyectedsVar.clean();
   }
 
