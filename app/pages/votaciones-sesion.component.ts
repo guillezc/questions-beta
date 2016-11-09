@@ -17,7 +17,8 @@ import  'app/js/votes-session.js';
 export class VotesSessionComponent implements OnInit {
   votes: FirebaseListObservable<any[]>;
   surveyList: Survey[] = [];
-  isLoaded: Boolean = false;
+  isLoaded: boolean = false;
+  proyectedReady: boolean = false;
   sessionID: any;
   resultsProyectedUrl: any;
 
@@ -62,7 +63,15 @@ export class VotesSessionComponent implements OnInit {
       this.surveyList = data;
       VoteSessionJS.init();
       this.isLoaded = true;
+      this.proyectedDelay();
     });	
+  }
+
+  proyectedDelay(){
+    var component: any = this;
+    window.setTimeout(function(){
+      component.proyectedReady = true;
+    }, 2000);
   }
 
   goToResults(srv: Survey) {

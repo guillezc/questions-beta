@@ -29,6 +29,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
   isInit: boolean = true;
   proyectedUrl: SafeResourceUrl;
   intervalObs: any;
+  proyectedReady: boolean = false;
 
   chartLabels:string[] = [];
   chartData:number[] = [];
@@ -108,12 +109,20 @@ export class ResultsComponent implements OnInit, OnDestroy {
             this.chartData = xchartData;
             if(this.isInit){
               this.isLoaded = true;
+              this.proyectedDelay();
               ResultsVar.init();
             }
           }
         }
       });
     });
+  }
+
+  proyectedDelay(){
+    var component: any = this;
+    window.setTimeout(function(){
+      component.proyectedReady = true;
+    }, 2000);
   }
 
   getIndexesOf(object: any){

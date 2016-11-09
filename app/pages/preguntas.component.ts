@@ -103,7 +103,7 @@ export class QuestionsComponent implements OnInit {
     delete q['userName'];
     delete q['sessionName'];
     delete q['$exists'];
-    this.af.database.object('/questions/'+id).update(q);
+    this.af.database.object('/questions/'+id).update({selected: true});
   }
 
   removeToSelecteds(q: any){
@@ -113,7 +113,7 @@ export class QuestionsComponent implements OnInit {
     delete q['userName'];
     delete q['sessionName'];
     delete q['$exists'];
-    this.af.database.object('/questions/'+id).update(q);
+    this.af.database.object('/questions/'+id).update({selected: false});
   }
 
   removeAll(){
@@ -123,7 +123,7 @@ export class QuestionsComponent implements OnInit {
       delete q['$key'];
       delete q['userName'];
       delete q['sessionName'];
-      this.af.database.object('/questions/'+id).update(q);
+      this.af.database.object('/questions/'+id).update({selected: false});
     });
   }
 

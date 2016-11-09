@@ -1,3 +1,5 @@
+<iframe id="proyecteds_frame" [src]="proyectedUrl" style="width:100%;height:100%;border:none;display:none"></iframe>
+
 <div class="page-bar">
     <ul class="page-breadcrumb">
         <li>
@@ -13,7 +15,10 @@
         Sesión: {{ sessionObj.title.spanish }} <br />
         Inicio: {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
     </small>
-    <a id="go-to-rproyecteds" class="btn btn-sm sbold green pull-right"><i class="fa fa-tv"></i> Proyectar</a>
+    <div class="pull-right">
+        <img src="app/assets/global/img/input-spinner.gif" alt="loading" [hidden]="proyectedReady" />
+        <button id="go-to-rproyecteds" [disabled]="!proyectedReady" class="btn btn-sm sbold green"><i class="fa fa-tv"></i> Proyectar</button>
+    </div>
     <div class="clearfix"></div>
 </h3>
 <div class="row">
@@ -36,5 +41,3 @@
         </div>
     </div>
 </div>
-
-<iframe id="proyecteds_frame" [src]="proyectedUrl" style="width:100%;height:100%;border:none;display:none"></iframe>

@@ -47,7 +47,8 @@
                 <br>
                 <div class="text-right">
                     <a [routerLink]="['/sesiones']" class="btn default"><i class="fa fa-arrow-left"></i> Regresar</a>
-                    <button id="go-to-rsproyecteds" type="submit" class="btn green"><i class="fa fa-tv"></i> Proyectar resultados</button>
+                    <img src="app/assets/global/img/input-spinner.gif" alt="loading" [hidden]="proyectedReady" />
+                    <button id="go-to-rsproyecteds" [disabled]="!proyectedReady" class="btn green"><i class="fa fa-tv"></i> Proyectar resultados</button>
                 </div>
             </div>
         </div>
