@@ -63,7 +63,7 @@ export class ResultsComponent implements OnInit, OnDestroy {
         if(srvObj.sessionId != "" && srvObj.sessionId != " "){
           this.session = this.af.database.object('/sessions/'+srvObj.sessionId);
           this.session.subscribe(sessObj => {
-              this.sessionObj.startTime = sessObj.startTime ? sessObj.startTime : "";
+              this.sessionObj.startTime = this.convertUTCTimeToLocalDate(sessObj.startTime);
               this.sessionObj.title = [];
               this.sessionObj.title['spanish'] = sessObj.title ? sessObj.title.spanish : "";
             
@@ -162,6 +162,13 @@ export class ResultsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
 
+  }
+
+  convertUTCTimeToLocalDate(_time: any){
+    var utcDate = new Date(_time);
+    var offset = utcDate.getTimezoneOffset();
+    var diffZone = _time+(offset*60*1000);
+    return new Date(diffZone);
   }
 
 }

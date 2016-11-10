@@ -12,8 +12,8 @@
 <h3 class="page-title results-title" *ngIf="survey | async">
     {{ surveyObj.question.spanish }} <br />
     <small *ngIf="session | async">
-        Sesión: {{ sessionObj.title.spanish }} <br />
-        Inicio: {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
+        {{ sessionObj.title.spanish }} <br />
+        {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
     </small>
     <div class="pull-right">
         <img src="app/assets/global/img/input-spinner.gif" alt="loading" [hidden]="proyectedReady" />

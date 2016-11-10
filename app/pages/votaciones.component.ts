@@ -60,6 +60,7 @@ export class VotesComponent implements OnInit, OnDestroy {
       data.forEach((s: Survey) => {
         this.af.database.object('/sessions/'+s.sessionId).subscribe(sessionData => {
           var arr: any[] = [];
+          sessionData.startTime = this.convertUTCTimeToLocalDate(sessionData.startTime);
           arr[0] = sessionData;
           s.session = arr;
         });
@@ -145,6 +146,7 @@ export class VotesComponent implements OnInit, OnDestroy {
         data.forEach((s: Survey) => {
           this.af.database.object('/sessions/'+s.sessionId).subscribe(sessionData => {
             var arr: any[] = [];
+            sessionData.startTime = this.convertUTCTimeToLocalDate(sessionData.startTime);
             arr[0] = sessionData;
             s.session = arr;
           });
@@ -158,6 +160,13 @@ export class VotesComponent implements OnInit, OnDestroy {
       VoteJS.init();
       this.isLoaded = true;
     }
+  }
+
+  convertUTCTimeToLocalDate(_time: any){
+    var utcDate = new Date(_time);
+    var offset = utcDate.getTimezoneOffset();
+    var diffZone = _time+(offset*60*1000);
+    return new Date(diffZone);
   }
 
 }

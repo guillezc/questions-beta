@@ -41,6 +41,7 @@ export class ParticipantEditComponent implements OnInit{
         this.speakerInfo = this.af.database.object('peopleInfo/'+data.$key);
         this.speakerInfo.subscribe((info: Speaker)=>{
 
+          this.speakerObj.$key = data.$key;
           this.speakerObj.name = data.name;
           this.speakerObj.title = data.title;
           this.speakerObj.pic = data.pic;

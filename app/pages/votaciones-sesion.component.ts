@@ -56,6 +56,7 @@ export class VotesSessionComponent implements OnInit {
       data.forEach((s: Survey) => {
         this.af.database.object('/sessions/'+s.sessionId).subscribe(sessionData => {
           var arr: any[] = [];
+          sessionData.startTime = this.convertUTCTimeToLocalDate(sessionData.startTime);
           arr[0] = sessionData;
           s.session = arr;
         });
@@ -71,7 +72,7 @@ export class VotesSessionComponent implements OnInit {
     var component: any = this;
     window.setTimeout(function(){
       component.proyectedReady = true;
-    }, 2000);
+    }, 5000);
   }
 
   goToResults(srv: Survey) {
@@ -92,6 +93,13 @@ export class VotesSessionComponent implements OnInit {
   deleteSurvey(s: any) {
     this.af.database.list('/surveys').remove(s.$key);
     VoteSessionJS.init();
+  }
+
+  convertUTCTimeToLocalDate(_time: any){
+    var utcDate = new Date(_time);
+    var offset = utcDate.getTimezoneOffset();
+    var diffZone = _time+(offset*60*1000);
+    return new Date(diffZone);
   }
 
 }
