@@ -488,6 +488,9 @@ input#new-chat-title{
     margin-top: 10px;
     opacity: 0.85
 }
+.sponsors-table .table>tbody>tr>td{
+    padding: 0 8px !important;
+}
 
 @media(min-width: 769px){
     .chart-container .chart canvas{

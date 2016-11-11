@@ -6,6 +6,7 @@ export class Sponsor {
     public image: string;
     public type: string;
     public urlImg: string;
+    public url: string;
 
     constructor(){}
 

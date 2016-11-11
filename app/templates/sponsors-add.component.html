@@ -34,6 +34,11 @@
 							<span class="help-block">Ingrese el título para el patrocinador</span>
 						</div>
 						<div class="form-group form-md-line-input">
+							<label for="url">Página web <span class="required" aria-required="true">*</span></label>
+							<input type="url" name="url" class="form-control" [ngModel]="sponsorObj.url">
+							<span class="help-block">Ingrese la url del patrocinador</span>
+						</div>
+						<div class="form-group form-md-line-input">
 							<label for="position">Posición <span class="required" aria-required="true">*</span></label>
 							<input type="number" name="position" class="form-control" [ngModel]="sponsorObj.position">
 							<span class="help-block">Ingrese la posición para el patrocinador</span>

@@ -39,6 +39,7 @@ export class SponsorAddComponent implements OnInit{
     this.sponsorObj.title = "";
     this.sponsorObj.image = "";
     this.sponsorObj.type = "Principal";
+    this.sponsorObj.url = "";
   }
 
   onSubmit(spon: any) { 

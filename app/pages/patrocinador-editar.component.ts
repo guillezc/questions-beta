@@ -75,7 +75,7 @@ export class SponsorEditComponent implements OnInit{
           var downloadURL = uploadTask.snapshot.downloadURL;
           spon.urlImg = downloadURL;
           sponsorClass.saving = false;
-          sponsorClass.sponsor.update(spon);
+          sponsorClass.af.database.object('sponsors/'+sponsorClass.sponsorID).update(spon);
           sponsorClass.redirectToPatrocinadores();
         });
       }
@@ -83,7 +83,7 @@ export class SponsorEditComponent implements OnInit{
       spon.image = sponsorClass.sponsorImg;
       spon.urlImg = sponsorClass.sponsorUrlImg;
       sponsorClass.saving = false;
-      sponsorClass.sponsor.update(spon);
+      sponsorClass.af.database.object('sponsors/'+sponsorClass.sponsorID).update(spon);
       sponsorClass.redirectToPatrocinadores();
     }
   }
