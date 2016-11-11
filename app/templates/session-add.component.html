@@ -81,9 +81,9 @@
 							<div class="row">
 								<div class="col-md-12">
 									<label for="locations"><strong>Locación</strong></label>
-									<ng-select [allowClear]="false" [items]="locationItems"
-											   [initData]="[]"
-								               [multiple]="false"
+									<ng-select [allowClear]="true" [items]="locationItems"
+											   [initData]="locationSelect"
+								               [multiple]="true"
 											   (selected)="addLocation($event)"
 		              						   (removed)="removeLocation($event)"
 								               placeholder="Seleccione la locación">

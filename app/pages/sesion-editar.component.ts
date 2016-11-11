@@ -145,7 +145,6 @@ export class SessionEditComponent implements OnInit, OnDestroy {
       this.getSessionTags();
 
       this.sessionObj.tags = data.tags ? data.tags : [];
-      console.log(data.startTime);
       this.sessionObj.startTime = this.convertUTCTimeToLocalDate(data.startTime);
       this.startDateValue = this.convertUTCTimeToLocalDate(data.startTime);
 
@@ -278,8 +277,9 @@ export class SessionEditComponent implements OnInit, OnDestroy {
     
   }
 
-  removeSpeaker(value:any):void {
+  removeSpeaker(value:any):boolean {
     this.af.database.list('sessions/'+this.sessionID+'/speakers').remove(value.id);
+    return false;
   }
 
   addManager(value:any):void {
@@ -292,8 +292,9 @@ export class SessionEditComponent implements OnInit, OnDestroy {
     
   }
 
-  removeManager(value:any):void {
+  removeManager(value:any):boolean {
     this.af.database.list('sessions/'+this.sessionID+'/managers').remove(value.id);
+    return false;
   }
 
   addTag(value:any):void {
