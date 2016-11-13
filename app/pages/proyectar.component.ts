@@ -36,7 +36,7 @@ export class ProyectedComponent implements OnInit, OnDestroy{
         this.af.database.object('people/'+proyected.userId).subscribe(user=>{
           let quest: Question = new Question();
           quest.userName = user.name;
-          quest.question = proyected.question;
+          quest.question = proyected.question ? proyected.question : "";
           quest.anonymous = proyected.anonymous;
 
           this.slides.push(quest);
