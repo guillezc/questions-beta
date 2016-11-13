@@ -73,8 +73,8 @@ export class ParticipantEditComponent implements OnInit{
       isSpeaker: spk.isSpeaker
     }
 
-    this.speaker.update(speakerObj);
-    this.speakerInfo.update({
+    this.af.database.object('/people/'+this.speakerID).update(speakerObj);
+    this.af.database.object('peopleInfo/'+this.speakerID).update({
       address: spk.address,
       englishBio: (spk.englishBio == "") ? "NA" : spk.englishBio,
       spanishBio: (spk.spanishBio == "") ? "NA" : spk.spanishBio,
