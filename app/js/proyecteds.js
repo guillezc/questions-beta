@@ -8,15 +8,9 @@ var ProyectedsVar = function(){
 			$(".page-content").css("height", $(".page-content").height());
 			window.setTimeout(function(){
 
-				$(window).keyup(function(e){
-					if(e.keyCode == 39)
-						$("#next-qproyected").trigger('click');
-					if(e.keyCode == 37)
-						$("#prev-qproyected").trigger('click');
-				});
 				$("#carousel-proyecteds .carousel-control").show();
 				
-			}, 1500);		
+			}, 2000);		
 		},
 		clean: function(){
 			$("body").removeClass("page-proyecteds");
