@@ -46,8 +46,8 @@ export class ParticipantEditComponent implements OnInit{
           this.speakerObj.title = data.title;
           this.speakerObj.pic = data.pic;
           this.speakerObj.company = data.company;
-          this.speakerObj.isCommittee = data.isCommittee;
-          this.speakerObj.isSpeaker = data.isSpeaker;
+          this.speakerObj.isCommittee = data.isCommittee ? data.isCommittee : false;
+          this.speakerObj.isSpeaker = data.isSpeaker ? data.isSpeaker : false;
 
           this.speakerObj.address = info.address;
           this.speakerObj.englishBio = (info.englishBio == undefined) ? "NA" : info.englishBio;
