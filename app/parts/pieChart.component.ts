@@ -65,7 +65,7 @@ export class PieChartComponent implements OnInit {
                 total += allData[i];
             }
             var tooltipPercentage = Math.round((tooltipData / total) * 100);
-            return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+            return tooltipPercentage + '%';
           }
         }
       }
