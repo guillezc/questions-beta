@@ -251,6 +251,7 @@ table.dataTable{
 }
 .page-body.page-proyecteds .chart-container .chart-title{
     color: #fff;
+    display: none;
 }
 .page-body.page-proyecteds .chart-container .chart-inn{
     display: table-cell;
@@ -263,13 +264,16 @@ table.dataTable{
     margin: 0 auto;
 }
 .page-body.page-proyecteds .chart-container .page-title{
-    margin: 0;
+    margin: 0 0 30px;
     text-align: center;
     color: #fff;
+    font-size: 30px;
+    line-height: 45px;
 }
 .page-body.page-proyecteds .chart-container .page-title > small{
     color: #fff;
     opacity: 0.95;
+    font-size: 18px;
 }
 .page-body.page-proyecteds .chart-container #gchart_proyecteds > div > div{
     margin: 0 auto;
@@ -504,7 +508,7 @@ input#new-chat-title{
 }
 @media(min-width: 1620px){
     .page-proyecteds .chart-container .chart canvas{
-        width: 82% !important;
+        width: 85% !important;
         max-width: 100%;
     }
     .page-body.page-proyecteds .chart-container .page-title{

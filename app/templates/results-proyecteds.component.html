@@ -6,8 +6,7 @@
 		<h3 class="page-title results-title"  *ngIf="survey | async">
 		    {{ surveyObj.question.spanish }} <br />
 		    <small *ngIf="session | async">
-		        {{ sessionObj.title.spanish }} <br />
-		        {{ sessionObj.startTime | date:"dd MMM y - H:mm" }}
+		        {{ sessionObj.title.spanish }}
 		    </small>
 		</h3>
 		<div [hidden]="isEmpty" *ngIf="votes | async">
