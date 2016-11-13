@@ -129,7 +129,7 @@ export class SessionEditComponent implements OnInit, OnDestroy {
     delete sess['description_spanish'];
     delete sess['description_english'];
 
-    this.session.update(sess);
+    this.af.database.object('sessions/'+this.sessionID).update(sess);
 
     let link = ['/sesiones'];
     this.router.navigate(link);
