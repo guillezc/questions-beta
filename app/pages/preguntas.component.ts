@@ -21,6 +21,7 @@ export class QuestionsComponent implements OnInit {
   filter: FirebaseObjectObservable<any>;
   sessions: FirebaseListObservable<any[]>;
   proyecteds: FirebaseListObservable<any[]>;
+  proyectedReady: boolean = false;
 
   questionsObj: Question = new Question();
   questionsListSelected: Question[] = [];
@@ -66,6 +67,7 @@ export class QuestionsComponent implements OnInit {
       });
       this.questionsList = data;
       this.isLoaded = true;
+      this.proyectedDelay();
     });
   }
 
@@ -196,6 +198,13 @@ export class QuestionsComponent implements OnInit {
       this.filter = null;
     }
     
+  }
+
+  proyectedDelay(){
+    var component: any = this;
+    window.setTimeout(function(){
+      component.proyectedReady = true;
+    }, 3000);
   }
 
 }

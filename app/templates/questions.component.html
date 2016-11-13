@@ -98,8 +98,8 @@
                         <a href="javascript:;" (click)="removeAll()" class="btn btn-sm sbold green">
                             <i class="fa fa-trash"></i> Borrar
                         </a>
-                        <!-- <a [routerLink]="['/proyectar']" target="_blank" class="btn btn-sm sbold green"><i class="fa fa-tv"></i> Proyectar</a> -->
-                        <a id="go-to-proyecteds" class="btn btn-sm sbold green"><i class="fa fa-tv"></i> Proyectar</a>
+                        <img src="app/assets/global/img/input-spinner.gif" alt="loading" [hidden]="proyectedReady" />
+                        <button id="go-to-proyecteds" [disabled]="!proyectedReady" class="btn btn-sm sbold green"><i class="fa fa-tv"></i> Proyectar</button>
                     </div>
                 </div>
             </div>
