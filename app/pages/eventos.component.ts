@@ -17,6 +17,8 @@ import { UserService } from '../services/user.service';
 export class EventsComponent implements OnInit{
 	events: FirebaseListObservable<any[]>;
 	eventList: Event[] = [];
+	sessions: any[] = [];
+	people: any[] = [];
 
 	constructor(
 		private userService  : UserService,
@@ -35,7 +37,43 @@ export class EventsComponent implements OnInit{
 	}
 
 	ngOnInit() {  
+		/*this.af.database.list('people').subscribe(data=>{
+			data.forEach(person=>{
+				this.people[person.$key] = person;
+			});
+		});
+		this.af.database.list('sessions').subscribe(data=>{
+			this.sessions = data;
+		});*/
+	}
 
+	updateSessions(){
+		this.sessions.forEach(sess=>{
+			if(sess.managers){
+				for(var key in sess.managers){
+					let speakerID: any = key;
+					let newData: any = this.people[speakerID];
+					if(newData){
+						delete newData['$exists'];
+						delete newData['$key'];
+						this.af.database.object('sessions/'+sess.$key+'/managers/'+speakerID).update(newData);
+						console.log('sessions/'+sess.$key+'/managers/'+speakerID+': EDITED!');
+					}
+				}
+			}
+			if(sess.speakers){
+				for(var key in sess.speakers){
+					let speakerID: any = key;
+					let newData: any = this.people[speakerID];
+					if(newData){
+						delete newData['$exists'];
+						delete newData['$key'];
+						this.af.database.object('sessions/'+sess.$key+'/speakers/'+speakerID).update(newData);
+						console.log('sessions/'+sess.$key+'/speakers/'+speakerID+': EDITED!');
+					}
+				}
+			}
+		});
 	}
 
 	getEvents(){

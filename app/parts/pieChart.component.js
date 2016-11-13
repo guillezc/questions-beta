@@ -16,6 +16,14 @@ var PieChartComponent = (function () {
         this.pieChartType = 'pie';
         this.pieLegend = true;
         this.pieOptions = {
+            defaultColors: [
+                [46, 204, 113],
+                [231, 76, 60],
+                [52, 152, 219],
+                [255, 162, 0],
+                [236, 240, 241],
+                [255, 89, 182]
+            ],
             showAllTooltips: true,
             legend: {
                 labels: {
