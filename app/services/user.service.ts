@@ -12,7 +12,7 @@ export class UserService {
 		private router: Router,
 		public  af    : AngularFire) {
     
-      this.loggedIn = !!localStorage.getItem('auth_token');
+      this.loggedIn = !!localStorage.getItem('auth_tokenaizer_login');
   }
 
   login(username: any, password: any){
@@ -25,14 +25,14 @@ export class UserService {
   }
 
   authenticate(username: any){
-  	localStorage.setItem('auth_token', username);
+  	localStorage.setItem('auth_tokenaizer_login', username);
     this.loggedIn = true;
     this.userActive();
     this.goToEvents();
   }
 
   logout() {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('auth_tokenaizer_login');
     this.loggedIn = false;
     this.userInactive();
     this.goToLogin();
@@ -43,7 +43,7 @@ export class UserService {
   }
 
   getUsername(){
-    return localStorage.getItem('auth_token');
+    return localStorage.getItem('auth_tokenaizer_login');
   }
 
   goToLogin(){
@@ -66,7 +66,7 @@ export class UserService {
   }
 
   userActive(){
-    document.getElementById("welcome-msg").innerHTML = "Bienvenido(a) "+localStorage.getItem('auth_token');
+    document.getElementById("welcome-msg").innerHTML = "Bienvenido(a) "+localStorage.getItem('auth_tokenaizer_login');
     document.getElementById("logout-item").style.display = "block";
   }
 
