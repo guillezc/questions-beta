@@ -75,14 +75,14 @@ export class ParticipantEditComponent implements OnInit{
 
     this.af.database.object('/people/'+this.speakerID).update(speakerObj);
     this.af.database.object('peopleInfo/'+this.speakerID).update({
-      address: spk.address,
+      //address: spk.address,
       englishBio: (spk.englishBio == "") ? "NA" : spk.englishBio,
       spanishBio: (spk.spanishBio == "") ? "NA" : spk.spanishBio,
       englishProfile: (spk.englishProfile == "") ? "NA" : spk.englishProfile,
       spanishProfile: (spk.spanishProfile == "") ? "NA" : spk.spanishProfile,
-      phoneNumber: spk.phoneNumber,
-      status: spk.status,
-      webSite: spk.webSite
+      //phoneNumber: spk.phoneNumber,
+      status: spk.status
+      //webSite: spk.webSite
     });
 
     this.updateOnSessions(speakerObj);
