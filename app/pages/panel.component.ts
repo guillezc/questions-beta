@@ -7,12 +7,12 @@ import { Speaker }  from '../classes/speaker';
 import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
 import { Title } from '@angular/platform-browser';
 
-//declare var ParticipantJS: any;
-//import  'app/js/participants.js';
+import { UserService } from '../services/user.service';
 
 @Component({
 	selector: 'q-dashboard',
-	templateUrl: 'app/templates/dashboard.component.html'
+	templateUrl: 'app/templates/dashboard.component.html',
+	providers: [UserService]
 })
 
 export class DashboardComponent implements OnInit, OnDestroy{
@@ -30,9 +30,12 @@ export class DashboardComponent implements OnInit, OnDestroy{
 	isLoaded: boolean = false;
 
 	constructor(
+		private userService  : UserService,
 		private router       : Router,
 		public af            : AngularFire,
 		public titleService  : Title) {
+
+		this.userService.checkCredentials();
 
 	}
 

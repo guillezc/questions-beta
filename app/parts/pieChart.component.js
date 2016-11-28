@@ -58,7 +58,7 @@ var PieChartComponent = (function () {
                             total += allData[i];
                         }
                         var tooltipPercentage = Math.round((tooltipData / total) * 100);
-                        return tooltipLabel + ': ' + tooltipData + ' (' + tooltipPercentage + '%)';
+                        return tooltipPercentage + '%';
                     }
                 }
             }
