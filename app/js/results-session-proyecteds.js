@@ -13,7 +13,9 @@ var ResultSesionProyectedsVar = function(){
 
 		init: function(){
 			this.updateBody();
-			$('.carousel').carousel();
+			$('.carousel').carousel({
+				interval: false
+			});
 		}
 	}
 }();

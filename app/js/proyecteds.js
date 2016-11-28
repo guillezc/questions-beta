@@ -5,19 +5,13 @@ var ProyectedsVar = function(){
 			$('.carousel').carousel({
 				interval: false
 			});
-			$(".page-content").css("height", $(".page-content").height());
-			window.setTimeout(function(){
-
-				$("#carousel-proyecteds .carousel-control").show();
-				
-			}, 2000);		
+			$(".page-content").css("height", $(".page-content").height());	
 		},
 		clean: function(){
 			$("body").removeClass("page-proyecteds");
 		},
 		init: function(){
 			this.updateBody();
-			$("#carousel-proyecteds .carousel-control").hide();
 		}
 	}
 }();

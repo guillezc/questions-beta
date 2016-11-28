@@ -7,14 +7,19 @@ var ResultsVar = function(){
 			    function fullscreenChanged() {
 			        if (document.webkitFullscreenElement == null) {
 			            mf = document.getElementById("proyecteds_frame");
-			            mf.style.display="none";
+			            if(mf) mf.style.display="none";
 			        }
 			    }
 			    document.onwebkitfullscreenchange = fullscreenChanged;
 			    $("#go-to-rproyecteds").on("click", function(){
 			    	mf = document.getElementById("proyecteds_frame");
-			        mf.webkitRequestFullscreen();
-			        mf.style.display="";
+			        if(mf){
+			        	mf.webkitRequestFullscreen();
+			        	mf.style.display="";
+			        } 
+			        $('.carousel').carousel({
+						interval: false
+					});
 			    }) ;
 			}, 1000)
 		}

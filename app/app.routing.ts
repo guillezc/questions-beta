@@ -52,6 +52,7 @@ import { LocationAddComponent } from './pages/locacion-nuevo.component';
 import { LocationEditComponent } from './pages/locacion-editar.component';
 
 import { LoginComponent } from './pages/login.component';
+import { DashboardComponent } from './pages/panel.component';
 
 const appRoutes: Routes = [
   {
@@ -62,6 +63,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'panel',
+    component: DashboardComponent
   },
   {
     path: 'eventos',

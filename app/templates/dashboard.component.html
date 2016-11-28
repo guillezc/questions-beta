@@ -1,0 +1,247 @@
+<div class="page-bar">
+    <ul class="page-breadcrumb">
+        <li>
+            <a [routerLink]="['/eventos']">Inicio</a>
+            <i class="fa fa-circle"></i>
+            <a href="javascript:void(0);">Panel</a>
+        </li>
+    </ul>
+</div>
+<h3 class="page-title"> Panel de Administración <small>Estadísticas, gráficas, eventos recientes y reportes</small> </h3>
+<div class="row">
+    <div class="col-md-12">
+        <!-- Begin: life time stats -->
+        <div class="portlet light portlet-fit portlet-datatable bordered">
+            <div class="portlet-body">
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat default" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="97">{{ speakersTotal }}</span>
+                                </div>
+                                <div class="desc"> Participantes </div>
+                            </div>
+                            <a class="more" [routerLink]="['/participantes']"> Ver más<i class="m-icon-swapright m-icon-white"></i></a>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat blue" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-list-alt"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="97">{{ surveysTotal }}</span>
+                                </div>
+                                <div class="desc"> Encuestas </div>
+                            </div>
+                            <a class="more" [routerLink]="['/encuestas']"> Ver más<i class="m-icon-swapright m-icon-white"></i></a>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat blue-madison" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-thumbs-up"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="97">{{ votesTotal }}</span>
+                                </div>
+                                <div class="desc"> Votaciones </div>
+                            </div>
+                            <a class="more" [routerLink]="['/votaciones']"> Ver más<i class="m-icon-swapright m-icon-white"></i></a>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat grey-mint" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-comments"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="97">{{ messagesTotal }}</span>
+                                </div>
+                                <div class="desc"> Mensajes </div>
+                            </div>
+                            <a class="more" [routerLink]="['/chat']"> Ver más<i class="m-icon-swapright m-icon-white"></i></a>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 grey-cascade" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="97">{{ contactsTotal }}</span>
+                                </div>
+                                <div class="desc"> Personas conectadas </div>
+                            </div>
+                            
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 green-jungle" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-android"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="97">97</span>
+                                </div>
+                                <div class="desc"> Usuarios de Android </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 grey-cararra" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-apple"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">162</span>
+                                </div>
+                                <div class="desc"> Usuarios de iOS </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 blue-oleo" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-clock-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="12,5">3 min y 20 seg</span> </div>
+                                <div class="desc"> Interacción por sesión </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 blue" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-mars"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="12,5">75.4%</span> </div>
+                                <div class="desc"> Hombres </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 red-pink" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-venus"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="12,5">24.6%</span> </div>
+                                <div class="desc"> Mujeres </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 red-thunderbird" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-globe"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">93.9%</span>
+                                </div>
+                                <div class="desc"> México </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 blue-chambray" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-globe"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">4.7%</span>
+                                </div>
+                                <div class="desc"> USA </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 yellow" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">30.5%</span>
+                                </div>
+                                <div class="desc"> Entre 25 y 34 años </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 yellow-gold" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">16.2%</span>
+                                </div>
+                                <div class="desc"> Entre 35 y 44 años </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 yellow-mint" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">21.9%</span>
+                                </div>
+                                <div class="desc"> Entre 45 y 54 años </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 purple" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">5.7%</span>
+                                </div>
+                                <div class="desc"> Entre 55 y 64 años </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                        <a class="dashboard-stat dashboard-stat-v2 purple-soft" href="javascript:void">
+                            <div class="visual">
+                                <i class="fa fa-bar-chart-o"></i>
+                            </div>
+                            <div class="details">
+                                <div class="number">
+                                    <span data-counter="counterup" data-value="162">7.6%</span>
+                                </div>
+                                <div class="desc"> Mayores de 65 </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

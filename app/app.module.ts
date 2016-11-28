@@ -74,6 +74,7 @@ import { LocationsComponent }             from './pages/locaciones.component';
 import { LocationAddComponent }           from './pages/locacion-nuevo.component';
 import { LocationEditComponent }         from './pages/locacion-editar.component';
 import { LoginComponent }                from './pages/login.component';
+import { DashboardComponent }            from './pages/panel.component';
 
 enableProdMode();
 
@@ -136,7 +137,8 @@ enableProdMode();
     LocationsComponent,
     LocationAddComponent,
     LocationEditComponent,
-    LoginComponent
+    LoginComponent,
+    DashboardComponent
 	],
 	providers: [
     appRoutingProviders,

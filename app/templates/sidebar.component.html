@@ -4,6 +4,12 @@
     <ul class="page-sidebar-menu sidebar-questions" data-keep-expanded="false" data-auto-scroll="true"
     data-slide-speed="200" [ngClass]="{'page-sidebar-menu-closed': settings.layout.pageSidebarClosed}">
         <li class="start nav-item">
+            <a [routerLink]="['/panel']" data-href="#/panel">
+                <i class="fa fa-tasks"></i>
+                <span class="title">Panel</span>
+            </a>
+        </li>
+        <li class="start nav-item">
             <a [routerLink]="['/eventos']" data-href="#/eventos" routerLinkActive="active">
                 <i class="fa fa-calendar"></i>
                 <span class="title">Eventos</span>
